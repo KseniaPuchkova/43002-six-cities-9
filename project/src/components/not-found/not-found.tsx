@@ -12,7 +12,7 @@ function NotFoundPage() {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <b className="places__found">404. Page Not Found</b>
-              <Link className ="login__submit form__submit button" to={AppRoute.Main}>Return to main page</Link>
+              <Link className="login__submit form__submit button" to={AppRoute.Main}>Return to main page</Link>
             </section>
           </div>
         </div>

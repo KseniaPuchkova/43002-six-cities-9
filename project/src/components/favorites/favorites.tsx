@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 
@@ -99,9 +100,9 @@ function Favorites(): JSX.Element {
                 <div className="favorites__places">
                   <article className="favorites__card place-card">
                     <div className="favorites__image-wrapper place-card__image-wrapper">
-                      <a href="/">
+                      <Link to="/">
                         <img className="place-card__image" src="img/apartment-small-04.jpg" width="150" height="110" alt="Place" />
-                      </a>
+                      </Link>
                     </div>
                     <div className="favorites__card-info place-card__info">
                       <div className="place-card__price-wrapper">
