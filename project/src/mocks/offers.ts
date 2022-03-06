@@ -1,6 +1,7 @@
-import Offer from '../types/offer';
+import {Offer}from '../types/offer';
+const AVATAR_URL = 'https://i.pravatar.cc/128';
 
-const offers:Offer[] = [
+export const offers:Offer[] = [
   {
     bedrooms: 3,
     city: {
@@ -12,9 +13,9 @@ const offers:Offer[] = [
       name: 'Amsterdam',
     },
     description: 'Deserunt minim deserunt enim sunt. Excepteur reprehenderit aliquip ad sunt ex ea laboris proident commodo ut et culpa ad mollit.',
-    goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
+    goods: ['Wi-Fi', 'Towels', 'Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher', 'Baby seat'],
     host: {
-      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 1,
       isPro: true,
       name: 'Angelina',
@@ -46,9 +47,9 @@ const offers:Offer[] = [
       name: 'Amsterdam',
     },
     description: 'Aliqua aliqua velit nisi non dolore non occaecat adipisicing magna do consectetur quis.',
-    goods: ['Heating', 'Kitchen', 'Washing machine', 'Coffee machine'],
+    goods: ['Heating', 'Kitchen', 'Washing machine', 'Coffee machine', 'Fridge'],
     host: {
-      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 2,
       isPro: true,
       name: 'Mary',
@@ -80,16 +81,16 @@ const offers:Offer[] = [
       name: 'Amsterdam',
     },
     description: 'Nostrud nulla laborum laborum ea nulla ullamco eu adipisicing amet occaecat.',
-    goods: ['Heating', 'Kitchen', 'Split system', 'Washing machine'],
+    goods: ['Heating', 'Kitchen', 'Split system', 'Washing machine', 'Dishwasher', 'Baby seat'],
     host: {
-      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
-      id: 3,
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
+      id: 4,
       isPro: false,
       name: 'Kurt',
     },
     id: 3,
     images: ['img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg'],
-    isFavorite: true,
+    isFavorite: false,
     isPremium: true,
     location: {
       latitude: 52.3909553943508,
@@ -111,19 +112,19 @@ const offers:Offer[] = [
         longitude: 4.9,
         zoom: 10,
       },
-      name: 'Amsterdam',
+      name: 'Paris',
     },
     description: 'Cillum occaecat amet irure reprehenderit aliquip proident et nostrud commodo aliquip aliquip non.',
-    goods: ['Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher', 'WiFi'],
+    goods: ['Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher', 'Wi-Fi'],
     host: {
-      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 4,
       isPro: true,
       name: 'Angelina',
     },
     id: 4,
-    images: ['img/apartment-02.jpg'],
-    isFavorite: false,
+    images: ['img/room.jpg'],
+    isFavorite: true,
     isPremium: false,
     location: {
       latitude: 52.3809553943508,
@@ -137,6 +138,39 @@ const offers:Offer[] = [
     title: 'Nice, cozy, warm big bed apartment',
     type: 'Apartment',
   },
+  {
+    bedrooms: 1,
+    city: {
+      location: {
+        latitude: 52.38333,
+        longitude: 4.9,
+        zoom: 10,
+      },
+      name: 'Hamburg',
+    },
+    description: 'Cillum occaecat amet irure reprehenderit aliquip proident.',
+    goods: ['Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher', 'Wi-Fi'],
+    host: {
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
+      id: 4,
+      isPro: true,
+      name: 'Anna',
+    },
+    id: 5,
+    images: ['img/apartment-02.jpg'],
+    isFavorite: true,
+    isPremium: false,
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 8,
+    },
+    maxAdults: 1,
+    previewImage: 'img/room.jpg',
+    price: 75,
+    rating: 2.3,
+    title: 'Nice, cozy, warm room',
+    type: 'Room',
+  },
 ];
 
-export default offers;

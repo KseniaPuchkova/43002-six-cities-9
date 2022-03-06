@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import Header from '../header/header';
 
 function Login(): JSX.Element {
@@ -8,7 +10,10 @@ function Login(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form className="login__form form"
+              action="#"
+              method="post"
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -34,9 +39,9 @@ function Login(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/">
+              <Link className="locations__item-link" to={AppRoute.SignIn}>
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>

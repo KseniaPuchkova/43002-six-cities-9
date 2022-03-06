@@ -1,22 +1,22 @@
-type Location = {
+export type Location = {
   latitude: number,
   longitude: number,
   zoom: number,
   }
 
-type City = {
+export type City = {
   location: Location,
   name: string,
 }
 
-type Host = {
+export type Host = {
   avatarUrl: string,
   id: number,
   isPro: boolean,
   name: string,
 }
 
-type Offer = {
+export type Offer = {
   bedrooms: number,
   city: City,
   description: string,
@@ -35,4 +35,3 @@ type Offer = {
   type: string,
 }
 
-export default Offer;

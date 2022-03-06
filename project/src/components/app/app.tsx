@@ -1,23 +1,26 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import MainPage from '../main-page/main-page';
+import {Offer} from '../../types/offer';
+import {Review }from '../../types/review';
+import Main from '../main/main';
 import Favorites from '../favorites/favorites';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
-import SignIn  from '../login/login';
+import SignIn from '../login/login';
 
-type AppScreenProps = {
-  offersCount: number
+type AppProps = {
+  offers: Offer[],
+  reviews: Review[]
 };
 
-function App({offersCount}: AppScreenProps): JSX.Element {
+function App({offers, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage offersCount={offersCount} />}
+          element={<Main offers={offers} />}
         />
         <Route
           path={AppRoute.SignIn}
@@ -27,13 +30,13 @@ function App({offersCount}: AppScreenProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <Favorites />
+              <Favorites offers={offers} />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Room}
-          element={<Room />}
+          element={<Room offers={offers} reviews={reviews} />}
         />
         <Route
           path={AppRoute.NotFound}

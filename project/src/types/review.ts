@@ -1,11 +1,11 @@
-type User = {
+export type User = {
   avatarUrl: string,
   id: number,
   isPro: boolean,
   name: string,
 }
 
-type Review = {
+export type Review = {
   comment: string,
   date: string,
   id: number,
@@ -13,4 +13,3 @@ type Review = {
   user: User,
 };
 
-export default Review;

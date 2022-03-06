@@ -1,13 +1,14 @@
-import Review from '../types/review';
+import {Review}from '../types/review';
+const AVATAR_URL = 'https://i.pravatar.cc/128';
 
-const reviews:Review[] = [
+export const reviews:Review[] = [
   {
     comment: 'Ullamco sunt occaecat voluptate magna.',
     date: '2021-09-08T14:13:56.569Z',
     id: 1,
     rating: 4,
     user: {
-      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 1,
       isPro: false,
       name: 'Mary',
@@ -19,7 +20,7 @@ const reviews:Review[] = [
     id: 2,
     rating: 2,
     user: {
-      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 2,
       isPro: false,
       name: 'Max',
@@ -31,7 +32,7 @@ const reviews:Review[] = [
     id: 3,
     rating: 5,
     user: {
-      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 3,
       isPro: true,
       name: 'Jan',
@@ -43,7 +44,7 @@ const reviews:Review[] = [
     id: 4,
     rating: 4,
     user: {
-      avatarUrl: `https://i.pravatar.cc/128?rnd=${Math.random()}`,
+      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
       id: 4,
       isPro: false,
       name: 'Anna',
@@ -51,4 +52,3 @@ const reviews:Review[] = [
   },
 ];
 
-export default reviews;
