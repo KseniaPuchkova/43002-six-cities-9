@@ -4,7 +4,7 @@ import PlaceCard from '../place-card/place-card';
 
 type PlacesListProps = {
   offers: Offer[],
-  isNearPlacesList: boolean,
+  isNearPlacesList?: boolean,
   onMouseOver?: (offer: Offer) => void
 };
 

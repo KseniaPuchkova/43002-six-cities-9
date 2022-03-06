@@ -31,9 +31,9 @@ function Room({offers, reviews}: RoomProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image, i) => (
+              {images.map((image) => (
                 <div
-                  key={image + i.toString()}
+                  key={image}
                   className="property__image-wrapper"
                 >
                   <img className="property__image"
@@ -46,12 +46,11 @@ function Room({offers, reviews}: RoomProps): JSX.Element {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremium &&
-                <div className="place-card__mark"><span>Premium</span></div>}
+              {isPremium && <div className="property__mark"><span>Premium</span></div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
                 <button
-                  className={`property__bookmark-button button${isFavorite ? ' property__bookmark-button--active' : ''}`}
+                  className={`property__bookmark-button ${isFavorite && 'property__bookmark-button--active'} button`}
                   type="button"
                 >
                   <svg className="property__bookmark-icon" style={{width: '31', height: '33'}}>
@@ -85,9 +84,9 @@ function Room({offers, reviews}: RoomProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((good, i) => (
+                  {goods.map((good) => (
                     <li
-                      key={good + i.toString()}
+                      key={good}
                       className="property__inside-item"
                     >{good}
                     </li>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,  FormEvent, ChangeEvent} from 'react';
 import {Rating} from '../../const';
 const MIN_CHARS_COUNT = 50;
 const MAX_CHARS_COUNT = 300;
@@ -13,7 +13,7 @@ function ReviewForm(): JSX.Element {
     <form className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={(evt) => evt.preventDefault()}
+      onSubmit={(evt: FormEvent<HTMLFormElement>) => evt.preventDefault()}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
@@ -25,7 +25,7 @@ function ReviewForm(): JSX.Element {
               value={value}
               id={`${value}-stars`}
               type="radio"
-              onChange={(evt) => setComment({...comment, rating: parseInt(evt.target.value, 10)})}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => setComment({...comment, rating: parseInt(evt.target.value, 10)})}
               checked={rating === value}
             />
             <label
@@ -46,7 +46,7 @@ function ReviewForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
-        onChange={(evt) => setComment({...comment, review: evt.target.value})}
+        onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => setComment({...comment, review: evt.target.value})}
       >
       </textarea>
       <div className="reviews__button-wrapper">

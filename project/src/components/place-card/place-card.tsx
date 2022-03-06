@@ -30,7 +30,7 @@ function PlaceCard({offer, cardType, onMouseOver}: PlaceCardProps): JSX.Element 
     >
       {isPremium &&<div className="place-card__mark"><span>Premium</span></div>}
       <div className={`${imgWrapperClassName} place-card__image-wrapper`}>
-      <Link to={`/offer/${id}`}>
+        <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}
