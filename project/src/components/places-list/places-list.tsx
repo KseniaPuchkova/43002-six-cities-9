@@ -16,7 +16,7 @@ function PlacesList({offers, isNearPlacesList, onMouseOver}: PlacesListProps) {
         <PlaceCard
           key={offer.id}
           offer={offer}
-          cardType={isNearPlacesList ? CardTypes['ROOM'] : CardTypes['MAIN']}
+          cardType={isNearPlacesList ? CardTypes.ROOM : CardTypes.MAIN}
           onMouseOver={onMouseOver}
         />
       ))}

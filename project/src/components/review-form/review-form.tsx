@@ -1,5 +1,6 @@
 import React, {useState,  FormEvent, ChangeEvent} from 'react';
 import {Rating} from '../../const';
+
 const MIN_CHARS_COUNT = 50;
 const MAX_CHARS_COUNT = 300;
 

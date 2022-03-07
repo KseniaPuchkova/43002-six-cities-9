@@ -25,7 +25,7 @@ function FavoritesCities({favorites, city}: FavoritesCitiesProp): JSX.Element {
           <PlaceCard
             key={offer.id}
             offer={offer}
-            cardType={CardTypes['FAVORITES']}
+            cardType={CardTypes.FAVORITES}
           />
         ))}
       </div>

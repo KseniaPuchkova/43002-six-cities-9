@@ -1,4 +1,4 @@
-import {MAX_RATING} from './const';
+export const MAX_RATING = 5;
 
 export const getRatingInPercent = (rating: number): string => `${rating * 100 / MAX_RATING}%`;
 

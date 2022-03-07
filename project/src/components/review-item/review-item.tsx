@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {Review} from '../../types/review';
 import {getRatingInPercent} from '../../utils';
 
@@ -8,8 +9,6 @@ type ReviewsProps = {
 function ReviewItem({review}: ReviewsProps) {
   const {user, rating, date, comment} = review;
   const {avatarUrl, name} = user;
-
-  const monthYearFormatDate = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long'}).format(new Date(date));
 
   return (
     <li className="reviews__item">
@@ -34,7 +33,12 @@ function ReviewItem({review}: ReviewsProps) {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="date">{monthYearFormatDate}</time>
+        <time
+          className="reviews__time"
+          dateTime={dayjs(date).format('YYYY-MM-DD')}
+        >
+          {dayjs(date).format('MMMM YYYY')}
+        </time>
       </div>
     </li>
   );

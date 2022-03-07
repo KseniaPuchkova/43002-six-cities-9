@@ -15,18 +15,21 @@ type PlaceCardProps = {
   onMouseOver?: (offer: Offer) => void
 }
 
+
 function PlaceCard({offer, cardType, onMouseOver}: PlaceCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, rating, title, type, id} = offer;
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
+  const handleMouseOver = () => {
+    if (onMouseOver) {
+      onMouseOver(offer);
+    }
+  };
+
   return (
     <article
       className={`${articleClassName} place-card`}
-      onMouseOver={() => {
-        if (onMouseOver) {
-          onMouseOver(offer);
-        }
-      }}
+      onMouseOver={handleMouseOver}
     >
       {isPremium &&<div className="place-card__mark"><span>Premium</span></div>}
       <div className={`${imgWrapperClassName} place-card__image-wrapper`}>

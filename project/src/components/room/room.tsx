@@ -1,5 +1,4 @@
 import {useLocation} from 'react-router-dom';
-import {MAX_NEAR_OFFERS} from '../../const';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
 import {Offer} from '../../types/offer';
 import {Review} from '../../types/review';
@@ -7,6 +6,8 @@ import Header from '../header/header';
 import PlacesList from '../places-list/places-list';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewForm from '../review-form/review-form';
+
+const MAX_NEAR_OFFERS = 3;
 
 type RoomProps = {
   offers: Offer[],

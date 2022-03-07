@@ -1,7 +1,7 @@
 import {Review}from '../types/review';
 const AVATAR_URL = 'https://i.pravatar.cc/128';
 
-export const reviews:Review[] = [
+export const reviews: Review[] = [
   {
     comment: 'Ullamco sunt occaecat voluptate magna.',
     date: '2021-09-08T14:13:56.569Z',
