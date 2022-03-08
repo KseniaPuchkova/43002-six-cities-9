@@ -39,7 +39,8 @@ function Map({city, offers, hoveredOffer}: MapProps): JSX.Element {
               lng: offer.location.longitude,
             },
             {
-              icon: (hoveredOffer !== undefined && hoveredOffer === offer) ? activeIcon : defaultIcon,
+              icon: (hoveredOffer !== undefined && hoveredOffer === offer)
+                ? activeIcon : defaultIcon,
             },
           )
           .addTo(map);
