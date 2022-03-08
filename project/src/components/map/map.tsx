@@ -25,15 +25,6 @@ const activeIcon = leaflet.icon({
   iconAnchor: [15, 30],
 });
 
-const getIcon = (hoveredOffer: Offer | null, offer: Offer) => {
-  if (hoveredOffer) {
-    if (hoveredOffer.id === offer.id) {
-      return activeIcon;
-    }
-  }
-  return defaultIcon;
-};
-
 function Map({city, offers, hoveredOffer}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -48,7 +39,7 @@ function Map({city, offers, hoveredOffer}: MapProps): JSX.Element {
               lng: offer.location.longitude,
             },
             {
-              icon: getIcon(hoveredOffer, offer),
+              icon: (hoveredOffer !== undefined && hoveredOffer === offer) ? activeIcon : defaultIcon,
             },
           )
           .addTo(map);
