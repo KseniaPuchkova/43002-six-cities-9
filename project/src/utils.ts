@@ -1,4 +1,4 @@
-export const MAX_RATING = 5;
+import {MAX_RATING} from './components/review-item/review-item';
 
 export const getRatingInPercent = (rating: number): string => `${rating * 100 / MAX_RATING}%`;
 

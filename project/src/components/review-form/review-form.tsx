@@ -1,8 +1,13 @@
 import React, {useState,  FormEvent, ChangeEvent} from 'react';
-import {Rating} from '../../const';
 
 const MIN_CHARS_COUNT = 50;
 const MAX_CHARS_COUNT = 300;
+
+const RATINGS = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
+const ratings = RATINGS.map((key, value) => ({
+  key: key,
+  value: RATINGS.length - value,
+}));
 
 function ReviewForm(): JSX.Element {
   const [comment, setComment] = useState({rating: 0, review: ''});
@@ -18,8 +23,8 @@ function ReviewForm(): JSX.Element {
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {Object.values(Rating).map(({value, title}) => (
-          <React.Fragment key={title}>
+        {ratings.map(({key, value}) => (
+          <React.Fragment key={key}>
             <input
               className="form__rating-input visually-hidden"
               name="rating"
@@ -32,7 +37,7 @@ function ReviewForm(): JSX.Element {
             <label
               htmlFor={`${value}-stars`}
               className="reviews__rating-label form__rating-label"
-              title={title}
+              title={key}
             >
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star"></use>
