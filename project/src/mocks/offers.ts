@@ -138,39 +138,5 @@ export const offers:Offer[] = [
     title: 'Nice, cozy, warm big bed apartment',
     type: 'Apartment',
   },
-  {
-    bedrooms: 1,
-    city: {
-      location: {
-        latitude: 52.38333,
-        longitude: 4.9,
-        zoom: 10,
-      },
-      name: 'Hamburg',
-    },
-    description: 'Cillum occaecat amet irure reprehenderit aliquip proident.',
-    goods: ['Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher', 'Wi-Fi'],
-    host: {
-      avatarUrl: `${AVATAR_URL}?rnd=${Math.random()}`,
-      id: 4,
-      isPro: true,
-      name: 'Anna',
-    },
-    id: 5,
-    images: ['img/apartment-02.jpg'],
-    isFavorite: true,
-    isPremium: false,
-    location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
-      zoom: 8,
-    },
-    maxAdults: 1,
-    previewImage: 'img/room.jpg',
-    price: 75,
-    rating: 2.3,
-    title: 'Nice, cozy, warm room',
-    type: 'Room',
-  },
 ];
 

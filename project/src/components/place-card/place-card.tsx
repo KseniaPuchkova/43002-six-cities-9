@@ -1,6 +1,5 @@
 import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
-
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
 
 type PlaceCardProps = {
@@ -14,7 +13,6 @@ type PlaceCardProps = {
   },
   onMouseOver?: (offer: Offer) => void
 }
-
 
 function PlaceCard({offer, cardType, onMouseOver}: PlaceCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, rating, title, type, id} = offer;

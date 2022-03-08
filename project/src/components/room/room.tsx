@@ -1,8 +1,10 @@
+import {useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
 import {Offer} from '../../types/offer';
 import {Review} from '../../types/review';
 import Header from '../header/header';
+import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewForm from '../review-form/review-form';
@@ -20,10 +22,12 @@ function Room({offers, reviews}: RoomProps): JSX.Element {
   const offerId =  parseInt(pathname[2], 10);
   const [offer] = offers.filter((currentOffer) => currentOffer.id === offerId);
 
-  const {price, isPremium, isFavorite, host, title, rating, type, bedrooms, maxAdults, goods, description, images} = offer;
+  const {price, isPremium, isFavorite, host, title, rating, type, bedrooms, maxAdults, goods, description, images, city} = offer;
   const {isPro, name, avatarUrl} = host;
 
   const nearOffers = offers.filter((currentOffer) => currentOffer !== offer).slice(0, MAX_NEAR_OFFERS);
+
+  const [hoveredOffer, setHoveredOffer] = useState<Offer | null>(null);
 
   return (
     <div className="page">
@@ -114,17 +118,29 @@ function Room({offers, reviews}: RoomProps): JSX.Element {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewsList reviews={reviews} />
+                <ReviewsList
+                  reviews={reviews}
+                />
                 <ReviewForm />
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map
+              city={city}
+              offers={offers}
+              hoveredOffer={hoveredOffer}
+            />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList offers={nearOffers} isNearPlacesList />
+            <PlacesList
+              offers={nearOffers}
+              onMouseOver={setHoveredOffer}
+              isNearPlacesList
+            />
           </section>
         </div>
       </main>

@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Offer} from '../../types/offer';
+import Map from '../map/map';
 import EmptyMain from './empty-main';
 import Header from '../header/header';
 import PlacesList from '../places-list/places-list';
@@ -10,7 +11,7 @@ type MainPageProps = {
 }
 
 function MainPage({offers}: MainPageProps): JSX.Element {
-  const [, setActiveCard] = useState<Offer>();
+  const [hoveredOffer, setHoveredOffer] = useState<Offer | null>(null);
 
   return (
     <div className="page page--gray page--main">
@@ -45,11 +46,17 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                 </form>
                 <PlacesList
                   offers={offers}
-                  onMouseOver={setActiveCard}
+                  onMouseOver={setHoveredOffer}
                 />
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <Map
+                    city={offers[0].city}
+                    offers={offers}
+                    hoveredOffer={hoveredOffer}
+                  />
+                </section>
               </div>
             </div>
           ) : (
