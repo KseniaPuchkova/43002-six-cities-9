@@ -4,7 +4,7 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 
 type PrivateRouteProps = PropsWithChildren<RouteProps & {
   authorizationStatus: AuthorizationStatus
-}>
+}>;
 
 function PrivateRoute(props: PrivateRouteProps) {
   const {children, authorizationStatus} = props;

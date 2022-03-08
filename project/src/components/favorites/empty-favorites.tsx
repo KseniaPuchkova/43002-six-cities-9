@@ -1,7 +1,7 @@
 import Header from '../header/header';
 import Footer from '../footer/footer';
 
-function EmptyFavoritesPage() {
+function EmptyFavorites() {
   return (
     <div className="page page--favorites-empty">
       <Header />
@@ -21,4 +21,4 @@ function EmptyFavoritesPage() {
   );
 }
 
-export default EmptyFavoritesPage;
+export default EmptyFavorites;
