@@ -10,7 +10,7 @@ const URL_MARKER_ACTIVE = 'img/pin-active.svg';
 type MapProps = {
   city: City,
   offers: Offer[],
-  hoveredOffer: Offer | null,
+  hoveredOffer?: Offer | null,
 };
 
 const defaultIcon = leaflet.icon({

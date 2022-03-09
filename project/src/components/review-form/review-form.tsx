@@ -3,17 +3,16 @@ import React, {useState,  FormEvent, ChangeEvent} from 'react';
 const MIN_CHARS_COUNT = 50;
 const MAX_CHARS_COUNT = 300;
 
-const RATINGS = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
-const ratings = RATINGS.map((key, value) => ({
-  key: key,
-  value: RATINGS.length - value,
+const ratings = ['terribly', 'badly', 'not bad', 'good', 'perfect'].map((rating, index) => ({
+  rating: rating,
+  index: index + 1,
 }));
 
 function ReviewForm(): JSX.Element {
-  const [comment, setComment] = useState({rating: 0, review: ''});
-  const {rating, review} = comment;
+  const [comment, setComment] = useState({ratingStars: 0, review: ''});
+  const {ratingStars, review} = comment;
 
-  const isDisabled = rating === null || review.length < MIN_CHARS_COUNT || review.length > MAX_CHARS_COUNT;
+  const isDisabled = ratingStars === null || review.length < MIN_CHARS_COUNT || review.length > MAX_CHARS_COUNT;
 
   return (
     <form className="reviews__form form"
@@ -23,21 +22,21 @@ function ReviewForm(): JSX.Element {
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {ratings.map(({key, value}) => (
-          <React.Fragment key={key}>
+        {ratings.map(({rating, index}) => (
+          <React.Fragment key={rating}>
             <input
               className="form__rating-input visually-hidden"
               name="rating"
-              value={value}
-              id={`${value}-stars`}
+              value={index}
+              id={`${index}-stars`}
               type="radio"
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => setComment({...comment, rating: parseInt(evt.target.value, 10)})}
-              checked={rating === value}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => setComment({...comment, ratingStars: parseInt(evt.target.value, 10)})}
+              checked={ratingStars === index}
             />
             <label
-              htmlFor={`${value}-stars`}
+              htmlFor={`${index}-stars`}
               className="reviews__rating-label form__rating-label"
-              title={key}
+              title={rating}
             >
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star"></use>
