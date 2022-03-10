@@ -46,7 +46,8 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                 </form>
                 <PlacesList
                   offers={offers}
-                  onMouseOver={setHoveredOffer}
+                  onMouseEnter={setHoveredOffer}
+                  onMouseLeave={() => setHoveredOffer(null)}
                 />
               </section>
               <div className="cities__right-section">

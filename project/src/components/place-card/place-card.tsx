@@ -11,23 +11,25 @@ type PlaceCardProps = {
     imgWidth: string,
     imgHeight: string
   },
-  onMouseOver?: (offer: Offer) => void
+  onMouseEnter?: (offer: Offer) => void
+  onMouseLeave?: () => void
 }
 
-function PlaceCard({offer, cardType, onMouseOver}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, price, rating, title, type, id} = offer;
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
   const handleMouseOver = () => {
-    if (onMouseOver) {
-      onMouseOver(offer);
+    if (onMouseEnter) {
+      onMouseEnter(offer);
     }
   };
 
   return (
     <article
       className={`${articleClassName} place-card`}
-      onMouseOver={handleMouseOver}
+      onMouseEnter={handleMouseOver}
+      onMouseLeave={onMouseLeave}
     >
       {isPremium &&<div className="place-card__mark"><span>Premium</span></div>}
       <div className={`${imgWrapperClassName} place-card__image-wrapper`}>
@@ -56,7 +58,7 @@ function PlaceCard({offer, cardType, onMouseOver}: PlaceCardProps): JSX.Element 
               width="18"
               height="19"
             >
-              <use xlinkHref="#icon-bookmark"></use>
+              <use xlinkHref="#icon-bookmark" />
             </svg>
             <span className="visually-hidden">To bookmarks</span>
           </button>

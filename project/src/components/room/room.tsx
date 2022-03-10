@@ -124,19 +124,13 @@ function Room({offers, reviews}: RoomProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map
-              city={city}
-              offers={offers}
-            />
+            <Map city={city} offers={nearOffers} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList
-              offers={nearOffers}
-              isNearPlacesList
-            />
+            <PlacesList offers={nearOffers} isNearPlacesList />
           </section>
         </div>
       </main>
