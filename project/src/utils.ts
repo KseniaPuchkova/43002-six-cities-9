@@ -19,7 +19,7 @@ export const getSortedOffersByCity = (currentCity: string, sortType: string, off
       sortedOffersByCity = offersByCity.slice().sort((a: Offer, b: Offer) => a.price - b.price);
       break;
     case SortType.HIGH_PRICE_FIRST:
-      sortedOffersByCity = offersByCity.slice().slice().sort((a: Offer, b: Offer) => b.price - a.price);
+      sortedOffersByCity = offersByCity.slice().sort((a: Offer, b: Offer) => b.price - a.price);
       break;
     case SortType.TOP_RATED_FIRST:
       sortedOffersByCity = offersByCity.slice().sort((a: Offer, b: Offer) => b.rating - a.rating);
