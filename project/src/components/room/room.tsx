@@ -1,8 +1,10 @@
-import {useLocation} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
 import {Offer} from '../../types/offer';
 import {Review} from '../../types/review';
 import Header from '../header/header';
+import EmptyMain from '../main/empty-main';
+import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewForm from '../review-form/review-form';
@@ -15,12 +17,14 @@ type RoomProps = {
 }
 
 function Room({offers, reviews}: RoomProps): JSX.Element {
-  const location = useLocation();
-  const pathname = location.pathname.split('/');
-  const offerId =  parseInt(pathname[2], 10);
-  const [offer] = offers.filter((currentOffer) => currentOffer.id === offerId);
+  const {id} = useParams();
+  const offer = offers.find((currentOffer) => currentOffer.id === Number(id));
 
-  const {price, isPremium, isFavorite, host, title, rating, type, bedrooms, maxAdults, goods, description, images} = offer;
+  if (!offer) {
+    return <EmptyMain />;
+  }
+
+  const {price, isPremium, isFavorite, host, title, rating, type, bedrooms, maxAdults, goods, description, images, city} = offer;
   const {isPro, name, avatarUrl} = host;
 
   const nearOffers = offers.filter((currentOffer) => currentOffer !== offer).slice(0, MAX_NEAR_OFFERS);
@@ -119,7 +123,9 @@ function Room({offers, reviews}: RoomProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map city={city} offers={nearOffers} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">

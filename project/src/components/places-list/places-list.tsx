@@ -5,10 +5,11 @@ import PlaceCard from '../place-card/place-card';
 type PlacesListProps = {
   offers: Offer[],
   isNearPlacesList?: boolean,
-  onMouseOver?: (offer: Offer) => void
+  onMouseEnter?: (offer: Offer) => void
+  onMouseLeave?: () => void
 };
 
-function PlacesList({offers, isNearPlacesList, onMouseOver}: PlacesListProps) {
+function PlacesList({offers, isNearPlacesList, onMouseEnter, onMouseLeave}: PlacesListProps) {
 
   return (
     <div className={isNearPlacesList ? 'near-places__list places__list' : 'cities__places-list places__list tabs__content'}>
@@ -17,7 +18,8 @@ function PlacesList({offers, isNearPlacesList, onMouseOver}: PlacesListProps) {
           key={offer.id}
           offer={offer}
           cardType={isNearPlacesList ? CardTypes.ROOM : CardTypes.MAIN}
-          onMouseOver={onMouseOver}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         />
       ))}
     </div>
