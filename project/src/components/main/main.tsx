@@ -9,7 +9,7 @@ import PlacesList from '../places-list/places-list';
 import CitiesList from '../cities-list/cities-list';
 
 function MainPage(): JSX.Element {
-  const {activeCity, offersBySortType} = useAppSelector((state) => state);
+  const {activeCity, sortedOffersByCity} = useAppSelector((state) => state);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | null>(null);
   const handleOnMouseEnter = setHoveredOffer;
@@ -18,7 +18,7 @@ function MainPage(): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
-      <main className={`page__main page__main--index ${offersBySortType.length === 0 && 'page__main--index-empty'}`}>
+      <main className={`page__main page__main--index ${sortedOffersByCity.length === 0 && 'page__main--index-empty'}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -26,14 +26,14 @@ function MainPage(): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          {offersBySortType.length !== 0 ? (
+          {sortedOffersByCity.length !== 0 ? (
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offersBySortType.length} {offersBySortType.length === 1 ? 'place' : 'places'} to stay in {activeCity}</b>
+                <b className="places__found">{sortedOffersByCity.length} {sortedOffersByCity.length === 1 ? 'place' : 'places'} to stay in {activeCity}</b>
                 <SortList />
                 <PlacesList
-                  offers={offersBySortType}
+                  offers={sortedOffersByCity}
                   onMouseEnter={handleOnMouseEnter}
                   onMouseLeave={handleOnMouseLeave}
                 />
@@ -41,8 +41,8 @@ function MainPage(): JSX.Element {
               <div className="cities__right-section">
                 <section className="cities__map map">
                   <Map
-                    city={offersBySortType[0].city}
-                    offersByCity={offersBySortType}
+                    city={sortedOffersByCity[0].city}
+                    offersByCity={sortedOffersByCity}
                     hoveredOffer={hoveredOffer}
                   />
                 </section>

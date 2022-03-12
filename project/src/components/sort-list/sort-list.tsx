@@ -9,21 +9,21 @@ function SortList(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const [isSortListOpen, setIsSortListOpen] = useState(false);
-  const handleSortClick = () => setIsSortListOpen((prevState) => !prevState);
+  const handleSortOnClick = () => setIsSortListOpen((prevState) => !prevState);
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type"
         tabIndex={0}
-        onClick={handleSortClick}
+        onClick={handleSortOnClick}
       >
         {activeSortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select" />
         </svg>
       </span>
-      <ul className={`places__options places__options--custom ${isSortListOpen && 'places__options--opened'}`}>
+      <ul className={`places__options places__options--custom${isSortListOpen ? ' places__options--opened':''}`}>
         {Object.values(SortType).map((sortType) => (
           <li
             className={`places__option${activeSortType === sortType ? ' places__option--active':''}`}
