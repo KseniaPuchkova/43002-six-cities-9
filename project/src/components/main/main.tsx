@@ -1,22 +1,23 @@
 import {useState} from 'react';
 import {Offer} from '../../types/offer';
+import {useAppSelector} from '../../hooks/index';
 import Map from '../map/map';
 import EmptyMain from './empty-main';
 import Header from '../header/header';
 import PlacesList from '../places-list/places-list';
 import CitiesList from '../cities-list/cities-list';
 
-type MainPageProps = {
-  offers: Offer[]
-}
+function MainPage(): JSX.Element {
+  const {activeCity, offersByCity} = useAppSelector((state) => state);
 
-function MainPage({offers}: MainPageProps): JSX.Element {
   const [hoveredOffer, setHoveredOffer] = useState<Offer | null>(null);
+  const handleOnMouseEnter = setHoveredOffer;
+  const handleOnMouseLeave = () => setHoveredOffer(null);
 
   return (
     <div className="page page--gray page--main">
       <Header />
-      <main className={`page__main page__main--index ${offers.length === 0 && 'page__main--index-empty'}`}>
+      <main className={`page__main page__main--index ${offersByCity.length === 0 && 'page__main--index-empty'}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -24,11 +25,11 @@ function MainPage({offers}: MainPageProps): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          {offers.length !== 0 ? (
+          {offersByCity.length !== 0 ? (
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in Amsterdam</b>
+                <b className="places__found">{offersByCity.length} {offersByCity.length === 1 ? 'place' : 'places'} to stay in {activeCity}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex={0}>
@@ -45,16 +46,16 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                   </ul>
                 </form>
                 <PlacesList
-                  offers={offers}
-                  onMouseEnter={setHoveredOffer}
-                  onMouseLeave={() => setHoveredOffer(null)}
+                  offers={offersByCity}
+                  onMouseEnter={handleOnMouseEnter}
+                  onMouseLeave={handleOnMouseLeave}
                 />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
                   <Map
-                    city={offers[0].city}
-                    offers={offers}
+                    city={offersByCity[0].city}
+                    offersByCity={offersByCity}
                     hoveredOffer={hoveredOffer}
                   />
                 </section>

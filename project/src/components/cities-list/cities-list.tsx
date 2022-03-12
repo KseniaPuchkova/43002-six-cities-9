@@ -1,9 +1,13 @@
+import {MouseEvent} from 'react';
 import {Link} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import {changeCity} from '../../store/action';
 
-const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 function CityList(): JSX.Element {
-  const activeCity = CITIES[3];
+  const activeCity = useAppSelector((state) => state.activeCity);
+  const dispatch = useAppDispatch();
 
   return (
     <ul className="locations__list tabs__list">
@@ -14,7 +18,11 @@ function CityList(): JSX.Element {
         >
           <Link
             to={city}
-            className={`locations__item-link tabs__item ${activeCity === city && ('tabs__item--active')}`}
+            className={`locations__item-link tabs__item${activeCity === city ? ' tabs__item--active':''}`}
+            onClick={(evt: MouseEvent) => {
+              evt.preventDefault();
+              dispatch(changeCity(city));
+            }}
           >
             <span>{city}</span>
           </Link>
