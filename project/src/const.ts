@@ -36,9 +36,10 @@ export const CardTypes = {
   },
 };
 
-export enum SortType {
-  Popular = 'Popular',
-  LowPriceFirst = 'Price: low to high',
-  HighPriceFirst = 'Price: high to low',
-  TopRatedFirst = 'Top rated first'
-}
+export const SortType = {
+  DEFAULT: 'Popular',
+  LOW_PRICE_FIRST: 'Price: low to high',
+  HIGH_PRICE_FIRST: 'Price: high to low',
+  TOP_RATED_FIRST: 'Top rated first',
+
+};
