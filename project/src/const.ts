@@ -37,7 +37,7 @@ export const CardTypes = {
 };
 
 export const SortType = {
-  DEFAULT: 'Popular',
+  POPULAR: 'Popular',
   LOW_PRICE_FIRST: 'Price: low to high',
   HIGH_PRICE_FIRST: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first',

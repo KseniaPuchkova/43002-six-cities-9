@@ -12,7 +12,7 @@ export const getSortedOffersByCity = (currentCity: string, sortType: string, off
   let sortedOffersByCity: Offer[] = [];
 
   switch (sortType) {
-    case SortType.DEFAULT:
+    case SortType.POPULAR:
       sortedOffersByCity = offersByCity;
       break;
     case SortType.LOW_PRICE_FIRST:
@@ -24,6 +24,8 @@ export const getSortedOffersByCity = (currentCity: string, sortType: string, off
     case SortType.TOP_RATED_FIRST:
       sortedOffersByCity = offersByCity.slice().sort((a: Offer, b: Offer) => b.rating - a.rating);
       break;
+    default:
+      throw new Error('Тип сортировки неизвестен');
   }
 
   return sortedOffersByCity;

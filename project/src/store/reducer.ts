@@ -11,8 +11,8 @@ const DEFAULT_CITY_INDEX = 0;
 const initialState = {
   offers: [],
   activeCity: CITIES[DEFAULT_CITY_INDEX],
-  sortType: SortType.DEFAULT,
-  sortedOffersByCity: getSortedOffersByCity(CITIES[DEFAULT_CITY_INDEX], SortType.DEFAULT, offers),
+  sortType: SortType.POPULAR,
+  sortedOffersByCity: getSortedOffersByCity(CITIES[DEFAULT_CITY_INDEX], SortType.POPULAR, offers),
 };
 
 export const reducer = createReducer(initialState, (builder) => {
