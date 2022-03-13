@@ -9,7 +9,7 @@ function SortList(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const [isSortListOpen, setIsSortListOpen] = useState(false);
-  const handleSortOnClick = () => setIsSortListOpen((prevState) => !prevState);
+  const handleSortOnClick = () => setIsSortListOpen(!isSortListOpen);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -31,6 +31,7 @@ function SortList(): JSX.Element {
             key={sortType}
             onClick={(evt: MouseEvent) => {
               evt.preventDefault();
+              setIsSortListOpen(!isSortListOpen);
               dispatch(changeSortType(sortType));
             }}
           >
