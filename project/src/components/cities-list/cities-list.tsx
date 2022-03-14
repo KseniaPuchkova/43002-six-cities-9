@@ -6,7 +6,7 @@ import {changeCity} from '../../store/action';
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 function CityList(): JSX.Element {
-  const activeCity = useAppSelector((state) => state.activeCity);
+  const {activeCity} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   return (
