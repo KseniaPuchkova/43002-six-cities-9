@@ -1,6 +1,6 @@
 import {useParams} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/index';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
-import {Offer} from '../../types/offer';
 import {Review} from '../../types/review';
 import Header from '../header/header';
 import EmptyMain from '../main/empty-main';
@@ -12,12 +12,14 @@ import ReviewForm from '../review-form/review-form';
 const MAX_NEAR_OFFERS = 3;
 
 type RoomProps = {
-  offers: Offer[],
   reviews: Review[],
 }
 
-function Room({offers, reviews}: RoomProps): JSX.Element {
+function Room({reviews}: RoomProps): JSX.Element {
   const {id} = useParams();
+
+  const offers = useAppSelector((state) => state.offers);
+
   const offer = offers.find((currentOffer) => currentOffer.id === Number(id));
 
   if (!offer) {

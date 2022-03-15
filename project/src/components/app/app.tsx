@@ -30,13 +30,13 @@ function App({offers, reviews}: AppProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <Favorites offers={offers} />
+              <Favorites />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Room}
-          element={<Room offers={offers} reviews={reviews} />}
+          element={<Room reviews={reviews} />}
         />
         <Route
           path={AppRoute.NotFound}

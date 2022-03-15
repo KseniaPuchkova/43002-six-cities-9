@@ -1,14 +1,12 @@
-import {Offer} from '../../types/offer';
+import {useAppSelector} from '../../hooks/index';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import EmptyFavorites from './empty-favorites';
 import FavoritesList from '../favorites-list/favorites-list';
 
-type FavoritesProps = {
-  offers: Offer[],
-};
 
-function Favorites({offers}: FavoritesProps): JSX.Element {
+function Favorites(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
   const favorites = offers.filter(({isFavorite}) => isFavorite);
 
   if (favorites.length) {
