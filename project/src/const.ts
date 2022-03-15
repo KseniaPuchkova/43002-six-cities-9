@@ -12,6 +12,14 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export const SortType = {
+  POPULAR: 'Popular',
+  LOW_PRICE_FIRST: 'Price: low to high',
+  HIGH_PRICE_FIRST: 'Price: high to low',
+  TOP_RATED_FIRST: 'Top rated first',
+
+};
+
 export const CardTypes = {
   MAIN: {
     articleClassName: 'cities__place-card',
@@ -35,4 +43,5 @@ export const CardTypes = {
     imgHeight: '200',
   },
 };
+
 
