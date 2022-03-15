@@ -6,7 +6,11 @@ export const getRatingInPercent = (rating: number): string => `${rating * 100 / 
 
 export const makeFirstLetterUppercase = (str: string): string => str[0].toUpperCase() + str.slice(1);
 
-export const getOffersByCity = (currentCity: string, offers: Offer[]) => offers.filter(({city}) => currentCity === city.name);
+export const getOffersByCity = (currentCity: string, offers: Offer[]) => {
+  const offersByCity = offers.filter(({city}) => currentCity === city.name);
+
+  return offersByCity;
+};
 
 export const getSortedOffers = (sortType: string, offers: Offer[]) => {
   let sortedOffers: Offer[] = [];

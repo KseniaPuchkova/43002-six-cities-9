@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import {SortType} from '../../const';
 import {changeSortType} from '../../store/action';
+import SortItem from '../sort-item/sort-item';
 
 function SortList(): JSX.Element {
   const activeSortType = useAppSelector((state) => state.sortType);
@@ -23,20 +24,18 @@ function SortList(): JSX.Element {
           <use xlinkHref="#icon-arrow-select" />
         </svg>
       </span>
-      <ul className={`places__options places__options--custom${isSortListOpen ? ' places__options--opened':''}`}>
+      <ul className={`places__options places__options--custom ${isSortListOpen && 'places__options--opened'}`}>
         {Object.values(SortType).map((sortType) => (
-          <li
-            className={`places__option${activeSortType === sortType ? ' places__option--active':''}`}
-            tabIndex={0}
+          <SortItem
             key={sortType}
+            isActive={activeSortType === sortType}
+            sortType={sortType}
             onClick={(evt: MouseEvent) => {
               evt.preventDefault();
               setIsSortListOpen(!isSortListOpen);
               dispatch(changeSortType(sortType));
             }}
-          >
-            {sortType}
-          </li>
+          />
         ))}
       </ul>
     </form>

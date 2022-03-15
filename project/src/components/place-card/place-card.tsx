@@ -25,13 +25,17 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
     }
   };
 
+  const handleOnMouseLeave = onMouseLeave;
+
   return (
     <article
       className={`${articleClassName} place-card`}
       onMouseEnter={handleOnMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseLeave={handleOnMouseLeave}
     >
-      {isPremium &&<div className="place-card__mark"><span>Premium</span></div>}
+      {isPremium &&
+        <div className="place-card__mark"><span>Premium</span>
+        </div>}
       <div className={`${imgWrapperClassName} place-card__image-wrapper`}>
         <Link to={`/offer/${id}`}>
           <img
