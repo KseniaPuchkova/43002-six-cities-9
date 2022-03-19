@@ -8,7 +8,7 @@ const URL_MARKER_DEFAULT = 'img/pin.svg';
 const URL_MARKER_ACTIVE = 'img/pin-active.svg';
 
 type MapProps = {
-  city: City,
+  activeCity: City,
   offersByCity: Offer[],
   hoveredOffer?: Offer | null,
 };
@@ -25,9 +25,9 @@ const activeIcon = leaflet.icon({
   iconAnchor: [15, 30],
 });
 
-function Map({city, offersByCity, hoveredOffer}: MapProps): JSX.Element {
+function Map({activeCity, offersByCity, hoveredOffer}: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, activeCity);
 
   useEffect(() => {
     const layerGroup = leaflet.layerGroup();
@@ -47,6 +47,15 @@ function Map({city, offersByCity, hoveredOffer}: MapProps): JSX.Element {
       });
 
       layerGroup.addTo(map);
+
+      map.flyTo(
+        [offersByCity[0].city.location.latitude, offersByCity[0].city.location.longitude],
+        offersByCity[0].city.location.zoom,
+        {
+          animate: false,
+          duration: 1.5,
+        },
+      );
     }
 
     return () => {
@@ -54,7 +63,7 @@ function Map({city, offersByCity, hoveredOffer}: MapProps): JSX.Element {
         layerGroup.remove();
       }
     };
-  }, [map, offersByCity, hoveredOffer]);
+  }, [map, activeCity, offersByCity, hoveredOffer]);
 
   return (
     <div id="map" style={{height: '100%'}} ref={mapRef}></div>

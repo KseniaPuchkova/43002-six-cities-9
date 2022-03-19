@@ -1,6 +1,6 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {Offer} from '../../types/offer';
+import {useAppSelector} from '../../hooks';
 import {Review }from '../../types/review';
 import Main from '../main/main';
 import Favorites from '../favorites/favorites';
@@ -8,13 +8,21 @@ import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
 import SignIn from '../login/login';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type AppProps = {
-  offers: Offer[],
   reviews: Review[]
 };
 
-function App({offers, reviews}: AppProps): JSX.Element {
+function App({reviews}: AppProps): JSX.Element {
+  const {isDataLoaded} = useAppSelector((state) => state);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>

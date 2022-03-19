@@ -1,0 +1,38 @@
+.loader__wrapper {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.loader-pin__wrapper {
+  position: relative;
+  margin: auto;
+}
+
+.loader-pin {
+  animation-name: mapPin;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  transform: translate(0, 20%);
+}
+
+.loader-pin__wrapper::after{
+  position: absolute;
+  content: '';
+  width: 16px;
+  height: 2px;
+  background: #4481C3;
+  transform: translateX(-21px) translateY(45px)
+}
+
+@keyframes mapPin {
+ 50% {
+    transform: translate(0, -20%);
+  }
+}

@@ -18,9 +18,9 @@ type RoomProps = {
 function Room({reviews}: RoomProps): JSX.Element {
   const {id} = useParams();
 
-  const offers = useAppSelector((state) => state.offers);
+  const {offers} = useAppSelector((state) => state);
 
-  const offer = offers.find((currentOffer) => currentOffer.id === Number(id));
+  const offer = offers.find((currentOffer: any) => currentOffer.id === Number(id));
 
   if (!offer) {
     return <EmptyMain />;
@@ -29,7 +29,7 @@ function Room({reviews}: RoomProps): JSX.Element {
   const {price, isPremium, isFavorite, host, title, rating, type, bedrooms, maxAdults, goods, description, images, city} = offer;
   const {isPro, name, avatarUrl} = host;
 
-  const nearOffers = offers.filter((currentOffer) => currentOffer !== offer).slice(0, MAX_NEAR_OFFERS);
+  const nearOffers = offers.filter((currentOffer: any) => currentOffer !== offer).slice(0, MAX_NEAR_OFFERS);
 
   return (
     <div className="page">
@@ -38,7 +38,7 @@ function Room({reviews}: RoomProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image) => (
+              {images.map((image: string) => (
                 <div
                   key={image}
                   className="property__image-wrapper"
@@ -91,7 +91,7 @@ function Room({reviews}: RoomProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((good) => (
+                  {goods.map((good: string) => (
                     <li
                       key={good}
                       className="property__inside-item"
@@ -126,7 +126,7 @@ function Room({reviews}: RoomProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city} offersByCity={nearOffers} />
+            <Map activeCity={city} offersByCity={nearOffers} />
           </section>
         </section>
         <div className="container">

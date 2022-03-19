@@ -1,8 +1,11 @@
 import {Link} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/index';
 import {AppRoute} from '../../const';
 import Header from '../header/header';
 
 function Login(): JSX.Element {
+  const {activeCity} = useAppSelector((state) => state);
+
   return (
     <div className="page page--gray page--login">
       <Header />
@@ -39,8 +42,8 @@ function Login(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.SignIn}>
-                <span>Amsterdam</span>
+              <Link className="locations__item-link" to={AppRoute.Main}>
+                <span>{activeCity}</span>
               </Link>
             </div>
           </section>

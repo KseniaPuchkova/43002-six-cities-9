@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Offer} from '../../types/offer';
+import {getOffersByCity, getSortedOffers} from '../../utils';
 import {useAppSelector} from '../../hooks/index';
 import Map from '../map/map';
 import EmptyMain from './empty-main';
@@ -9,7 +10,9 @@ import PlacesList from '../places-list/places-list';
 import CitiesList from '../cities-list/cities-list';
 
 function MainPage(): JSX.Element {
-  const {activeCity, offersByCity, sortedOffers} = useAppSelector((state) => state);
+  const {activeCity, offers, sortType} = useAppSelector((state) => state);
+  const offersByCity = getOffersByCity(activeCity, offers);
+  const sortedOffers = getSortedOffers(sortType, offersByCity);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | null>(null);
   const handleOnMouseEnter = setHoveredOffer;
@@ -41,7 +44,7 @@ function MainPage(): JSX.Element {
               <div className="cities__right-section">
                 <section className="cities__map map">
                   <Map
-                    city={offersByCity[0].city}
+                    activeCity={offersByCity[0].city}
                     offersByCity={offersByCity}
                     hoveredOffer={hoveredOffer}
                   />

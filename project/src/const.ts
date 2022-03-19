@@ -1,3 +1,8 @@
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',
@@ -6,10 +11,19 @@ export enum AppRoute {
   NotFound = '*',
 }
 
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
+export enum APIRoute {
+  Offers = '/hotels',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout =  '/logout'
+}
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
 }
 
 export const SortType = {
@@ -17,7 +31,6 @@ export const SortType = {
   LOW_PRICE_FIRST: 'Price: low to high',
   HIGH_PRICE_FIRST: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first',
-
 };
 
 export const CardTypes = {

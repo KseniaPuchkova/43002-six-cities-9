@@ -4,10 +4,10 @@ import Footer from '../footer/footer';
 import EmptyFavorites from './empty-favorites';
 import FavoritesList from '../favorites-list/favorites-list';
 
-
 function Favorites(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
-  const favorites = offers.filter(({isFavorite}) => isFavorite);
+  const favorites = offers;
+  //const favorites = offers.filter(({isFavorite}) => isFavorite);
 
   if (favorites.length) {
     return (
