@@ -39,11 +39,7 @@ function App({reviews}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          element={
-            <PrivateRoute authorizationStatus={authorizationStatus}>
-              <Favorites />
-            </PrivateRoute>
-          }
+          element={<PrivateRoute><Favorites /></PrivateRoute>}
         />
         <Route
           path={AppRoute.Room}
