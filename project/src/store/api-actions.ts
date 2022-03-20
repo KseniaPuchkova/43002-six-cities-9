@@ -1,22 +1,12 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from '../store';
+import {AppRoute, APIRoute, AuthorizationStatus} from '../const';
 import {Offer} from '../types/offer';
 import {UserData} from '../types/user-data';
 import {AuthData} from '../types/auth-data';
 import {saveToken, dropToken} from '../services/token';
 import {errorHandle} from '../services/error-handle';
-import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
-import {requireAuthorization, loadOffers, setError} from './action';
-
-export const clearErrorAction = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError('')),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
+import {requireAuthorization, loadOffers, redirectToRoute, setUserData} from './action';
 
 export const fetchOffersAction = createAsyncThunk(
   'fetchOffers',
@@ -30,7 +20,7 @@ export const fetchOffersAction = createAsyncThunk(
   },
 );
 
-export const getAuthAction = createAsyncThunk(
+export const checkAuthAction = createAsyncThunk(
   'checkAuth',
   async () => {
     try {
@@ -45,11 +35,13 @@ export const getAuthAction = createAsyncThunk(
 
 export const loginAction = createAsyncThunk(
   'login',
-  async ({login: email, password}: AuthData) => {
+  async ({email, password}: AuthData) => {
     try {
-      const {data: {token}} = await api.post<UserData>(APIRoute.Login, {login: email, password});
+      const {data, data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(setUserData(data));
+      store.dispatch(redirectToRoute(AppRoute.Main));
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
@@ -64,6 +56,7 @@ export const logoutAction = createAsyncThunk(
       await api.delete(APIRoute.Logout);
       dropToken();
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      store.dispatch(redirectToRoute(AppRoute.SignIn));
     } catch (error) {
       errorHandle(error);
     }

@@ -1,6 +1,8 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {Route, Routes} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import {useAppSelector} from '../../hooks';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 import {Review }from '../../types/review';
 import Main from '../main/main';
 import Favorites from '../favorites/favorites';
@@ -9,22 +11,23 @@ import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
 import SignIn from '../login/login';
 import LoadingScreen from '../loading-screen/loading-screen';
+import {isCheckedAuth} from '../main/main';
 
 type AppProps = {
   reviews: Review[]
 };
 
 function App({reviews}: AppProps): JSX.Element {
-  const {isDataLoaded} = useAppSelector((state) => state);
+  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
 
-  if (!isDataLoaded) {
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
     );
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -37,7 +40,7 @@ function App({reviews}: AppProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <Favorites />
             </PrivateRoute>
           }
@@ -51,7 +54,7 @@ function App({reviews}: AppProps): JSX.Element {
           element={<NotFound />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

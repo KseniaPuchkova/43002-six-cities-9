@@ -1,31 +1,75 @@
+import {MouseEvent} from 'react';
+import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {useAppSelector} from '../../hooks/index';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import {logoutAction} from '../../store/api-actions';
 
 function Header(): JSX.Element {
+  const dispatch = useDispatch();
+
+  const {authorizationStatus, userData} = useAppSelector((state) => state);
+  const {avatarUrl, email, name} = userData;
+
+  const handleLogout= (evt: MouseEvent) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
+  };
+
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
             <Link className="header__logo-link header__logo-link--active" to={AppRoute.Main}>
-              <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
+              <img className="header__logo"
+                src="img/logo.svg"
+                alt="6 cities logo"
+                width="81"
+                height="41"
+              />
             </Link>
           </div>
           <nav className="header__nav">
-            <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <Link className="header__nav-link header__nav-link--profile" to={AppRoute.SignIn}>
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
-                  <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                </Link>
-              </li>
-              <li className="header__nav-item">
-                <Link className="header__nav-link" to={AppRoute.SignIn}>
-                  <span className="header__signout">Sign out</span>
-                </Link>
-              </li>
-            </ul>
+            {
+              authorizationStatus === AuthorizationStatus.Auth ? (
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                        <img
+                          src={avatarUrl}
+                          alt={name}
+                          style={{borderRadius: '50%'}}
+                        />
+                      </div>
+                      <span className="header__user-name user__name">{email}</span>
+                    </Link>
+                  </li>
+                  <li className="header__nav-item">
+                    <Link className="header__nav-link" to={AppRoute.Main}>
+                      <span
+                        className="header__signout"
+                        onClick={handleLogout}
+                      >
+                        Sign out
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              )
+                : (
+                  <ul className="header__nav-list">
+                    <li className="header__nav-item user">
+                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.SignIn}>
+                        <div className="header__avatar-wrapper user__avatar-wrapper">
+                        </div>
+                        <span className="header__login">Sign in</span>
+                      </Link>
+                    </li>
+                  </ul>
+                )
+            }
           </nav>
         </div>
       </div>

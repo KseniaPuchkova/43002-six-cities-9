@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {AuthorizationStatus} from '../../const';
 import {Offer} from '../../types/offer';
 import {getOffersByCity, getSortedOffers} from '../../utils';
 import {useAppSelector} from '../../hooks/index';
@@ -8,6 +9,9 @@ import Header from '../header/header';
 import SortList from '../sort-list/sort-list';
 import PlacesList from '../places-list/places-list';
 import CitiesList from '../cities-list/cities-list';
+
+export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
 
 function MainPage(): JSX.Element {
   const {activeCity, offers, sortType} = useAppSelector((state) => state);
