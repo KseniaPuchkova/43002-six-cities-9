@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import {AuthorizationStatus} from '../../const';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
-import {fetchReviewsAction, fetchOfferAction} from '../../store/api-actions';
+import {fetchReviewsAction, fetchOfferAction, fetchOffersNearbyAction} from '../../store/api-actions';
 import Header from '../header/header';
 import EmptyMain from '../main/empty-main';
 import Map from '../map/map';
@@ -12,18 +12,17 @@ import ReviewsList from '../reviews-list/reviews-list';
 import ReviewForm from '../review-form/review-form';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-const MAX_NEAR_OFFERS = 3;
-
 function Room(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id} = useParams();
 
-  const {offers, currentOffer, reviewsByOffer, authorizationStatus} = useAppSelector((state) => state);
+  const {offers, currentOffer, nearOffers, reviewsByOffer, authorizationStatus} = useAppSelector((state) => state);
   const offer = offers.find((item: any) => item.id === Number(id));
 
   useEffect(() => {
     dispatch(fetchReviewsAction(Number(id)));
     dispatch(fetchOfferAction(Number(id)));
+    dispatch(fetchOffersNearbyAction(Number(id)));
   }, []);
 
 
@@ -37,8 +36,6 @@ function Room(): JSX.Element {
 
   const {price, isPremium, isFavorite, host, title, rating, type, bedrooms, maxAdults, goods, description, images, city} = offer;
   const {isPro, name, avatarUrl} = host;
-
-  const nearOffers = offers.filter((item: any) => item !== offer).slice(0, MAX_NEAR_OFFERS);
 
   return (
     <div className="page">
@@ -135,13 +132,20 @@ function Room(): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map activeCity={city} offersByCity={nearOffers} />
+            <Map
+              activeCity={city}
+              offersByCity={[...nearOffers, currentOffer]}
+              hoveredOffer={currentOffer}
+            />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList offers={nearOffers} isNearPlacesList />
+            <PlacesList
+              offers={nearOffers}
+              isNearPlacesList
+            />
           </section>
         </div>
       </main>

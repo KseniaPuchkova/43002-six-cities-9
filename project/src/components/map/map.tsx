@@ -10,7 +10,7 @@ const URL_MARKER_ACTIVE = 'img/pin-active.svg';
 type MapProps = {
   activeCity: City,
   offersByCity: Offer[],
-  hoveredOffer?: Offer | null,
+  hoveredOffer: Offer | null,
 };
 
 const defaultIcon = leaflet.icon({
@@ -40,7 +40,7 @@ function Map({activeCity, offersByCity, hoveredOffer}: MapProps): JSX.Element {
             lng: offer.location.longitude,
           },
           {
-            icon: (offer === hoveredOffer) ? activeIcon : defaultIcon,
+            icon: (offer === hoveredOffer && offer !== null) ? activeIcon : defaultIcon,
           },
         );
         layerGroup.addLayer(marker);

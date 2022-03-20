@@ -7,7 +7,7 @@ import {UserData} from '../types/user-data';
 import {AuthData} from '../types/auth-data';
 import {saveToken, dropToken} from '../services/token';
 import {errorHandle} from '../services/error-handle';
-import {requireAuthorization, loadOffers, loadOffer, loadReviewsByOffer, redirectToRoute, setUserData} from './action';
+import {requireAuthorization, loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, redirectToRoute, setUserData} from './action';
 
 export const fetchOffersAction = createAsyncThunk(
   'fetchOffers',
@@ -27,6 +27,23 @@ export const fetchOfferAction = createAsyncThunk(
     try {
       const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
       store.dispatch(loadOffer(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchOffersNearbyAction = createAsyncThunk(
+  'fetchOffersNearby',
+  async (id: number) => {
+    try {
+      if (!id) {
+        return;
+      }
+
+      const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+      store.dispatch(loadOffersNearby(data));
+
     } catch (error) {
       errorHandle(error);
     }
