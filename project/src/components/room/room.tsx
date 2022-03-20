@@ -1,35 +1,44 @@
+import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {useAppSelector} from '../../hooks/index';
+import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import {AuthorizationStatus} from '../../const';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
-import {Review} from '../../types/review';
+import {fetchReviewsAction, fetchOfferAction} from '../../store/api-actions';
 import Header from '../header/header';
 import EmptyMain from '../main/empty-main';
 import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewForm from '../review-form/review-form';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 const MAX_NEAR_OFFERS = 3;
 
-type RoomProps = {
-  reviews: Review[],
-}
-
-function Room({reviews}: RoomProps): JSX.Element {
+function Room(): JSX.Element {
+  const dispatch = useAppDispatch();
   const {id} = useParams();
 
-  const {offers} = useAppSelector((state) => state);
+  const {offers, currentOffer, reviewsByOffer, authorizationStatus} = useAppSelector((state) => state);
+  const offer = offers.find((item: any) => item.id === Number(id));
 
-  const offer = offers.find((currentOffer: any) => currentOffer.id === Number(id));
+  useEffect(() => {
+    dispatch(fetchReviewsAction(Number(id)));
+    dispatch(fetchOfferAction(Number(id)));
+  }, []);
+
 
   if (!offer) {
     return <EmptyMain />;
   }
 
+  if (!currentOffer) {
+    return <LoadingScreen />;
+  }
+
   const {price, isPremium, isFavorite, host, title, rating, type, bedrooms, maxAdults, goods, description, images, city} = offer;
   const {isPro, name, avatarUrl} = host;
 
-  const nearOffers = offers.filter((currentOffer: any) => currentOffer !== offer).slice(0, MAX_NEAR_OFFERS);
+  const nearOffers = offers.filter((item: any) => item !== offer).slice(0, MAX_NEAR_OFFERS);
 
   return (
     <div className="page">
@@ -38,7 +47,7 @@ function Room({reviews}: RoomProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image: string) => (
+              {images.slice(0, 6).map((image: string) => (
                 <div
                   key={image}
                   className="property__image-wrapper"
@@ -119,9 +128,9 @@ function Room({reviews}: RoomProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewsList reviews={reviews} />
-                <ReviewForm />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsByOffer.length}</span></h2>
+                <ReviewsList reviews={reviewsByOffer} />
+                {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm /> : ''}
               </section>
             </div>
           </div>

@@ -3,7 +3,6 @@ import {AppRoute} from '../../const';
 import {useAppSelector} from '../../hooks';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-import {Review }from '../../types/review';
 import Main from '../main/main';
 import Favorites from '../favorites/favorites';
 import NotFound from '../not-found/not-found';
@@ -13,11 +12,7 @@ import SignIn from '../login/login';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {isCheckedAuth} from '../main/main';
 
-type AppProps = {
-  reviews: Review[]
-};
-
-function App({reviews}: AppProps): JSX.Element {
+function App(): JSX.Element {
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
@@ -43,7 +38,7 @@ function App({reviews}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<Room reviews={reviews} />}
+          element={<Room />}
         />
         <Route
           path={AppRoute.NotFound}
