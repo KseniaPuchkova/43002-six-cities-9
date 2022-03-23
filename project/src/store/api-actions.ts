@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from '../store';
 import {AppRoute, APIRoute, AuthorizationStatus, HTTP_CODE} from '../const';
 import {Offer, Favorite} from '../types/offer';
-import {Review} from '../types/review';
+import {Review, Comment} from '../types/review';
 import {UserData} from '../types/user-data';
 import {AuthData} from '../types/auth-data';
 import {saveToken, dropToken} from '../services/token';
@@ -66,6 +66,18 @@ export const fetchReviewsAction = createAsyncThunk(
   },
 );
 
+export const postReviewAction = createAsyncThunk(
+  'postReview',
+  async ({id, comment, rating}: Comment) => {
+    try {
+      const {data} = await api.post<Review[]>(`${APIRoute.Comments}/${id}`, {comment, rating});
+      store.dispatch(loadReviewsByOffer(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
 export const checkAuthAction = createAsyncThunk(
   'checkAuth',
   async () => {
@@ -104,8 +116,8 @@ export const loginAction = createAsyncThunk(
       const {data, data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      store.dispatch(getUserInfo(data));
       store.dispatch(redirectToRoute(AppRoute.Main));
+      store.dispatch(getUserInfo(data));
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));

@@ -13,3 +13,8 @@ export type Review = {
   user: User,
 };
 
+export type Comment = {
+  comment: string,
+  id: number,
+  rating: number,
+};

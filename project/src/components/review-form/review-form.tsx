@@ -1,24 +1,44 @@
 import React, {useState,  FormEvent, ChangeEvent} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {postReviewAction} from '../../store/api-actions';
 
+const RATINGS = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
 const MIN_CHARS_COUNT = 50;
 const MAX_CHARS_COUNT = 300;
 
-const ratings = ['terribly', 'badly', 'not bad', 'good', 'perfect'].map((rating, index) => ({
+const ratings = RATINGS .map((rating, index) => ({
   rating: rating,
-  index: index + 1,
+  index: RATINGS.length - index,
 }));
 
 function ReviewForm(): JSX.Element {
+  const {currentOffer} = useAppSelector((state) => state);
+
   const [comment, setComment] = useState({ratingStars: 0, review: ''});
   const {ratingStars, review} = comment;
 
   const isDisabled = ratingStars === null || review.length < MIN_CHARS_COUNT || review.length > MAX_CHARS_COUNT;
 
+  const clearForm = () => {
+    setComment({ratingStars: 0, review: ''});
+  };
+
+  const dispatch = useAppDispatch();
+  const handleReviewSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (!currentOffer) {
+      return;
+    }
+    dispatch(postReviewAction({id: currentOffer.id, rating: ratingStars, comment: review}));
+    clearForm();
+  };
+
   return (
     <form className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={(evt: FormEvent<HTMLFormElement>) => evt.preventDefault()}
+      onSubmit={handleReviewSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
