@@ -8,8 +8,8 @@ import {logoutAction} from '../../store/api-actions';
 function Header(): JSX.Element {
   const dispatch = useDispatch();
 
-  const {authorizationStatus, userData} = useAppSelector((state) => state);
-  const {avatarUrl, email, name} = userData;
+  const {authorizationStatus, userInfo} = useAppSelector((state) => state);
+  const {avatarUrl, email, name} = userInfo;
 
   const handleLogout= (evt: MouseEvent) => {
     evt.preventDefault();
@@ -47,11 +47,11 @@ function Header(): JSX.Element {
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <Link className="header__nav-link" to={AppRoute.Main}>
-                      <span
-                        className="header__signout"
-                        onClick={handleLogout}
-                      >
+                    <Link className="header__nav-link"
+                      to={AppRoute.Main}
+                      onClick={handleLogout}
+                    >
+                      <span className="header__signout">
                         Sign out
                       </span>
                     </Link>

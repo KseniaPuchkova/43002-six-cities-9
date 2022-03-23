@@ -1,13 +1,13 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from '../store';
-import {AppRoute, APIRoute, AuthorizationStatus} from '../const';
-import {Offer} from '../types/offer';
+import {AppRoute, APIRoute, AuthorizationStatus, HTTP_CODE} from '../const';
+import {Offer, Favorite} from '../types/offer';
 import {Review} from '../types/review';
 import {UserData} from '../types/user-data';
 import {AuthData} from '../types/auth-data';
 import {saveToken, dropToken} from '../services/token';
-import {errorHandle} from '../services/error-handle';
-import {requireAuthorization, loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, redirectToRoute, setUserData} from './action';
+import {errorHandle, getStatusCode} from '../services/error-handle';
+import {requireAuthorization, loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, getUserInfo, redirectToRoute} from './action';
 
 export const fetchOffersAction = createAsyncThunk(
   'fetchOffers',
@@ -79,6 +79,24 @@ export const checkAuthAction = createAsyncThunk(
   },
 );
 
+export const setIsFavoriteAction = createAsyncThunk(
+  'setIsFavorite',
+  async ({isFavorite, offerId: id}: Favorite) => {
+    try {
+      await api.post<Offer>(`${APIRoute.Favorite}/${id}/${isFavorite ? 1 : 0}`);
+    } catch (error) {
+      const status = getStatusCode(error);
+      if (status === HTTP_CODE.UNAUTHORIZED) {
+        store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth),
+        );
+        return;
+      }
+
+      errorHandle(error);
+    }
+  },
+);
+
 export const loginAction = createAsyncThunk(
   'login',
   async ({email, password}: AuthData) => {
@@ -86,7 +104,7 @@ export const loginAction = createAsyncThunk(
       const {data, data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      store.dispatch(setUserData(data));
+      store.dispatch(getUserInfo(data));
       store.dispatch(redirectToRoute(AppRoute.Main));
     } catch (error) {
       errorHandle(error);

@@ -35,3 +35,7 @@ export type Offer = {
   type: string,
 }
 
+export type Favorite = {
+  isFavorite: boolean,
+  offerId: number,
+};

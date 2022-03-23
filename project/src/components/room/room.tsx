@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, FavoritesButtonTypes} from '../../const';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
 import {fetchReviewsAction, fetchOfferAction, fetchOffersNearbyAction} from '../../store/api-actions';
 import Header from '../header/header';
@@ -11,22 +11,25 @@ import PlacesList from '../places-list/places-list';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewForm from '../review-form/review-form';
 import LoadingScreen from '../loading-screen/loading-screen';
+import FavoritesButton from '../favorites-button/favorites-button';
+
+const MAX_IMAGES_COUNT = 6;
 
 function Room(): JSX.Element {
-  const dispatch = useAppDispatch();
   const {id} = useParams();
+  const offerId = Number(id);
 
   const {offers, currentOffer, nearOffers, reviewsByOffer, authorizationStatus} = useAppSelector((state) => state);
-  const offer = offers.find((item: any) => item.id === Number(id));
+  const offer = offers.find((item) => item.id === offerId);
 
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchReviewsAction(Number(id)));
-    dispatch(fetchOfferAction(Number(id)));
-    dispatch(fetchOffersNearbyAction(Number(id)));
+    dispatch(fetchReviewsAction(offerId));
+    dispatch(fetchOfferAction(offerId));
+    dispatch(fetchOffersNearbyAction(offerId));
   }, []);
 
-
-  if (!offer) {
+  if (!offer || !offerId) {
     return <EmptyMain />;
   }
 
@@ -34,7 +37,7 @@ function Room(): JSX.Element {
     return <LoadingScreen />;
   }
 
-  const {price, isPremium, isFavorite, host, title, rating, type, bedrooms, maxAdults, goods, description, images, city} = offer;
+  const {price, isPremium, host, title, rating, type, bedrooms, maxAdults, goods, description, images, city} = offer;
   const {isPro, name, avatarUrl} = host;
 
   return (
@@ -44,7 +47,7 @@ function Room(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.slice(0, 6).map((image: string) => (
+              {images.slice(0, MAX_IMAGES_COUNT).map((image: string) => (
                 <div
                   key={image}
                   className="property__image-wrapper"
@@ -59,18 +62,15 @@ function Room(): JSX.Element {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremium && <div className="property__mark"><span>Premium</span></div>}
+              {isPremium
+                && <div className="property__mark"><span>Premium</span></div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
-                <button
-                  className={`property__bookmark-button ${isFavorite && 'property__bookmark-button--active'} button`}
-                  type="button"
-                >
-                  <svg className="property__bookmark-icon" style={{width: '31', height: '33'}}>
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoritesButton
+                  buttonType={FavoritesButtonTypes.ROOM}
+                  currentOffer={currentOffer}
+                  offerId={offerId}
+                />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

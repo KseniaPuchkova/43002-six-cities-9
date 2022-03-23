@@ -56,4 +56,15 @@ export const CardTypes = {
   },
 };
 
-
+export const FavoritesButtonTypes = {
+  CARD: {
+    buttonClassName: 'place-card',
+    imgWidth: '18',
+    imgHeight: '19',
+  },
+  ROOM: {
+    buttonClassName: 'property',
+    imgWidth: '31',
+    imgHeight: '33',
+  },
+};

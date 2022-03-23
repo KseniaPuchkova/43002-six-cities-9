@@ -1,6 +1,6 @@
 import {useRef, ChangeEvent, FormEvent} from 'react';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {Link, useNavigate} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks/index';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
@@ -9,7 +9,12 @@ import Header from '../header/header';
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const {activeCity} = useAppSelector((state) => state);
+  const {activeCity, authorizationStatus} = useAppSelector((state) => state);
+
+  const navigate = useNavigate();
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    navigate(AppRoute.Main);
+  }
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -18,7 +23,7 @@ function Login(): JSX.Element {
     const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (!reg.test(evt.target.value)) {
-      evt.target.setCustomValidity('Please enter correct email address');
+      evt.target.setCustomValidity('Please enter the correct email address');
     }
     else {
       evt.target.setCustomValidity('');
@@ -26,8 +31,10 @@ function Login(): JSX.Element {
   };
 
   const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    if (evt.target.value.trim().length === 0) {
-      evt.target.setCustomValidity('Password cannot contain only spaces');
+    const reg = /^(?=.*[a-z])(?=.*[0-9]).+$/;
+
+    if (evt.target.value.trim().length === 0 || !reg.test(evt.target.value)) {
+      evt.target.setCustomValidity('The password must not consist of only spaces and must contain at least one digit and one letter');
     }
     else {
       evt.target.setCustomValidity('');
