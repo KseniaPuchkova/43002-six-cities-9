@@ -1,29 +1,32 @@
-import {useRef, ChangeEvent, FormEvent} from 'react';
+import {useState, ChangeEvent, FormEvent} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
-import {useAppSelector} from '../../hooks/index';
-import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import Header from '../header/header';
+import {useAppSelector} from '../../hooks/index';
+import {useAppDispatch} from '../../hooks';
+import {AppRoute, AuthorizationStatus} from '../../const';
+
+const EMAIL_REG = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const PASSWORD_REG = /^(?=.*[a-z])(?=.*[0-9]).+$/;
+const EMAIL_TEXT = 'Please enter the correct email address';
+const PASSWORD_TEXT= 'The password must not consist of only spaces and must contain at least one digit and one letter';
 
 function Login(): JSX.Element {
-  const dispatch = useAppDispatch();
-
-  const {activeCity, authorizationStatus} = useAppSelector((state) => state);
+  const [authData, setAuthData] = useState({email: '', password: ''});
+  const {email, password} = authData;
 
   const navigate = useNavigate();
+  const {activeCity, authorizationStatus} = useAppSelector((state) => state);
   if (authorizationStatus === AuthorizationStatus.Auth) {
     navigate(AppRoute.Main);
   }
 
-  const emailRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
-
   const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const {name, value} = evt.target;
+    setAuthData({...authData, [name]:value});
 
-    if (!reg.test(evt.target.value)) {
-      evt.target.setCustomValidity('Please enter the correct email address');
+    if (!EMAIL_REG.test(evt.target.value)) {
+      evt.target.setCustomValidity(EMAIL_TEXT);
     }
     else {
       evt.target.setCustomValidity('');
@@ -31,24 +34,23 @@ function Login(): JSX.Element {
   };
 
   const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const reg = /^(?=.*[a-z])(?=.*[0-9]).+$/;
+    const {name, value} = evt.target;
+    setAuthData({...authData, [name]:value});
 
-    if (evt.target.value.trim().length === 0 || !reg.test(evt.target.value)) {
-      evt.target.setCustomValidity('The password must not consist of only spaces and must contain at least one digit and one letter');
+    if ((evt.target.value).trim().length === 0 || !PASSWORD_REG.test(evt.target.value)) {
+      evt.target.setCustomValidity(PASSWORD_TEXT);
     }
     else {
       evt.target.setCustomValidity('');
     }
   };
 
+  const dispatch = useAppDispatch();
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
-      dispatch(loginAction({
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
-      }));
+    if (email && password) {
+      dispatch(loginAction({email, password}));
     }
   };
 
@@ -72,7 +74,6 @@ function Login(): JSX.Element {
                   type="email"
                   name="email"
                   placeholder="Email"
-                  ref={emailRef}
                   onChange={handleEmailChange}
                   required
                 />
@@ -84,7 +85,6 @@ function Login(): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
-                  ref={passwordRef}
                   onChange={handlePasswordChange}
                   required
                 />

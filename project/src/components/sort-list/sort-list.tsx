@@ -1,9 +1,9 @@
 import {MouseEvent} from 'react';
 import {useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {SortType} from '../../const';
-import {changeSortType} from '../../store/action';
 import SortItem from '../sort-item/sort-item';
+import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import {changeSortType} from '../../store/action';
+import {SortType} from '../../const';
 
 function SortList(): JSX.Element {
   const activeSortType = useAppSelector((state) => state.sortType);

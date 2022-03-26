@@ -1,40 +1,43 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {Offer} from '../types/offer';
 import {Review} from '../types/review';
+import {UserData} from '../types/user-data';
 import {AuthorizationStatus, SortType} from '../const';
-import {requireAuthorization, changeCity, changeSortType, loadOffers, loadOffer, loadReviewsByOffer, loadOffersNearby, getUserInfo} from './action';
+import {requireAuthorization,
+  changeCity,
+  changeSortType,
+  loadOffers,
+  loadOffer,
+  loadReviewsByOffer,
+  loadFavoriteOffers,
+  loadOffersNearby,
+  getUserData} from './action';
 import {CITIES} from '../components/cities-list/cities-list';
 
 const DEFAULT_CITY_INDEX = 0;
 
 type InitalState = {
-  isDataLoaded: boolean,
   offers: Offer[],
+  isDataLoaded: boolean,
   currentOffer: Offer | null,
   nearOffers: Offer[],
   reviewsByOffer: Review[],
+  favoriteOffers: Offer[],
   authorizationStatus: AuthorizationStatus,
-  userInfo: {
-    email: string,
-    name?: string,
-    avatarUrl?: string,
-  },
+  userData: UserData | null,
   activeCity: string,
   sortType: string,
 }
 
 const initialState: InitalState = {
-  isDataLoaded: false,
   offers: [],
+  isDataLoaded: false,
   currentOffer: null,
   nearOffers: [],
   reviewsByOffer: [],
+  favoriteOffers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
-  userInfo: {
-    email: '',
-    name: '',
-    avatarUrl: '',
-  },
+  userData: null,
   activeCity: CITIES[DEFAULT_CITY_INDEX],
   sortType: SortType.POPULAR,
 };
@@ -54,11 +57,14 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loadReviewsByOffer, (state, action) => {
       state.reviewsByOffer = action.payload;
     })
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
+    })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
-    .addCase(getUserInfo, (state, action) => {
-      state.userInfo = action.payload;
+    .addCase(getUserData, (state, action) => {
+      state.userData = action.payload;
     })
     .addCase(changeCity, (state, action) => {
       state.activeCity = action.payload;

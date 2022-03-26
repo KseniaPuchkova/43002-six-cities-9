@@ -2,16 +2,14 @@ import {MouseEvent} from 'react';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/index';
-import {AppRoute, AuthorizationStatus} from '../../const';
 import {logoutAction} from '../../store/api-actions';
+import {AppRoute, AuthorizationStatus} from '../../const';
 
 function Header(): JSX.Element {
+  const {authorizationStatus, userData} = useAppSelector((state) => state);
+
   const dispatch = useDispatch();
-
-  const {authorizationStatus, userInfo} = useAppSelector((state) => state);
-  const {avatarUrl, email, name} = userInfo;
-
-  const handleLogout= (evt: MouseEvent) => {
+  const handleLogoutClick= (evt: MouseEvent) => {
     evt.preventDefault();
     dispatch(logoutAction());
   };
@@ -38,18 +36,18 @@ function Header(): JSX.Element {
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                         <img
-                          src={avatarUrl}
-                          alt={name}
-                          style={{borderRadius: '50%'}}
+                          src={userData?.avatarUrl}
+                          alt={userData?.name}
+                          style={{borderRadius: '100%'}}
                         />
                       </div>
-                      <span className="header__user-name user__name">{email}</span>
+                      <span className="header__user-name user__name">{userData?.email}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">
                     <Link className="header__nav-link"
                       to={AppRoute.Main}
-                      onClick={handleLogout}
+                      onClick={handleLogoutClick}
                     >
                       <span className="header__signout">
                         Sign out

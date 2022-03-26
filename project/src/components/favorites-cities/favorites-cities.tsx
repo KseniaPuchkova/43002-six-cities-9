@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
-import {Offer} from '../../types/offer';
 import PlaceCard from '../place-card/place-card';
 import {AppRoute, CardTypes} from '../../const';
+import {Offer} from '../../types/offer';
 
 type FavoritesCitiesProp = {
   favorites: Offer[],

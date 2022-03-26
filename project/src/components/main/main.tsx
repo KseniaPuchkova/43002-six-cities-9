@@ -1,20 +1,17 @@
 import {useState} from 'react';
-import {AuthorizationStatus} from '../../const';
-import {Offer} from '../../types/offer';
-import {getOffersByCity, getSortedOffers} from '../../utils';
-import {useAppSelector} from '../../hooks/index';
 import Map from '../map/map';
 import EmptyMain from './empty-main';
 import Header from '../header/header';
 import SortList from '../sort-list/sort-list';
 import PlacesList from '../places-list/places-list';
 import CitiesList from '../cities-list/cities-list';
-
-export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
-  authorizationStatus === AuthorizationStatus.Unknown;
+import {useAppSelector} from '../../hooks/index';
+import {getOffersByCity, getSortedOffers} from '../../utils';
+import {Offer} from '../../types/offer';
 
 function MainPage(): JSX.Element {
   const {activeCity, offers, sortType} = useAppSelector((state) => state);
+
   const offersByCity = getOffersByCity(activeCity, offers);
   const sortedOffers = getSortedOffers(sortType, offersByCity);
 
@@ -25,7 +22,7 @@ function MainPage(): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
-      <main className={`page__main page__main--index ${offersByCity.length === 0 && 'page__main--index-empty'}`}>
+      <main className={`page__main page__main--index${offersByCity.length === 0 ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">

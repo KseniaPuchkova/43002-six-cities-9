@@ -2,11 +2,11 @@ import React, {useState,  FormEvent, ChangeEvent} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {postReviewAction} from '../../store/api-actions';
 
-const RATINGS = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
 const MIN_CHARS_COUNT = 50;
 const MAX_CHARS_COUNT = 300;
+const RATINGS = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
 
-const ratings = RATINGS .map((rating, index) => ({
+const ratings = RATINGS.map((rating, index) => ({
   rating: rating,
   index: RATINGS.length - index,
 }));
@@ -14,14 +14,12 @@ const ratings = RATINGS .map((rating, index) => ({
 function ReviewForm(): JSX.Element {
   const {currentOffer} = useAppSelector((state) => state);
 
-  const [comment, setComment] = useState({ratingStars: 0, review: ''});
-  const {ratingStars, review} = comment;
+  const [review, setReview] = useState({ratingStars: 0, comment: ''});
+  const {ratingStars, comment} = review;
 
-  const isDisabled = ratingStars === null || review.length < MIN_CHARS_COUNT || review.length > MAX_CHARS_COUNT;
+  const isDisabled = ratingStars === null || comment.length < MIN_CHARS_COUNT || comment.length > MAX_CHARS_COUNT;
 
-  const clearForm = () => {
-    setComment({ratingStars: 0, review: ''});
-  };
+  const clearForm = () => setReview({ratingStars: 0, comment: ''});
 
   const dispatch = useAppDispatch();
   const handleReviewSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -30,7 +28,7 @@ function ReviewForm(): JSX.Element {
     if (!currentOffer) {
       return;
     }
-    dispatch(postReviewAction({id: currentOffer.id, rating: ratingStars, comment: review}));
+    dispatch(postReviewAction({id: currentOffer.id, rating: ratingStars, comment}));
     clearForm();
   };
 
@@ -50,7 +48,7 @@ function ReviewForm(): JSX.Element {
               value={index}
               id={`${index}-stars`}
               type="radio"
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => setComment({...comment, ratingStars: parseInt(evt.target.value, 10)})}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => setReview({...review, ratingStars: Number(evt.target.value)})}
               checked={ratingStars === index}
             />
             <label
@@ -70,8 +68,8 @@ function ReviewForm(): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={review}
-        onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => setComment({...comment, review: evt.target.value})}
+        value={comment}
+        onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => setReview({...review, comment: evt.target.value})}
       >
       </textarea>
       <div className="reviews__button-wrapper">

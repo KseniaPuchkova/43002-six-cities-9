@@ -1,12 +1,11 @@
-import {useAppSelector} from '../../hooks/index';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import EmptyFavorites from './empty-favorites';
 import FavoritesList from '../favorites-list/favorites-list';
+import {useAppSelector} from '../../hooks/index';
 
 function Favorites(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const favorites = offers.filter(({isFavorite}) => isFavorite);
+  const favorites = useAppSelector((state) => state.favoriteOffers);
 
   if (favorites.length) {
     return (

@@ -1,6 +1,6 @@
-import {Offer} from '../../types/offer';
-import {CardTypes} from '../../const';
 import PlaceCard from '../place-card/place-card';
+import {CardTypes} from '../../const';
+import {Offer} from '../../types/offer';
 
 type PlacesListProps = {
   offers: Offer[],

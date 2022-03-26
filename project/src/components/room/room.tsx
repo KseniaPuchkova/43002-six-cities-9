@@ -1,43 +1,61 @@
-import {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {AuthorizationStatus, FavoritesButtonTypes} from '../../const';
-import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
-import {fetchReviewsAction, fetchOfferAction, fetchOffersNearbyAction} from '../../store/api-actions';
+import {useState, useEffect} from 'react';
+import {useParams,  useNavigate} from 'react-router-dom';
 import Header from '../header/header';
-import EmptyMain from '../main/empty-main';
+import NotFound from '../not-found/not-found';
 import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewForm from '../review-form/review-form';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FavoritesButton from '../favorites-button/favorites-button';
+import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import {loadReviewsByOfferAction, loadOfferAction, loadOffersNearbyAction, setFavoriteAction} from '../../store/api-actions';
+import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
+import {AppRoute, AuthorizationStatus, FavoritesButtonTypes} from '../../const';
 
 const MAX_IMAGES_COUNT = 6;
 
 function Room(): JSX.Element {
-  const {id} = useParams();
-  const offerId = Number(id);
+  const params = useParams();
+  const id = Number(params.id);
 
   const {offers, currentOffer, nearOffers, reviewsByOffer, authorizationStatus} = useAppSelector((state) => state);
-  const offer = offers.find((item) => item.id === offerId);
+  const offer = offers.find((item) => item.id === id);
+
+  const [isFavorite, setIsFavorite] = useState(currentOffer?.isFavorite);
+  const postFavoriteFlag = currentOffer?.isFavorite ? 0 : 1;
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchReviewsAction(offerId));
-    dispatch(fetchOfferAction(offerId));
-    dispatch(fetchOffersNearbyAction(offerId));
-  }, []);
+    dispatch(loadOfferAction(id));
+    dispatch(loadOffersNearbyAction(id));
+    dispatch(loadReviewsByOfferAction(id));
+  }, [id, dispatch, isFavorite]);
 
-  if (!offer || !offerId) {
-    return <EmptyMain />;
-  }
+  const navigate = useNavigate();
+  const handleFavoriteClick = () => {
+    dispatch(setFavoriteAction({
+      id: id,
+      flag: postFavoriteFlag,
+    }));
+
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.SignIn);
+      return;
+    }
+
+    setIsFavorite(!isFavorite);
+  };
 
   if (!currentOffer) {
     return <LoadingScreen />;
   }
 
-  const {price, isPremium, host, title, rating, type, bedrooms, maxAdults, goods, description, images, city} = offer;
+  if (!offer || !id) {
+    return <NotFound />;
+  }
+
+  const {price, isPremium, host, title, rating, type, bedrooms, maxAdults, goods, description, city, images} = offer;
   const {isPro, name, avatarUrl} = host;
 
   return (
@@ -68,8 +86,8 @@ function Room(): JSX.Element {
                 <h1 className="property__name">{title}</h1>
                 <FavoritesButton
                   buttonType={FavoritesButtonTypes.ROOM}
-                  currentOffer={currentOffer}
-                  offerId={offerId}
+                  handleFavoriteClick={handleFavoriteClick}
+                  isFavorite={currentOffer?.isFavorite}
                 />
               </div>
               <div className="property__rating rating">

@@ -4,5 +4,5 @@ export type UserData = {
   id: number,
   isPro: boolean,
   name: string,
-  token: string,
-}
+  token: string;
+};

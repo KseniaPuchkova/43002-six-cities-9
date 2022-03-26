@@ -1,8 +1,8 @@
 import {useRef, useEffect} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {City, Offer} from '../../types/offer';
 import useMap from '../../hooks/use-map';
+import {City, Offer} from '../../types/offer';
 
 const URL_MARKER_DEFAULT = 'img/pin.svg';
 const URL_MARKER_ACTIVE = 'img/pin-active.svg';

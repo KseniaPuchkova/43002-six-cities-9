@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import {AppRoute} from '../../const';
 
 function NotFoundPage() {
   return (

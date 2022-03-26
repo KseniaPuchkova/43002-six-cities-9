@@ -1,16 +1,23 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from '../store';
 import {AppRoute, APIRoute, AuthorizationStatus, HTTP_CODE} from '../const';
-import {Offer, Favorite} from '../types/offer';
-import {Review, Comment} from '../types/review';
+import {Offer, FavoriteFlag} from '../types/offer';
+import {Review, ReviewForForm} from '../types/review';
 import {UserData} from '../types/user-data';
 import {AuthData} from '../types/auth-data';
 import {saveToken, dropToken} from '../services/token';
 import {errorHandle, getStatusCode} from '../services/error-handle';
-import {requireAuthorization, loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, getUserInfo, redirectToRoute} from './action';
+import {requireAuthorization,
+  loadOffers,
+  loadOffer,
+  loadOffersNearby,
+  loadReviewsByOffer,
+  loadFavoriteOffers,
+  redirectToRoute,
+  getUserData} from './action';
 
-export const fetchOffersAction = createAsyncThunk(
-  'fetchOffers',
+export const loadOffersAction = createAsyncThunk(
+  'loadOffers',
   async () => {
     try {
       const {data} = await api.get<Offer[]>(APIRoute.Offers);
@@ -21,8 +28,8 @@ export const fetchOffersAction = createAsyncThunk(
   },
 );
 
-export const fetchOfferAction = createAsyncThunk(
-  'fetchOffer',
+export const loadOfferAction = createAsyncThunk(
+  'loadOffer',
   async (id: number) => {
     try {
       const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
@@ -33,31 +40,22 @@ export const fetchOfferAction = createAsyncThunk(
   },
 );
 
-export const fetchOffersNearbyAction = createAsyncThunk(
-  'fetchOffersNearby',
+export const loadOffersNearbyAction = createAsyncThunk(
+  'loadOffersNearby',
   async (id: number) => {
     try {
-      if (!id) {
-        return;
-      }
-
       const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
       store.dispatch(loadOffersNearby(data));
-
     } catch (error) {
       errorHandle(error);
     }
   },
 );
 
-export const fetchReviewsAction = createAsyncThunk(
-  'fetchReviewsByOffer',
+export const loadReviewsByOfferAction = createAsyncThunk(
+  'loadReviewsByOffer',
   async (id: number) => {
     try {
-      if (!id) {
-        return;
-      }
-
       const {data} = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
       store.dispatch(loadReviewsByOffer(data));
     } catch (error) {
@@ -68,7 +66,7 @@ export const fetchReviewsAction = createAsyncThunk(
 
 export const postReviewAction = createAsyncThunk(
   'postReview',
-  async ({id, comment, rating}: Comment) => {
+  async ({id, comment, rating}: ReviewForForm) => {
     try {
       const {data} = await api.post<Review[]>(`${APIRoute.Comments}/${id}`, {comment, rating});
       store.dispatch(loadReviewsByOffer(data));
@@ -82,8 +80,9 @@ export const checkAuthAction = createAsyncThunk(
   'checkAuth',
   async () => {
     try {
-      await api.get(APIRoute.Login);
+      const {data} = await api.get(APIRoute.Login);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(getUserData(data));
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
@@ -91,11 +90,24 @@ export const checkAuthAction = createAsyncThunk(
   },
 );
 
-export const setIsFavoriteAction = createAsyncThunk(
-  'setIsFavorite',
-  async ({isFavorite, offerId: id}: Favorite) => {
+export const loadFavoritesAction = createAsyncThunk(
+  'loadFavorites',
+  async () => {
     try {
-      await api.post<Offer>(`${APIRoute.Favorite}/${id}/${isFavorite ? 1 : 0}`);
+      const {data} = await api.get<Offer[]>(`${APIRoute.Favorite}`);
+      store.dispatch(loadFavoriteOffers(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const setFavoriteAction = createAsyncThunk(
+  'setFavorite',
+  async ({id, flag}: FavoriteFlag) => {
+    try {
+      await api.post<Offer>(`${APIRoute.Favorite}/${id}/${flag}`);
+      store.dispatch(loadFavoritesAction());
     } catch (error) {
       const status = getStatusCode(error);
       if (status === HTTP_CODE.UNAUTHORIZED) {
@@ -115,9 +127,9 @@ export const loginAction = createAsyncThunk(
     try {
       const {data, data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
+      store.dispatch(getUserData(data));
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
       store.dispatch(redirectToRoute(AppRoute.Main));
-      store.dispatch(getUserInfo(data));
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
