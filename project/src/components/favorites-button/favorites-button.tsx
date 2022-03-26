@@ -1,18 +1,41 @@
-import {MouseEvent} from 'react';
-import {useAppSelector} from '../../hooks/index';
-import {AuthorizationStatus} from '../../const';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import {loadOffersAction, loadFavoritesAction, setFavoriteAction} from '../../store/api-actions';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {FavoriteButton} from '../../types/favorite-button';
+import {Offer} from '../../types/offer';
 
 type FavoritesButtonProps = {
   favoriteButton: FavoriteButton,
-  isFavorite: boolean;
-  handleFavoriteClick: (evt: MouseEvent<HTMLButtonElement>) => void,
+  offer: Offer,
 }
 
-function FavoritesButton ({favoriteButton, isFavorite, handleFavoriteClick}: FavoritesButtonProps): JSX.Element {
+function FavoritesButton ({favoriteButton, offer}: FavoritesButtonProps): JSX.Element {
   const {buttonClassName, imgWidth, imgHeight} = favoriteButton;
 
   const {authorizationStatus} = useAppSelector((state) => state);
+
+  const [isFavorite, setIsFavorite] = useState(offer?.isFavorite);
+  const postFavoriteFlag = isFavorite ? 0 : 1;
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleFavoriteClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.SignIn);
+    } else {
+      dispatch(setFavoriteAction({
+        id: offer.id,
+        flag: postFavoriteFlag,
+      }));
+
+      setIsFavorite(!isFavorite);
+      dispatch(loadOffersAction());
+      dispatch(loadFavoritesAction());
+    }
+  };
 
   return (
     <button

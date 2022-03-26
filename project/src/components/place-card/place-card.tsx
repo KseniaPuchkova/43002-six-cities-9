@@ -1,10 +1,7 @@
-import {useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import FavoritesButton from '../favorites-button/favorites-button';
-import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {loadOffersAction, loadFavoritesAction, setFavoriteAction} from '../../store/api-actions';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
-import {AppRoute, AuthorizationStatus, FavoriteButtonType} from '../../const';
+import {FavoriteButtonType} from '../../const';
 import {Offer} from '../../types/offer';
 import {Card} from '../../types/card';
 
@@ -23,28 +20,6 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
   const handleOnMouseEnter  = () => {
     if (onMouseEnter) {
       onMouseEnter(offer);
-    }
-  };
-
-  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
-  const postFavoriteFlag = offer.isFavorite ? 0 : 1;
-
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const {authorizationStatus} = useAppSelector((state) => state);
-
-  const handleFavoriteClick = () => {
-    if (authorizationStatus === AuthorizationStatus.NoAuth) {
-      navigate(AppRoute.SignIn);
-    } else {
-      dispatch(setFavoriteAction({
-        id: offer.id,
-        flag: postFavoriteFlag,
-      }));
-
-      setIsFavorite(!isFavorite);
-      dispatch(loadOffersAction());
-      dispatch(loadFavoritesAction());
     }
   };
 
@@ -77,8 +52,7 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
           </div>
           <FavoritesButton
             favoriteButton={FavoriteButtonType.CARD}
-            handleFavoriteClick={handleFavoriteClick}
-            isFavorite={offer.isFavorite}
+            offer={offer}
           />
         </div>
         <div className="place-card__rating rating">
