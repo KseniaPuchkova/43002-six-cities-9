@@ -1,4 +1,4 @@
-import {MouseEvent} from 'react';
+import {MouseEvent, memo} from 'react';
 import {useState} from 'react';
 import SortItem from '../sort-item/sort-item';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
@@ -42,4 +42,4 @@ function SortList(): JSX.Element {
   );
 }
 
-export default SortList;
+export default memo(SortList);

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import Map from '../map/map';
 import EmptyMain from './empty-main';
 import Header from '../header/header';
@@ -17,7 +17,7 @@ function MainPage(): JSX.Element {
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | null>(null);
   const handleOnMouseEnter = setHoveredOffer;
-  const handleOnMouseLeave = () => setHoveredOffer(null);
+  const handleOnMouseLeave = useCallback(() => setHoveredOffer(null), []);
 
   return (
     <div className="page page--gray page--main">

@@ -1,4 +1,4 @@
-import {useState, ChangeEvent, FormEvent} from 'react';
+import {useState, ChangeEvent, FormEvent, memo} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import Header from '../header/header';
@@ -110,4 +110,4 @@ function Login(): JSX.Element {
   );
 }
 
-export default Login;
+export default memo(Login);
