@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import PlaceCard from '../place-card/place-card';
-import {AppRoute, CardTypes} from '../../const';
+import {AppRoute, CardType} from '../../const';
 import {Offer} from '../../types/offer';
 
 type FavoritesCitiesProp = {
@@ -25,7 +25,7 @@ function FavoritesCities({favorites, city}: FavoritesCitiesProp): JSX.Element {
           <PlaceCard
             key={offer.id}
             offer={offer}
-            cardType={CardTypes.FAVORITES}
+            cardType={CardType.FAVORITE}
           />
         ))}
       </div>

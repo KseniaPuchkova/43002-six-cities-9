@@ -32,7 +32,7 @@ export const SortType = {
   TOP_RATED_FIRST: 'Top rated first',
 };
 
-export const CardTypes = {
+export const CardType = {
   MAIN: {
     articleClassName: 'cities__place-card',
     imgWrapperClassName: 'cities__image-wrapper',
@@ -40,7 +40,7 @@ export const CardTypes = {
     imgWidth: '260',
     imgHeight: '200',
   },
-  FAVORITES: {
+  FAVORITE: {
     articleClassName: 'favorites__card',
     imgWrapperClassName: 'favorites__image-wrapper',
     cardInfoClassName: 'favorites__card-info',
@@ -56,7 +56,7 @@ export const CardTypes = {
   },
 };
 
-export const FavoritesButtonTypes = {
+export const FavoriteButtonType = {
   CARD: {
     buttonClassName: 'place-card',
     imgWidth: '18',

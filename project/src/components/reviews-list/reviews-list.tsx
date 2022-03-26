@@ -10,8 +10,9 @@ type ReviewsListProps = {
 function ReviewsList({reviews}: ReviewsListProps): JSX.Element {
 
   const reviewsByDateAndCount = reviews
-    .slice(0, MAX_REVIEWS_COUNT)
-    .sort((a: Review, b: Review) => Number(new Date(b.date)) - Number(new Date(a.date)));
+    .slice()
+    .sort((a: Review, b: Review) => Number(new Date(b.date)) - Number(new Date(a.date)))
+    .slice(0, MAX_REVIEWS_COUNT);
 
   return (
     <ul className="reviews__list">

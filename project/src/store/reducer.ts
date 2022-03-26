@@ -20,11 +20,11 @@ type InitalState = {
   offers: Offer[],
   isDataLoaded: boolean,
   currentOffer: Offer | null,
-  nearOffers: Offer[],
+  offersNearby: Offer[],
   reviewsByOffer: Review[],
   favoriteOffers: Offer[],
   authorizationStatus: AuthorizationStatus,
-  userData: UserData | null,
+  userData: UserData,
   activeCity: string,
   sortType: string,
 }
@@ -33,11 +33,11 @@ const initialState: InitalState = {
   offers: [],
   isDataLoaded: false,
   currentOffer: null,
-  nearOffers: [],
+  offersNearby: [],
   reviewsByOffer: [],
   favoriteOffers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
-  userData: null,
+  userData: {} as UserData,
   activeCity: CITIES[DEFAULT_CITY_INDEX],
   sortType: SortType.POPULAR,
 };
@@ -52,7 +52,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.currentOffer = action.payload;
     })
     .addCase(loadOffersNearby, (state, action) => {
-      state.nearOffers = action.payload;
+      state.offersNearby = action.payload;
     })
     .addCase(loadReviewsByOffer, (state, action) => {
       state.reviewsByOffer = action.payload;

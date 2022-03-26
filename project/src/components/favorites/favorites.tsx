@@ -5,7 +5,8 @@ import FavoritesList from '../favorites-list/favorites-list';
 import {useAppSelector} from '../../hooks/index';
 
 function Favorites(): JSX.Element {
-  const favorites = useAppSelector((state) => state.favoriteOffers);
+  const offers = useAppSelector((state) => state.offers);
+  const favorites = offers.filter(({isFavorite}) => isFavorite);
 
   if (favorites.length) {
     return (

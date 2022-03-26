@@ -1,26 +1,23 @@
 import {MouseEvent} from 'react';
 import {useAppSelector} from '../../hooks/index';
 import {AuthorizationStatus} from '../../const';
+import {FavoriteButton} from '../../types/favorite-button';
 
 type FavoritesButtonProps = {
-buttonType: {
-    buttonClassName: string,
-    imgWidth: string,
-    imgHeight: string,
-  },
+  favoriteButton: FavoriteButton,
   isFavorite: boolean;
   handleFavoriteClick: (evt: MouseEvent<HTMLButtonElement>) => void,
 }
 
-function FavoritesButton ({buttonType, isFavorite, handleFavoriteClick}: FavoritesButtonProps): JSX.Element {
-  const {buttonClassName, imgWidth, imgHeight} = buttonType;
+function FavoritesButton ({favoriteButton, isFavorite, handleFavoriteClick}: FavoritesButtonProps): JSX.Element {
+  const {buttonClassName, imgWidth, imgHeight} = favoriteButton;
 
   const {authorizationStatus} = useAppSelector((state) => state);
 
   return (
     <button
       className={`${buttonClassName}__bookmark-button ${isFavorite && (authorizationStatus === AuthorizationStatus.Auth)
-        ? `${buttonClassName}__bookmark-button--active` : ''} button`}
+        ? `${buttonClassName}__bookmark-button--active ` : ''}button`}
       type="button"
       onClick={handleFavoriteClick}
     >

@@ -4,18 +4,13 @@ import FavoritesButton from '../favorites-button/favorites-button';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import {loadOffersAction, loadFavoritesAction, setFavoriteAction} from '../../store/api-actions';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
-import {AppRoute, AuthorizationStatus, FavoritesButtonTypes} from '../../const';
+import {AppRoute, AuthorizationStatus, FavoriteButtonType} from '../../const';
 import {Offer} from '../../types/offer';
+import {Card} from '../../types/card';
 
 type PlaceCardProps = {
   offer: Offer,
-  cardType: {
-    articleClassName: string;
-    imgWrapperClassName: string,
-    cardInfoClassName: string,
-    imgWidth: string,
-    imgHeight: string
-  },
+  cardType: Card,
   onMouseEnter?: (offer: Offer) => void
   onMouseLeave?: () => void
 }
@@ -39,20 +34,18 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
   const {authorizationStatus} = useAppSelector((state) => state);
 
   const handleFavoriteClick = () => {
-    dispatch(setFavoriteAction({
-      id: offer.id,
-      flag: postFavoriteFlag,
-    }));
-
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
       navigate(AppRoute.SignIn);
-      return;
+    } else {
+      dispatch(setFavoriteAction({
+        id: offer.id,
+        flag: postFavoriteFlag,
+      }));
+
+      setIsFavorite(!isFavorite);
+      dispatch(loadOffersAction());
+      dispatch(loadFavoritesAction());
     }
-
-    setIsFavorite(!isFavorite);
-
-    dispatch(loadOffersAction());
-    dispatch(loadFavoritesAction());
   };
 
   return (
@@ -83,7 +76,7 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <FavoritesButton
-            buttonType={FavoritesButtonTypes.CARD}
+            favoriteButton={FavoriteButtonType.CARD}
             handleFavoriteClick={handleFavoriteClick}
             isFavorite={offer.isFavorite}
           />

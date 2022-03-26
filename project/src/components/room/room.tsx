@@ -9,9 +9,9 @@ import ReviewForm from '../review-form/review-form';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FavoritesButton from '../favorites-button/favorites-button';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {loadReviewsByOfferAction, loadOfferAction, loadOffersNearbyAction, setFavoriteAction} from '../../store/api-actions';
+import {loadReviewsByOfferAction, loadOfferAction, loadOffersNearbyAction, loadOffersAction, loadFavoritesAction, setFavoriteAction} from '../../store/api-actions';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
-import {AppRoute, AuthorizationStatus, FavoritesButtonTypes} from '../../const';
+import {AppRoute, AuthorizationStatus, FavoriteButtonType} from '../../const';
 
 const MAX_IMAGES_COUNT = 6;
 
@@ -19,11 +19,11 @@ function Room(): JSX.Element {
   const params = useParams();
   const id = Number(params.id);
 
-  const {offers, currentOffer, nearOffers, reviewsByOffer, authorizationStatus} = useAppSelector((state) => state);
+  const {offers, currentOffer, offersNearby, reviewsByOffer, authorizationStatus} = useAppSelector((state) => state);
   const offer = offers.find((item) => item.id === id);
 
-  const [isFavorite, setIsFavorite] = useState(currentOffer?.isFavorite);
-  const postFavoriteFlag = currentOffer?.isFavorite ? 0 : 1;
+  const [isFavorite, setIsFavorite] = useState(offer?.isFavorite);
+  const postFavoriteFlag = offer?.isFavorite ? 0 : 1;
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -34,17 +34,18 @@ function Room(): JSX.Element {
 
   const navigate = useNavigate();
   const handleFavoriteClick = () => {
-    dispatch(setFavoriteAction({
-      id: id,
-      flag: postFavoriteFlag,
-    }));
-
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
       navigate(AppRoute.SignIn);
-      return;
-    }
+    } else {
+      dispatch(setFavoriteAction({
+        id: id,
+        flag: postFavoriteFlag,
+      }));
 
-    setIsFavorite(!isFavorite);
+      setIsFavorite(!isFavorite);
+      dispatch(loadOffersAction());
+      dispatch(loadFavoritesAction());
+    }
   };
 
   if (!currentOffer) {
@@ -85,9 +86,9 @@ function Room(): JSX.Element {
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
                 <FavoritesButton
-                  buttonType={FavoritesButtonTypes.ROOM}
+                  favoriteButton={FavoriteButtonType.ROOM}
                   handleFavoriteClick={handleFavoriteClick}
-                  isFavorite={currentOffer?.isFavorite}
+                  isFavorite={offer?.isFavorite}
                 />
               </div>
               <div className="property__rating rating">
@@ -152,7 +153,7 @@ function Room(): JSX.Element {
           <section className="property__map map">
             <Map
               activeCity={city}
-              offersByCity={[...nearOffers, currentOffer]}
+              offersByCity={[...offersNearby, currentOffer]}
               hoveredOffer={currentOffer}
             />
           </section>
@@ -161,7 +162,7 @@ function Room(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <PlacesList
-              offers={nearOffers}
+              offers={offersNearby}
               isNearPlacesList
             />
           </section>

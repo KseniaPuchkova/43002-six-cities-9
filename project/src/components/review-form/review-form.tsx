@@ -14,12 +14,12 @@ const ratings = RATINGS.map((rating, index) => ({
 function ReviewForm(): JSX.Element {
   const {currentOffer} = useAppSelector((state) => state);
 
-  const [review, setReview] = useState({ratingStars: 0, comment: ''});
-  const {ratingStars, comment} = review;
+  const [review, setReview] = useState({count: 0, comment: ''});
+  const {count, comment} = review;
 
-  const isDisabled = ratingStars === null || comment.length < MIN_CHARS_COUNT || comment.length > MAX_CHARS_COUNT;
+  const isDisabled = count === null || comment.length < MIN_CHARS_COUNT || comment.length > MAX_CHARS_COUNT;
 
-  const clearForm = () => setReview({ratingStars: 0, comment: ''});
+  const clearForm = () => setReview({count: 0, comment: ''});
 
   const dispatch = useAppDispatch();
   const handleReviewSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,7 @@ function ReviewForm(): JSX.Element {
     if (!currentOffer) {
       return;
     }
-    dispatch(postReviewAction({id: currentOffer.id, rating: ratingStars, comment}));
+    dispatch(postReviewAction({id: currentOffer.id, rating: count, comment}));
     clearForm();
   };
 
@@ -48,8 +48,8 @@ function ReviewForm(): JSX.Element {
               value={index}
               id={`${index}-stars`}
               type="radio"
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => setReview({...review, ratingStars: Number(evt.target.value)})}
-              checked={ratingStars === index}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => setReview({...review, count: Number(evt.target.value)})}
+              checked={count === index}
             />
             <label
               htmlFor={`${index}-stars`}

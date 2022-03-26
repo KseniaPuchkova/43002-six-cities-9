@@ -1,5 +1,5 @@
 import PlaceCard from '../place-card/place-card';
-import {CardTypes} from '../../const';
+import {CardType} from '../../const';
 import {Offer} from '../../types/offer';
 
 type PlacesListProps = {
@@ -17,7 +17,7 @@ function PlacesList({offers, isNearPlacesList, onMouseEnter, onMouseLeave}: Plac
         <PlaceCard
           key={offer.id}
           offer={offer}
-          cardType={isNearPlacesList ? CardTypes.ROOM : CardTypes.MAIN}
+          cardType={isNearPlacesList ? CardType.ROOM : CardType.MAIN}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         />

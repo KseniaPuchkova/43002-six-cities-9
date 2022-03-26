@@ -7,8 +7,8 @@ import {loadOffersAction, checkAuthAction} from './store/api-actions';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-store.dispatch(loadOffersAction());
 store.dispatch(checkAuthAction());
+store.dispatch(loadOffersAction());
 
 ReactDOM.render(
   <React.StrictMode>

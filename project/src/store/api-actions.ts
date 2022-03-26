@@ -7,7 +7,8 @@ import {UserData} from '../types/user-data';
 import {AuthData} from '../types/auth-data';
 import {saveToken, dropToken} from '../services/token';
 import {errorHandle, getStatusCode} from '../services/error-handle';
-import {requireAuthorization,
+import {
+  requireAuthorization,
   loadOffers,
   loadOffer,
   loadOffersNearby,
@@ -115,7 +116,6 @@ export const setFavoriteAction = createAsyncThunk(
         );
         return;
       }
-
       errorHandle(error);
     }
   },
