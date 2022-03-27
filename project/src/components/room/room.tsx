@@ -22,11 +22,14 @@ function Room(): JSX.Element {
   const {offers, currentOffer, offersNearby, reviewsByOffer, authorizationStatus} = useAppSelector((state) => state);
   const offer = offers.find((item) => item.id === id);
 
+  const offersWithoutNearby = offers.filter((a) => !offersNearby.some((b) => a.id === b.id));
+  const offersNearbyFiltered = offers.filter((a) => !offersWithoutNearby.some((b) => a.id === b.id));
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(loadOfferAction(id));
-    dispatch(loadOffersNearbyAction(id));
     dispatch(loadReviewsByOfferAction(id));
+    dispatch(loadOffersNearbyAction(id));
   }, [dispatch, id]);
 
   if (!currentOffer) {
@@ -142,7 +145,7 @@ function Room(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <PlacesList
-              offers={offersNearby}
+              offers={offersNearbyFiltered}
               isNearPlacesList
             />
           </section>

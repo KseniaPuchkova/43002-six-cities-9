@@ -45,3 +45,4 @@ export function sortCities(a: Offer, b: Offer): number {
 
   return 0;
 }
+
