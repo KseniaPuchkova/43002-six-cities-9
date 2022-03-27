@@ -1,7 +1,7 @@
 import Header from '../header/header';
 import OffersList from '../offers-list/offers-list';
 import CitiesList from '../cities-list/cities-list';
-import {useAppSelector} from '../../hooks/index';
+import {useAppSelector} from '../../hooks/hooks';
 import {getOffersByCity} from '../../utils';
 
 function Main(): JSX.Element {

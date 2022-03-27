@@ -2,8 +2,8 @@ import {useState, ChangeEvent, FormEvent, memo} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import Header from '../header/header';
-import {useAppSelector} from '../../hooks/index';
-import {useAppDispatch} from '../../hooks';
+import {useAppSelector} from '../../hooks/hooks';
+import {useAppDispatch} from '../../hooks/hooks';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 const EMAIL_REG = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;

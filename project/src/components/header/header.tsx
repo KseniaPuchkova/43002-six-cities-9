@@ -1,7 +1,7 @@
 import {MouseEvent, memo} from 'react';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {useAppSelector} from '../../hooks/index';
+import {useAppSelector} from '../../hooks/hooks';
 import {logoutAction} from '../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../const';
 

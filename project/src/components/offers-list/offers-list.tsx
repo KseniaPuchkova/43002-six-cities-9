@@ -3,7 +3,7 @@ import Map from '../map/map';
 import EmptyOffersList from './empty-offers-list';
 import SortList from '../sort-list/sort-list';
 import PlacesList from '../places-list/places-list';
-import {useAppSelector} from '../../hooks/index';
+import {useAppSelector} from '../../hooks/hooks';
 import {getOffersByCity, getSortedOffers} from '../../utils';
 import {Offer} from '../../types/offer';
 
@@ -14,8 +14,8 @@ function OffersList(): JSX.Element {
   const sortedOffers = getSortedOffers(sortType, offersByCity);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | null>(null);
-  const handleOnMouseEnter = setHoveredOffer;
-  const handleOnMouseLeave = useCallback(() => setHoveredOffer(null), []);
+  const onMouseEnter = setHoveredOffer;
+  const onMouseLeave = useCallback(() => setHoveredOffer(null), []);
 
   return (
     <div className="cities">
@@ -27,8 +27,8 @@ function OffersList(): JSX.Element {
             <SortList />
             <PlacesList
               offers={sortedOffers}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
             />
           </section>
           <div className="cities__right-section">

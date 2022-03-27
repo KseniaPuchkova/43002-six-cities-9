@@ -1,6 +1,6 @@
 import {MouseEvent, memo} from 'react';
 import {Link} from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {changeCity} from '../../store/app-process/app-process';
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
@@ -8,6 +8,11 @@ export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', '
 function CitiesList(): JSX.Element {
   const dispatch = useAppDispatch();
   const {activeCity} = useAppSelector(({APP}) => APP);
+
+  const handleChangeCityClick = (evt: MouseEvent, city: string) => {
+    evt.preventDefault();
+    dispatch(changeCity(city));
+  };
 
   return (
     <div className="tabs">
@@ -21,10 +26,7 @@ function CitiesList(): JSX.Element {
               <Link
                 to={city}
                 className={`locations__item-link tabs__item${activeCity === city ? ' tabs__item--active':''}`}
-                onClick={(evt: MouseEvent) => {
-                  evt.preventDefault();
-                  dispatch(changeCity(city));
-                }}
+                onClick={(evt) => handleChangeCityClick (evt, city)}
               >
                 <span>{city}</span>
               </Link>

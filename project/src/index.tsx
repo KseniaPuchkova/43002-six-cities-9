@@ -7,8 +7,8 @@ import {store} from './store/store';
 import App from './components/app/app';
 import {loadOffersAction, checkAuthAction} from './store/api-actions';
 
-store.dispatch(checkAuthAction());
 store.dispatch(loadOffersAction());
+store.dispatch(checkAuthAction());
 
 ReactDOM.render(
   <React.StrictMode>

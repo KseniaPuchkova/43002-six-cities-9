@@ -4,8 +4,10 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import {City, Offer} from '../../types/offer';
 
-const URL_MARKER_DEFAULT = 'img/pin.svg';
-const URL_MARKER_ACTIVE = 'img/pin-active.svg';
+export enum MarkerUrl {
+  Default = 'img/pin.svg',
+  Active = 'img/pin-active.svg'
+}
 
 type MapProps = {
   activeCity: City,
@@ -14,13 +16,13 @@ type MapProps = {
 };
 
 const defaultIcon = leaflet.icon({
-  iconUrl: URL_MARKER_DEFAULT,
+  iconUrl: MarkerUrl.Default,
   iconSize: [30, 40],
   iconAnchor: [15, 30],
 });
 
 const activeIcon = leaflet.icon({
-  iconUrl: URL_MARKER_ACTIVE,
+  iconUrl: MarkerUrl.Active,
   iconSize: [30, 40],
   iconAnchor: [15, 30],
 });

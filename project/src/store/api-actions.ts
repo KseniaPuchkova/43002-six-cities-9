@@ -4,15 +4,16 @@ import {saveToken, dropToken} from '../services/token';
 import {errorHandle, getStatusCode} from '../services/error-handle';
 import {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites} from './data-process/data-process';
 import {requireAuthorization, getUserData} from './user-process/user-process';
+import {changeSubmitStatus} from './data-process/data-process';
 import {redirectToRoute} from './action';
-import {AppRoute, APIRoute, AuthorizationStatus, HTTP_CODE} from '../const';
+import {AppRoute, APIRoute, AuthorizationStatus, HttpCode, SubmitStatus} from '../const';
 import {Offer, FavoriteFlag} from '../types/offer';
 import {Review, ReviewForForm} from '../types/review';
 import {UserData} from '../types/user-data';
 import {AuthData} from '../types/auth-data';
 
 export const loadOffersAction = createAsyncThunk(
-  'loadOffers',
+  'data/loadOffers',
   async () => {
     try {
       const {data} = await api.get<Offer[]>(APIRoute.Offers);
@@ -24,7 +25,7 @@ export const loadOffersAction = createAsyncThunk(
 );
 
 export const loadOfferAction = createAsyncThunk(
-  'loadOffer',
+  'data/loadOffer',
   async (id: number) => {
     try {
       const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
@@ -36,7 +37,7 @@ export const loadOfferAction = createAsyncThunk(
 );
 
 export const loadOffersNearbyAction = createAsyncThunk(
-  'loadOffersNearby',
+  'data/loadOffersNearby',
   async (id: number) => {
     try {
       const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
@@ -48,7 +49,7 @@ export const loadOffersNearbyAction = createAsyncThunk(
 );
 
 export const loadReviewsByOfferAction = createAsyncThunk(
-  'loadReviewsByOffer',
+  'data/loadReviewsByOffer',
   async (id: number) => {
     try {
       const {data} = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
@@ -60,19 +61,22 @@ export const loadReviewsByOfferAction = createAsyncThunk(
 );
 
 export const postReviewAction = createAsyncThunk(
-  'postReview',
+  'data/postReview',
   async ({id, comment, rating}: ReviewForForm) => {
     try {
+      store.dispatch(changeSubmitStatus(SubmitStatus.Sending));
       const {data} = await api.post<Review[]>(`${APIRoute.Comments}/${id}`, {comment, rating});
+      store.dispatch(changeSubmitStatus(SubmitStatus.Success));
       store.dispatch(loadReviewsByOffer(data));
     } catch (error) {
       errorHandle(error);
+      store.dispatch(changeSubmitStatus(SubmitStatus.Error));
     }
   },
 );
 
 export const checkAuthAction = createAsyncThunk(
-  'checkAuth',
+  'user/checkAuth',
   async () => {
     try {
       const {data} = await api.get(APIRoute.Login);
@@ -86,7 +90,7 @@ export const checkAuthAction = createAsyncThunk(
 );
 
 export const loadFavoritesAction = createAsyncThunk(
-  'loadFavorites',
+  'data/loadFavorites',
   async () => {
     try {
       const {data} = await api.get<Offer[]>(`${APIRoute.Favorite}`);
@@ -98,7 +102,7 @@ export const loadFavoritesAction = createAsyncThunk(
 );
 
 export const setFavoriteAction = createAsyncThunk(
-  'setFavorite',
+  'data/setFavorite',
   async ({id, flag}: FavoriteFlag) => {
     try {
       await api.post<Offer>(`${APIRoute.Favorite}/${id}/${flag}`);
@@ -107,7 +111,7 @@ export const setFavoriteAction = createAsyncThunk(
       store.dispatch(loadFavoritesAction());
     } catch (error) {
       const status = getStatusCode(error);
-      if (status === HTTP_CODE.UNAUTHORIZED) {
+      if (status === HttpCode.Unauthorized) {
         store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth),
         );
         return;
@@ -118,7 +122,7 @@ export const setFavoriteAction = createAsyncThunk(
 );
 
 export const loginAction = createAsyncThunk(
-  'login',
+  'user/login',
   async ({email, password}: AuthData) => {
     try {
       const {data, data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
@@ -134,7 +138,7 @@ export const loginAction = createAsyncThunk(
 );
 
 export const logoutAction = createAsyncThunk(
-  'logout',
+  'user/logout',
   async () => {
     try {
       await api.delete(APIRoute.Logout);

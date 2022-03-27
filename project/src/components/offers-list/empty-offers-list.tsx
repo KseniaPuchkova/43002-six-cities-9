@@ -1,4 +1,4 @@
-import {useAppSelector} from '../../hooks/index';
+import {useAppSelector} from '../../hooks/hooks';
 
 function EmptyMainPage(): JSX.Element {
   const {activeCity} = useAppSelector(({APP}) => APP);
@@ -11,7 +11,9 @@ function EmptyMainPage(): JSX.Element {
           <p className="cities__status-description">We could not find any property available at the moment in {activeCity}</p>
         </div>
       </section>
-      <div className="cities__right-section"></div>
+      <div className="cities__right-section">
+        <section className="cities__map map"></section>
+      </div>
     </div>
   );
 }

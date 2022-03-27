@@ -23,13 +23,20 @@ export enum APIRoute {
   Favorite = '/favorite',
   Comments = '/comments',
   Login = '/login',
-  Logout =  '/logout'
+  Logout =  '/logout',
 }
 
-export enum HTTP_CODE {
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  NOT_FOUND = 404,
+export enum HttpCode {
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
+}
+
+export enum SubmitStatus {
+  Unknown,
+  Sending,
+  Success,
+  Error,
 }
 
 export const SortType = {
@@ -37,7 +44,7 @@ export const SortType = {
   LOW_PRICE_FIRST: 'Price: low to high',
   HIGH_PRICE_FIRST: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first',
-};
+} as const;
 
 export const CardType = {
   MAIN: {
@@ -61,7 +68,7 @@ export const CardType = {
     imgWidth: '260',
     imgHeight: '200',
   },
-};
+} as const;
 
 export const FavoriteButtonType = {
   CARD: {
@@ -74,4 +81,4 @@ export const FavoriteButtonType = {
     imgWidth: '31',
     imgHeight: '33',
   },
-};
+} as const;

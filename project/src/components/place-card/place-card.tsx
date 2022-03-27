@@ -17,12 +17,12 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
   const {isPremium, previewImage, price, rating, title, type, id} = offer;
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
-  const handleOnMouseLeave = onMouseLeave;
   const handleOnMouseEnter = useCallback(() => {
     if (onMouseEnter) {
       onMouseEnter(offer);
     }
   }, [offer, onMouseEnter]);
+  const handleOnMouseLeave = onMouseLeave;
 
   return (
     <article

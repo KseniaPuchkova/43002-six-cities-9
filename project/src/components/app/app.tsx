@@ -8,7 +8,7 @@ import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
 import SignIn from '../login/login';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {useAppSelector} from '../../hooks';
+import {useAppSelector} from '../../hooks/hooks';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>

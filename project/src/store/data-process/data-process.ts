@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {Process} from '../../const';
+import {Process, SubmitStatus} from '../../const';
 import {Offer} from '../../types/offer';
 import {Review} from '../../types/review';
 
@@ -10,6 +10,7 @@ type InitalState = {
   offersNearby: Offer[],
   reviewsByOffer: Review[],
   favorites: Offer[],
+  submitStatus: number,
 }
 
 const initialState: InitalState = {
@@ -19,6 +20,7 @@ const initialState: InitalState = {
   offersNearby: [],
   reviewsByOffer: [],
   favorites: [],
+  submitStatus: SubmitStatus.Unknown,
 };
 
 export const dataProcess = createSlice({
@@ -41,7 +43,10 @@ export const dataProcess = createSlice({
     loadFavorites: (state, action) => {
       state.favorites = action.payload;
     },
+    changeSubmitStatus: (state, action) => {
+      state.submitStatus = action.payload;
+    },
   },
 });
 
-export const {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites} = dataProcess.actions;
+export const {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites, changeSubmitStatus} = dataProcess.actions;

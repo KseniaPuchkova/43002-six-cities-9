@@ -1,9 +1,14 @@
-import React, {useState,  FormEvent, ChangeEvent} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import React, {useState, useEffect, FormEvent, ChangeEvent} from 'react';
+import {toast} from 'react-toastify';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {postReviewAction} from '../../store/api-actions';
+import {SubmitStatus} from '../../const';
 
-const MIN_CHARS_COUNT = 50;
-const MAX_CHARS_COUNT = 300;
+export enum ReviewLength {
+  Min = 50,
+  Max = 300,
+}
+
 const RATINGS = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
 
 const ratings = RATINGS.map((rating, index) => ({
@@ -12,14 +17,10 @@ const ratings = RATINGS.map((rating, index) => ({
 }));
 
 function ReviewForm(): JSX.Element {
-  const {currentOffer} = useAppSelector(({DATA}) => DATA);
+  const {currentOffer, submitStatus} = useAppSelector(({DATA}) => DATA);
 
   const [review, setReview] = useState({count: 0, comment: ''});
   const {count, comment} = review;
-
-  const isDisabled = count === null || comment.length < MIN_CHARS_COUNT || comment.length > MAX_CHARS_COUNT;
-
-  const clearForm = () => setReview({count: 0, comment: ''});
 
   const dispatch = useAppDispatch();
   const handleReviewSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -28,9 +29,25 @@ function ReviewForm(): JSX.Element {
     if (!currentOffer) {
       return;
     }
+
     dispatch(postReviewAction({id: currentOffer.id, rating: count, comment}));
-    clearForm();
   };
+
+  useEffect(() => {
+    if (submitStatus === SubmitStatus.Success) {
+      setReview({count: 0, comment: ''});
+      toast.success('Your review has been sent successfully. Thanks!');
+    }
+
+    if (submitStatus === SubmitStatus.Error) {
+      toast.error('Your review has not been sent. Please try later');
+    }
+
+  }, [submitStatus]);
+
+
+  const isDisabled = count === 0 || comment.length < ReviewLength.Min || comment.length > ReviewLength.Max;
+  const isSending = submitStatus === SubmitStatus.Sending;
 
   return (
     <form className="reviews__form form"
@@ -50,6 +67,7 @@ function ReviewForm(): JSX.Element {
               type="radio"
               onChange={(evt: ChangeEvent<HTMLInputElement>) => setReview({...review, count: Number(evt.target.value)})}
               checked={count === index}
+              disabled={isSending}
             />
             <label
               htmlFor={`${index}-stars`}
@@ -70,16 +88,17 @@ function ReviewForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
         onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => setReview({...review, comment: evt.target.value})}
+        disabled={isSending}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_CHARS_COUNT} characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{ReviewLength.Min} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isDisabled}
+          disabled={isDisabled || isSending}
         >Submit
         </button>
       </div>

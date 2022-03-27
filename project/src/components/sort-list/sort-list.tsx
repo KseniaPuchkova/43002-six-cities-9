@@ -1,7 +1,7 @@
 import {MouseEvent, memo} from 'react';
 import {useState} from 'react';
 import SortItem from '../sort-item/sort-item';
-import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {changeSortType} from '../../store/app-process/app-process';
 import {SortType} from '../../const';
 
@@ -11,6 +11,12 @@ function SortList(): JSX.Element {
 
   const [isSortListOpen, setIsSortListOpen] = useState(false);
   const handleSortOnClick = () => setIsSortListOpen(!isSortListOpen);
+
+  const onSortTypeChange = (evt: MouseEvent, sortType: string) => {
+    evt.preventDefault();
+    setIsSortListOpen(!isSortListOpen);
+    dispatch(changeSortType(sortType));
+  };
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -30,11 +36,7 @@ function SortList(): JSX.Element {
             key={sortType}
             isActive={activeSortType === sortType}
             sortType={sortType}
-            onClick={(evt: MouseEvent) => {
-              evt.preventDefault();
-              setIsSortListOpen(!isSortListOpen);
-              dispatch(changeSortType(sortType));
-            }}
+            onSortTypeChange={(evt) => onSortTypeChange(evt, sortType)}
           />
         ))}
       </ul>

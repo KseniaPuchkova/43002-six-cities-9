@@ -8,7 +8,7 @@ import ReviewsList from '../reviews-list/reviews-list';
 import ReviewForm from '../review-form/review-form';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FavoritesButton from '../favorites-button/favorites-button';
-import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {loadReviewsByOfferAction, loadOfferAction, loadOffersNearbyAction} from '../../store/api-actions';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
 import {AuthorizationStatus, FavoriteButtonType} from '../../const';
@@ -22,9 +22,6 @@ function Room(): JSX.Element {
   const {offers, currentOffer, offersNearby, reviewsByOffer} = useAppSelector(({DATA}) => DATA);
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const offer = offers.find((item) => item.id === id);
-
-  const offersWithoutNearby = offers.filter((a) => !offersNearby.some((b) => a.id === b.id));
-  const offersNearbyFiltered = offers.filter((a) => !offersWithoutNearby.some((b) => a.id === b.id));
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -147,7 +144,7 @@ function Room(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <PlacesList
-              offers={offersNearbyFiltered}
+              offers={offersNearby}
               isNearPlacesList
             />
           </section>
