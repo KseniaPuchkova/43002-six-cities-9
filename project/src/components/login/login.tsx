@@ -16,7 +16,8 @@ function Login(): JSX.Element {
   const {email, password} = authData;
 
   const navigate = useNavigate();
-  const {activeCity, authorizationStatus} = useAppSelector((state) => state);
+  const {activeCity} = useAppSelector(({APP}) => APP);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
   if (authorizationStatus === AuthorizationStatus.Auth) {
     navigate(AppRoute.Main);
   }

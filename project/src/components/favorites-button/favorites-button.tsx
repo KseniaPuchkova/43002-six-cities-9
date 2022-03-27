@@ -17,7 +17,7 @@ function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JS
 
   const {buttonClassName, imgWidth, imgHeight} = favoriteButtonType;
 
-  const {authorizationStatus} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   const handleFavoriteClick = (evt: MouseEvent) => {
     evt.preventDefault();

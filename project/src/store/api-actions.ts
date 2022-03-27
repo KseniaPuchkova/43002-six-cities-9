@@ -1,21 +1,15 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {api, store} from '../store';
+import {api, store} from '../store/store';
+import {saveToken, dropToken} from '../services/token';
+import {errorHandle, getStatusCode} from '../services/error-handle';
+import {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites} from './data-process/data-process';
+import {requireAuthorization, getUserData} from './user-process/user-process';
+import {redirectToRoute} from './action';
 import {AppRoute, APIRoute, AuthorizationStatus, HTTP_CODE} from '../const';
 import {Offer, FavoriteFlag} from '../types/offer';
 import {Review, ReviewForForm} from '../types/review';
 import {UserData} from '../types/user-data';
 import {AuthData} from '../types/auth-data';
-import {saveToken, dropToken} from '../services/token';
-import {errorHandle, getStatusCode} from '../services/error-handle';
-import {
-  requireAuthorization,
-  loadOffers,
-  loadOffer,
-  loadOffersNearby,
-  loadReviewsByOffer,
-  loadFavorites,
-  redirectToRoute,
-  getUserData} from './action';
 
 export const loadOffersAction = createAsyncThunk(
   'loadOffers',

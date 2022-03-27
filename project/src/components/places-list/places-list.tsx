@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import PlaceCard from '../place-card/place-card';
 import {CardType} from '../../const';
 import {Offer} from '../../types/offer';
@@ -26,4 +27,4 @@ function PlacesList({offers, isNearPlacesList, onMouseEnter, onMouseLeave}: Plac
   );
 }
 
-export default PlacesList;
+export default memo(PlacesList, (prevProps, nextProps) => prevProps.offers === nextProps.offers);

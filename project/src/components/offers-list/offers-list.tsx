@@ -8,7 +8,8 @@ import {getOffersByCity, getSortedOffers} from '../../utils';
 import {Offer} from '../../types/offer';
 
 function OffersList(): JSX.Element {
-  const {activeCity, offers, sortType} = useAppSelector((state) => state);
+  const {activeCity, sortType} = useAppSelector(({APP}) => APP);
+  const {offers} = useAppSelector(({DATA}) => DATA);
   const offersByCity = getOffersByCity(activeCity, offers);
   const sortedOffers = getSortedOffers(sortType, offersByCity);
 

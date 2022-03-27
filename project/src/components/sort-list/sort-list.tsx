@@ -2,11 +2,11 @@ import {MouseEvent, memo} from 'react';
 import {useState} from 'react';
 import SortItem from '../sort-item/sort-item';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {changeSortType} from '../../store/action';
+import {changeSortType} from '../../store/app-process/app-process';
 import {SortType} from '../../const';
 
 function SortList(): JSX.Element {
-  const activeSortType = useAppSelector((state) => state.sortType);
+  const {sortType: activeSortType} = useAppSelector(({APP}) => APP);
   const dispatch = useAppDispatch();
 
   const [isSortListOpen, setIsSortListOpen] = useState(false);

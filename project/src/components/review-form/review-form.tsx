@@ -12,7 +12,7 @@ const ratings = RATINGS.map((rating, index) => ({
 }));
 
 function ReviewForm(): JSX.Element {
-  const {currentOffer} = useAppSelector((state) => state);
+  const {currentOffer} = useAppSelector(({DATA}) => DATA);
 
   const [review, setReview] = useState({count: 0, comment: ''});
   const {count, comment} = review;

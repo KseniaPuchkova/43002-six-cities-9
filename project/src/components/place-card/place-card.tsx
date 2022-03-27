@@ -1,3 +1,4 @@
+import {memo, useCallback} from 'react';
 import {Link} from 'react-router-dom';
 import FavoritesButton from '../favorites-button/favorites-button';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
@@ -17,11 +18,11 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
   const handleOnMouseLeave = onMouseLeave;
-  const handleOnMouseEnter  = () => {
+  const handleOnMouseEnter = useCallback(() => {
     if (onMouseEnter) {
       onMouseEnter(offer);
     }
-  };
+  }, [offer, onMouseEnter]);
 
   return (
     <article
@@ -69,4 +70,4 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
     </article>
   );
 }
-export default PlaceCard;
+export default memo(PlaceCard);

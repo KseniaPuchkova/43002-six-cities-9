@@ -1,5 +1,5 @@
-import {Offer} from '../../types/offer';
 import FavoritesCities from '../favorites-cities/favorites-cities';
+import {Offer} from '../../types/offer';
 
 type FavoritesListProps = {
   favorites: Offer[],

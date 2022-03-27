@@ -5,7 +5,8 @@ import {useAppSelector} from '../../hooks/index';
 import {getOffersByCity} from '../../utils';
 
 function Main(): JSX.Element {
-  const {activeCity, offers} = useAppSelector((state) => state);
+  const {activeCity} = useAppSelector(({APP}) => APP);
+  const {offers} = useAppSelector(({DATA}) => DATA);
   const offersByCity = getOffersByCity(activeCity, offers);
 
   return (

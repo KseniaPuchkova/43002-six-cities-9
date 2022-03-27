@@ -6,7 +6,7 @@ import {useAppSelector} from '../../hooks/index';
 import {sortCities} from '../../utils';
 
 function Favorites(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const {offers} = useAppSelector(({DATA}) => DATA);
   const favorites = offers.filter(({isFavorite}) => isFavorite).slice().sort(sortCities);
 
   if (favorites.length) {

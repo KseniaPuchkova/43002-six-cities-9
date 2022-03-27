@@ -1,13 +1,13 @@
 import {MouseEvent, memo} from 'react';
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {changeCity} from '../../store/action';
+import {changeCity} from '../../store/app-process/app-process';
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 function CitiesList(): JSX.Element {
   const dispatch = useAppDispatch();
-  const {activeCity} = useAppSelector((state) => state);
+  const {activeCity} = useAppSelector(({APP}) => APP);
 
   return (
     <div className="tabs">

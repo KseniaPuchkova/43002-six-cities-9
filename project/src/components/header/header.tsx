@@ -6,7 +6,7 @@ import {logoutAction} from '../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 function Header(): JSX.Element {
-  const {authorizationStatus, userData} = useAppSelector((state) => state);
+  const {authorizationStatus, userData} = useAppSelector(({USER}) => USER);
 
   const dispatch = useDispatch();
   const handleLogoutClick= (evt: MouseEvent) => {

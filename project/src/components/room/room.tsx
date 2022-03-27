@@ -19,7 +19,8 @@ function Room(): JSX.Element {
   const params = useParams();
   const id = Number(params.id);
 
-  const {offers, currentOffer, offersNearby, reviewsByOffer, authorizationStatus} = useAppSelector((state) => state);
+  const {offers, currentOffer, offersNearby, reviewsByOffer} = useAppSelector(({DATA}) => DATA);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const offer = offers.find((item) => item.id === id);
 
   const offersWithoutNearby = offers.filter((a) => !offersNearby.some((b) => a.id === b.id));
@@ -32,12 +33,13 @@ function Room(): JSX.Element {
     dispatch(loadOffersNearbyAction(id));
   }, [dispatch, id]);
 
-  if (!currentOffer) {
-    return <LoadingScreen />;
-  }
 
   if (!offer || !id) {
     return <NotFound />;
+  }
+
+  if (!currentOffer) {
+    return <LoadingScreen />;
   }
 
   const {price, isPremium, host, title, rating, type, bedrooms, maxAdults, goods, description, city, images} = offer;

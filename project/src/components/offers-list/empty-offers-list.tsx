@@ -1,7 +1,7 @@
 import {useAppSelector} from '../../hooks/index';
 
 function EmptyMainPage(): JSX.Element {
-  const {activeCity} = useAppSelector((state) => state);
+  const {activeCity} = useAppSelector(({APP}) => APP);
 
   return (
     <div className="cities__places-container cities__places-container--empty container">
