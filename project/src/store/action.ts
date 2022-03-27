@@ -9,7 +9,7 @@ export enum Action {
   LOAD_OFFER = 'Load_Offer',
   LOAD_OFFER_NEARBY = 'Load_Offer_Nearby',
   LOAD_REVIEWS_BY_OFFER = 'Load_Reviews_By_Offer',
-  LOAD_FAVORITE_OFFERS = 'Load_Favorite_Offers',
+  LOAD_FAVORITES = 'Load_Favorite_Offers',
   REQUIRE_AUTHORIZATION = 'Require_Authorization',
   GET_USER_DATA = 'Get_User_Data',
   CHANGE_CITY = 'Change_City',
@@ -21,7 +21,7 @@ export const loadOffers = createAction<Offer[]>(Action.LOAD_OFFERS);
 export const loadOffer = createAction<Offer>(Action.LOAD_OFFER);
 export const loadOffersNearby = createAction<Offer[]>(Action.LOAD_OFFER_NEARBY);
 export const loadReviewsByOffer = createAction<Review[]>(Action.LOAD_REVIEWS_BY_OFFER);
-export const loadFavoriteOffers = createAction<Offer[]>(Action.LOAD_FAVORITE_OFFERS);
+export const loadFavorites = createAction<Offer[]>(Action.LOAD_FAVORITES);
 export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQUIRE_AUTHORIZATION);
 export const getUserData = createAction<UserData>(Action.GET_USER_DATA);
 export const changeCity = createAction<string>(Action.CHANGE_CITY);

@@ -6,13 +6,13 @@ export const getRatingInPercent = (rating: number): string => `${Math.round(rati
 
 export const makeFirstLetterUppercase = (str: string): string => str[0].toUpperCase() + str.slice(1);
 
-export const getOffersByCity = (currentCity: string, offers: Offer[]) => {
+export const getOffersByCity = (currentCity: string, offers: Offer[]): Offer[] => {
   const offersByCity = offers.filter(({city}) => currentCity === city.name);
 
   return offersByCity;
 };
 
-export const getSortedOffers = (sortType: string, offers: Offer[]) => {
+export const getSortedOffers = (sortType: string, offers: Offer[]): Offer[] => {
   let sortedOffers: Offer[] = [];
 
   switch (sortType) {
@@ -34,3 +34,14 @@ export const getSortedOffers = (sortType: string, offers: Offer[]) => {
 
   return sortedOffers;
 };
+
+export function sortCities(a: Offer, b: Offer): number {
+  if (a.city.name < b.city.name) {
+    return -1;
+  }
+  if (a.city.name > b.city.name) {
+    return 1;
+  }
+
+  return 0;
+}

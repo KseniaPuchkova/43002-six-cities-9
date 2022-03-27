@@ -1,45 +1,37 @@
-import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {loadOffersAction, loadFavoritesAction, setFavoriteAction} from '../../store/api-actions';
+import {setFavoriteAction} from '../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {FavoriteButton} from '../../types/favorite-button';
+import {FavoriteButtonType} from '../../types/favorite-button';
 import {Offer} from '../../types/offer';
 
 type FavoritesButtonProps = {
-  favoriteButton: FavoriteButton,
+  favoriteButtonType: FavoriteButtonType,
   offer: Offer,
 }
 
-function FavoritesButton ({favoriteButton, offer}: FavoritesButtonProps): JSX.Element {
-  const {buttonClassName, imgWidth, imgHeight} = favoriteButton;
+function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JSX.Element {
+  const {buttonClassName, imgWidth, imgHeight} = favoriteButtonType;
 
   const {authorizationStatus} = useAppSelector((state) => state);
 
-  const [isFavorite, setIsFavorite] = useState(offer?.isFavorite);
-  const postFavoriteFlag = isFavorite ? 0 : 1;
-
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleFavoriteClick = () => {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
-      navigate(AppRoute.SignIn);
+      return navigate(AppRoute.SignIn);
     } else {
       dispatch(setFavoriteAction({
         id: offer.id,
-        flag: postFavoriteFlag,
+        flag: Number(!offer.isFavorite),
       }));
-
-      setIsFavorite(!isFavorite);
-      dispatch(loadOffersAction());
-      dispatch(loadFavoritesAction());
     }
   };
 
   return (
     <button
-      className={`${buttonClassName}__bookmark-button ${isFavorite && (authorizationStatus === AuthorizationStatus.Auth)
+      className={`${buttonClassName}__bookmark-button ${offer.isFavorite && (authorizationStatus === AuthorizationStatus.Auth)
         ? `${buttonClassName}__bookmark-button--active ` : ''}button`}
       type="button"
       onClick={handleFavoriteClick}
@@ -51,7 +43,7 @@ function FavoritesButton ({favoriteButton, offer}: FavoritesButtonProps): JSX.El
       >
         <use xlinkHref="#icon-bookmark" />
       </svg>
-      <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+      <span className="visually-hidden">{offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
     </button>
   );
 }

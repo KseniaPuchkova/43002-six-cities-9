@@ -67,7 +67,7 @@ function Room(): JSX.Element {
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
                 <FavoritesButton
-                  favoriteButton={FavoriteButtonType.ROOM}
+                  favoriteButtonType={FavoriteButtonType.ROOM}
                   offer={offer}
                 />
               </div>

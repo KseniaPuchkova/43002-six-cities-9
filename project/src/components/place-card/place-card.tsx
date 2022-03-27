@@ -3,11 +3,11 @@ import FavoritesButton from '../favorites-button/favorites-button';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
 import {FavoriteButtonType} from '../../const';
 import {Offer} from '../../types/offer';
-import {Card} from '../../types/card';
+import {CardType} from '../../types/card';
 
 type PlaceCardProps = {
   offer: Offer,
-  cardType: Card,
+  cardType: CardType,
   onMouseEnter?: (offer: Offer) => void
   onMouseLeave?: () => void
 }
@@ -51,7 +51,7 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <FavoritesButton
-            favoriteButton={FavoriteButtonType.CARD}
+            favoriteButtonType={FavoriteButtonType.CARD}
             offer={offer}
           />
         </div>

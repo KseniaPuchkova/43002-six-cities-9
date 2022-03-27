@@ -9,7 +9,7 @@ import {requireAuthorization,
   loadOffers,
   loadOffer,
   loadReviewsByOffer,
-  loadFavoriteOffers,
+  loadFavorites,
   loadOffersNearby,
   getUserData} from './action';
 import {CITIES} from '../components/cities-list/cities-list';
@@ -22,7 +22,7 @@ type InitalState = {
   currentOffer: Offer | null,
   offersNearby: Offer[],
   reviewsByOffer: Review[],
-  favoriteOffers: Offer[],
+  favorites: Offer[],
   authorizationStatus: AuthorizationStatus,
   userData: UserData,
   activeCity: string,
@@ -35,7 +35,7 @@ const initialState: InitalState = {
   currentOffer: null,
   offersNearby: [],
   reviewsByOffer: [],
-  favoriteOffers: [],
+  favorites: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: {} as UserData,
   activeCity: CITIES[DEFAULT_CITY_INDEX],
@@ -57,8 +57,8 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loadReviewsByOffer, (state, action) => {
       state.reviewsByOffer = action.payload;
     })
-    .addCase(loadFavoriteOffers, (state, action) => {
-      state.favoriteOffers = action.payload;
+    .addCase(loadFavorites, (state, action) => {
+      state.favorites = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

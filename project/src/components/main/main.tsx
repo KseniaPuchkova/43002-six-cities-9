@@ -25,9 +25,7 @@ function MainPage(): JSX.Element {
       <main className={`page__main page__main--index${offersByCity.length === 0 ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <CitiesList />
-          </section>
+          <CitiesList />
         </div>
         <div className="cities">
           {offersByCity.length !== 0 ? (

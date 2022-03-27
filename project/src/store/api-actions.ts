@@ -13,7 +13,7 @@ import {
   loadOffer,
   loadOffersNearby,
   loadReviewsByOffer,
-  loadFavoriteOffers,
+  loadFavorites,
   redirectToRoute,
   getUserData} from './action';
 
@@ -96,7 +96,7 @@ export const loadFavoritesAction = createAsyncThunk(
   async () => {
     try {
       const {data} = await api.get<Offer[]>(`${APIRoute.Favorite}`);
-      store.dispatch(loadFavoriteOffers(data));
+      store.dispatch(loadFavorites(data));
     } catch (error) {
       errorHandle(error);
     }
@@ -108,6 +108,8 @@ export const setFavoriteAction = createAsyncThunk(
   async ({id, flag}: FavoriteFlag) => {
     try {
       await api.post<Offer>(`${APIRoute.Favorite}/${id}/${flag}`);
+      const {data} = await api.get<Offer[]>(APIRoute.Offers);
+      store.dispatch(loadOffers(data));
       store.dispatch(loadFavoritesAction());
     } catch (error) {
       const status = getStatusCode(error);

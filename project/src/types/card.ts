@@ -1,4 +1,4 @@
-export type Card ={
+export type CardType = {
   articleClassName: string;
   imgWrapperClassName: string,
   cardInfoClassName: string,

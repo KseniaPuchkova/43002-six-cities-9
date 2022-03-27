@@ -3,10 +3,11 @@ import Footer from '../footer/footer';
 import EmptyFavorites from './empty-favorites';
 import FavoritesList from '../favorites-list/favorites-list';
 import {useAppSelector} from '../../hooks/index';
+import {sortCities} from '../../utils';
 
 function Favorites(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
-  const favorites = offers.filter(({isFavorite}) => isFavorite);
+  const favorites = offers.filter(({isFavorite}) => isFavorite).slice().sort(sortCities);
 
   if (favorites.length) {
     return (
