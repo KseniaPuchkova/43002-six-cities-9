@@ -40,7 +40,7 @@ function ReviewForm(): JSX.Element {
     }
 
     if (submitStatus === SubmitStatus.Error) {
-      toast.error('Your review has not been sent. Please try later');
+      toast.error('Your review has not been sent. Please try again');
     }
 
   }, [submitStatus]);

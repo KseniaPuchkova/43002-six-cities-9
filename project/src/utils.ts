@@ -45,7 +45,3 @@ export function sortCities(a: Offer, b: Offer): number {
 
   return 0;
 }
-
-/*export const getOffersNearbyFiltered = (offers: Offer[], offersNearby: Offer[]): Offer[] =>
-  offers.filter((a) => !offers.filter((b) => !offersNearby
-    .some((c) => b.id === c.id)).some((b) => a.id === b.id));*/
