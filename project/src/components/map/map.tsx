@@ -58,6 +58,8 @@ function Map({activeCity, offersByCity, hoveredOffer}: MapProps): JSX.Element {
           duration: 1.5,
         },
       );
+
+      map.scrollWheelZoom.disable();
     }
 
     return () => {

@@ -6,8 +6,9 @@ import {changeSortType} from '../../store/app-process/app-process';
 import {SortType} from '../../const';
 
 function SortList(): JSX.Element {
-  const {sortType: activeSortType} = useAppSelector(({APP}) => APP);
   const dispatch = useAppDispatch();
+
+  const {sortType: activeSortType} = useAppSelector(({APP}) => APP);
 
   const [isSortListOpen, setIsSortListOpen] = useState(false);
   const handleSortOnClick = () => setIsSortListOpen(!isSortListOpen);

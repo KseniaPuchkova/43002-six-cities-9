@@ -12,14 +12,15 @@ type FavoritesButtonProps = {
 }
 
 function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const {buttonClassName, imgWidth, imgHeight} = favoriteButtonType;
 
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   const [isFavorite, setFavorite] = useState(offer.isFavorite);
 
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const handleFavoriteClick = (evt: MouseEvent) => {
     evt.preventDefault();

@@ -4,7 +4,12 @@ import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {postReviewAction} from '../../store/api-actions';
 import {SubmitStatus} from '../../const';
 
-export enum ReviewLength {
+enum ToastText {
+  Success = 'Your review has been sent successfully. Thanks!',
+  Error = 'Your review has not been sent. Please try again',
+}
+
+enum ReviewLength {
   Min = 50,
   Max = 300,
 }
@@ -17,12 +22,14 @@ const ratings = RATINGS.map((rating, index) => ({
 }));
 
 function ReviewForm(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const {currentOffer, submitStatus} = useAppSelector(({DATA}) => DATA);
 
   const [review, setReview] = useState({count: 0, comment: ''});
   const {count, comment} = review;
 
-  const dispatch = useAppDispatch();
+
   const handleReviewSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -36,15 +43,11 @@ function ReviewForm(): JSX.Element {
   useEffect(() => {
     if (submitStatus === SubmitStatus.Success) {
       setReview({count: 0, comment: ''});
-      toast.success('Your review has been sent successfully. Thanks!');
+      toast.success(ToastText.Success);
     }
-
     if (submitStatus === SubmitStatus.Error) {
-      toast.error('Your review has not been sent. Please try again');
-    }
-
-  }, [submitStatus]);
-
+      toast.error(ToastText.Error);
+    }}, [submitStatus]);
 
   const isDisabled = count === 0 || comment.length < ReviewLength.Min || comment.length > ReviewLength.Max;
   const isSending = submitStatus === SubmitStatus.Sending;

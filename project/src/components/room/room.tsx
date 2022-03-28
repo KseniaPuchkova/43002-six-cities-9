@@ -16,6 +16,8 @@ import {AuthorizationStatus, FavoriteButtonType} from '../../const';
 const MAX_IMAGES_COUNT = 6;
 
 function Room(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const params = useParams();
   const id = Number(params.id);
 
@@ -23,7 +25,7 @@ function Room(): JSX.Element {
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const offer = offers.find((item) => item.id === id);
 
-  const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(loadOfferAction(id));
     dispatch(loadReviewsByOfferAction(id));

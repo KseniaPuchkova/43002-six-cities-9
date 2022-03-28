@@ -6,18 +6,27 @@ import {useAppSelector} from '../../hooks/hooks';
 import {useAppDispatch} from '../../hooks/hooks';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
-const EMAIL_REG = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-const PASSWORD_REG = /^(?=.*[a-z])(?=.*[0-9]).+$/;
-const EMAIL_TEXT = 'Please enter the correct email address';
-const PASSWORD_TEXT= 'The password must not consist of only spaces and must contain at least one digit and one letter';
+const Reg = {
+  Email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+  Password: /^(?=.*[a-z])(?=.*[0-9]).+$/,
+};
+
+enum ValidityText {
+  Email = 'Please enter the correct email address',
+  PasswordOnlySpaces = 'The password must not consist of only spaces',
+  PasswordDigitAndLetter = 'The password must contain at least one digit and one letter',
+}
 
 function Login(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const [authData, setAuthData] = useState({email: '', password: ''});
   const {email, password} = authData;
 
-  const navigate = useNavigate();
   const {activeCity} = useAppSelector(({APP}) => APP);
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
+
   if (authorizationStatus === AuthorizationStatus.Auth) {
     navigate(AppRoute.Main);
   }
@@ -26,8 +35,8 @@ function Login(): JSX.Element {
     const {name, value} = evt.target;
     setAuthData({...authData, [name]:value});
 
-    if (!EMAIL_REG.test(evt.target.value)) {
-      evt.target.setCustomValidity(EMAIL_TEXT);
+    if (!Reg.Email.test(evt.target.value)) {
+      evt.target.setCustomValidity(ValidityText.Email);
     }
     else {
       evt.target.setCustomValidity('');
@@ -38,15 +47,17 @@ function Login(): JSX.Element {
     const {name, value} = evt.target;
     setAuthData({...authData, [name]:value});
 
-    if ((evt.target.value).trim().length === 0 || !PASSWORD_REG.test(evt.target.value)) {
-      evt.target.setCustomValidity(PASSWORD_TEXT);
+    if ((evt.target.value).trim().length === 0) {
+      evt.target.setCustomValidity(ValidityText.PasswordOnlySpaces);
+    }
+    else if (!Reg.Password.test(evt.target.value))  {
+      evt.target.setCustomValidity(ValidityText.PasswordDigitAndLetter);
     }
     else {
       evt.target.setCustomValidity('');
     }
   };
 
-  const dispatch = useAppDispatch();
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 

@@ -19,6 +19,7 @@ export const loadOffersAction = createAsyncThunk(
       const {data} = await api.get<Offer[]>(APIRoute.Offers);
       store.dispatch(loadOffers(data));
     } catch (error) {
+      store.dispatch(loadOffers([]));
       errorHandle(error);
     }
   },
