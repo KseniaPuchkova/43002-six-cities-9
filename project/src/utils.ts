@@ -1,6 +1,6 @@
-import {Offer} from './types/offer';
-import {SortType} from './const';
 import {MAX_RATING} from './components/review-item/review-item';
+import {SortType} from './const';
+import {Offer} from './types/offer';
 
 export const getRatingInPercent = (rating: number): string => `${Math.round(rating) * 100 / MAX_RATING}%`;
 
