@@ -1,10 +1,10 @@
 import {createAction} from '@reduxjs/toolkit';
+import {AppRoute} from '../const';
 
 export enum Action {
-  CHANGE_CITY = 'Change_City',
-  CHANGE_SORT_TYPE = 'Change_Sort_Type',
+  REDIRECT_TO_ROUTE = 'Redirect_To_Route',
 }
 
-export const changeCity = createAction<string>(Action.CHANGE_CITY);
-export const changeSortType = createAction<string>(Action.CHANGE_SORT_TYPE);
+export const redirectToRoute = createAction<AppRoute>(Action.REDIRECT_TO_ROUTE);
+
 

@@ -1,6 +1,7 @@
-import {Offer} from '../../types/offer';
-import {CardTypes} from '../../const';
+import {memo} from 'react';
 import PlaceCard from '../place-card/place-card';
+import {CardType} from '../../const';
+import {Offer} from '../../types/offer';
 
 type PlacesListProps = {
   offers: Offer[],
@@ -17,7 +18,7 @@ function PlacesList({offers, isNearPlacesList, onMouseEnter, onMouseLeave}: Plac
         <PlaceCard
           key={offer.id}
           offer={offer}
-          cardType={isNearPlacesList ? CardTypes.ROOM : CardTypes.MAIN}
+          cardType={isNearPlacesList ? CardType.ROOM : CardType.MAIN}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         />
@@ -26,4 +27,4 @@ function PlacesList({offers, isNearPlacesList, onMouseEnter, onMouseLeave}: Plac
   );
 }
 
-export default PlacesList;
+export default memo(PlacesList, (prevProps, nextProps) => prevProps.offers === nextProps.offers);

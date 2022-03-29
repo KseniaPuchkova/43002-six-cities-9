@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import {AppRoute} from '../../const';
 
 function NotFoundPage() {
   return (
@@ -9,10 +9,16 @@ function NotFoundPage() {
       <Header />
       <main className="page__main page__main--index">
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
+          <div className="cities__status-wrapper container">
+            <section className="tabs__content container">
               <b className="places__found">404. Page Not Found</b>
-              <Link className="login__submit form__submit button" to={AppRoute.Main}>Return to main page</Link>
+              <Link
+                className="form__submit button"
+                style={{width: '50%'}}
+                to={AppRoute.Main}
+              >
+                Return to main page
+              </Link>
             </section>
           </div>
         </div>

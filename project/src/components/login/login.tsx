@@ -1,8 +1,71 @@
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {useState, ChangeEvent, FormEvent, memo} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {loginAction} from '../../store/api-actions';
 import Header from '../header/header';
+import {useAppSelector} from '../../hooks/hooks';
+import {useAppDispatch} from '../../hooks/hooks';
+import {AppRoute, AuthorizationStatus} from '../../const';
+
+const Reg = {
+  Email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+  Password: /^(?=.*[a-z])(?=.*[0-9]).+$/,
+};
+
+enum ValidityText {
+  Email = 'Please enter the correct email address',
+  PasswordOnlySpaces = 'The password must not consist of only spaces',
+  PasswordDigitAndLetter = 'The password must contain at least one digit and one letter',
+}
 
 function Login(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const [authData, setAuthData] = useState({email: '', password: ''});
+  const {email, password} = authData;
+
+  const {activeCity} = useAppSelector(({APP}) => APP);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    navigate(AppRoute.Main);
+  }
+
+  const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = evt.target;
+    setAuthData({...authData, [name]:value});
+
+    if (!Reg.Email.test(evt.target.value)) {
+      evt.target.setCustomValidity(ValidityText.Email);
+    }
+    else {
+      evt.target.setCustomValidity('');
+    }
+  };
+
+  const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = evt.target;
+    setAuthData({...authData, [name]:value});
+
+    if ((evt.target.value).trim().length === 0) {
+      evt.target.setCustomValidity(ValidityText.PasswordOnlySpaces);
+    }
+    else if (!Reg.Password.test(evt.target.value))  {
+      evt.target.setCustomValidity(ValidityText.PasswordDigitAndLetter);
+    }
+    else {
+      evt.target.setCustomValidity('');
+    }
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (email && password) {
+      dispatch(loginAction({email, password}));
+    }
+  };
+
   return (
     <div className="page page--gray page--login">
       <Header />
@@ -10,9 +73,11 @@ function Login(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form"
+            <form
+              className="login__form form"
               action="#"
               method="post"
+              onSubmit={handleSubmit}
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
@@ -21,6 +86,7 @@ function Login(): JSX.Element {
                   type="email"
                   name="email"
                   placeholder="Email"
+                  onChange={handleEmailChange}
                   required
                 />
               </div>
@@ -31,16 +97,22 @@ function Login(): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  onChange={handlePasswordChange}
                   required
                 />
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button
+                className="login__submit form__submit button"
+                type="submit"
+              >
+                Sign in
+              </button>
             </form>
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.SignIn}>
-                <span>Amsterdam</span>
+              <Link className="locations__item-link" to={AppRoute.Main}>
+                <span>{activeCity}</span>
               </Link>
             </div>
           </section>
@@ -50,4 +122,4 @@ function Login(): JSX.Element {
   );
 }
 
-export default Login;
+export default memo(Login);

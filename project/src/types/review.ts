@@ -1,9 +1,6 @@
-export type User = {
-  avatarUrl: string,
-  id: number,
-  isPro: boolean,
-  name: string,
-}
+import {UserData} from './user-data';
+
+export type User = Omit<UserData, 'email' | 'token'>;
 
 export type Review = {
   comment: string,
@@ -12,4 +9,7 @@ export type Review = {
   rating: number,
   user: User,
 };
+
+export type ReviewForForm = Omit<Review, 'date' | 'user'>;
+
 

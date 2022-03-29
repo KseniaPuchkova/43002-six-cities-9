@@ -1,3 +1,5 @@
+import {Flag} from './flag';
+
 export type Location = {
   latitude: number,
   longitude: number,
@@ -34,4 +36,7 @@ export type Offer = {
   title: string,
   type: string,
 }
+
+export type FavoriteFlag = Pick<Offer, 'id'> & Flag;
+
 

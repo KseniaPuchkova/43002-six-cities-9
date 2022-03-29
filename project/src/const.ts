@@ -1,9 +1,7 @@
-export enum AppRoute {
-  Main = '/',
-  SignIn = '/login',
-  Favorites = '/favorites',
-  Room = '/offer/:id',
-  NotFound = '*',
+export enum Process {
+  User = 'USER',
+  Data = 'DATA',
+  App = 'APP',
 }
 
 export enum AuthorizationStatus {
@@ -12,15 +10,43 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum AppRoute {
+  Main = '/',
+  SignIn = '/login',
+  Favorites = '/favorites',
+  Room = '/offer/:id',
+  NotFound = '*',
+}
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout =  '/logout',
+}
+
+export enum HttpCode {
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
+}
+
+export enum SubmitStatus {
+  Unknown,
+  Sending,
+  Success,
+  Error,
+}
+
 export const SortType = {
   POPULAR: 'Popular',
   LOW_PRICE_FIRST: 'Price: low to high',
   HIGH_PRICE_FIRST: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first',
+} as const;
 
-};
-
-export const CardTypes = {
+export const CardType = {
   MAIN: {
     articleClassName: 'cities__place-card',
     imgWrapperClassName: 'cities__image-wrapper',
@@ -28,7 +54,7 @@ export const CardTypes = {
     imgWidth: '260',
     imgHeight: '200',
   },
-  FAVORITES: {
+  FAVORITE: {
     articleClassName: 'favorites__card',
     imgWrapperClassName: 'favorites__image-wrapper',
     cardInfoClassName: 'favorites__card-info',
@@ -42,6 +68,17 @@ export const CardTypes = {
     imgWidth: '260',
     imgHeight: '200',
   },
-};
+} as const;
 
-
+export const FavoriteButtonType = {
+  CARD: {
+    buttonClassName: 'place-card',
+    imgWidth: '18',
+    imgHeight: '19',
+  },
+  ROOM: {
+    buttonClassName: 'property',
+    imgWidth: '31',
+    imgHeight: '33',
+  },
+} as const;

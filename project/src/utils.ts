@@ -1,14 +1,18 @@
-import {Offer} from './types/offer';
-import {SortType} from './const';
 import {MAX_RATING} from './components/review-item/review-item';
+import {SortType} from './const';
+import {Offer} from './types/offer';
 
-export const getRatingInPercent = (rating: number): string => `${rating * 100 / MAX_RATING}%`;
+export const getRatingInPercent = (rating: number): string => `${Math.round(rating) * 100 / MAX_RATING}%`;
 
 export const makeFirstLetterUppercase = (str: string): string => str[0].toUpperCase() + str.slice(1);
 
-export const getOffersByCity = (currentCity: string, offers: Offer[]) => offers.filter(({city}) => currentCity === city.name);
+export const getOffersByCity = (currentCity: string, offers: Offer[]): Offer[] => {
+  const offersByCity = offers.filter(({city}) => currentCity === city.name);
 
-export const getSortedOffers = (sortType: string, offers: Offer[]) => {
+  return offersByCity;
+};
+
+export const getSortedOffers = (sortType: string, offers: Offer[]): Offer[] => {
   let sortedOffers: Offer[] = [];
 
   switch (sortType) {
@@ -30,3 +34,14 @@ export const getSortedOffers = (sortType: string, offers: Offer[]) => {
 
   return sortedOffers;
 };
+
+export function sortCities(a: Offer, b: Offer): number {
+  if (a.city.name < b.city.name) {
+    return -1;
+  }
+  if (a.city.name > b.city.name) {
+    return 1;
+  }
+
+  return 0;
+}

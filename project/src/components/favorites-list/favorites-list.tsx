@@ -1,12 +1,12 @@
-import {Offer} from '../../types/offer';
 import FavoritesCities from '../favorites-cities/favorites-cities';
+import {Offer} from '../../types/offer';
 
 type FavoritesListProps = {
   favorites: Offer[],
 };
 
 function FavoritesList({favorites}: FavoritesListProps): JSX.Element {
-  const cities: string[] = [...new Set(favorites.map((favorite) => favorite.city.name))];
+  const cities: string[] = Array.from(new Set(favorites.map((favorite) => favorite.city.name)));
 
   return (
     <ul className="favorites__list">

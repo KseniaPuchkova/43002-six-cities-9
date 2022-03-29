@@ -1,37 +1,38 @@
+import {memo, useCallback} from 'react';
 import {Link} from 'react-router-dom';
-import {Offer} from '../../types/offer';
+import FavoritesButton from '../favorites-button/favorites-button';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
+import {FavoriteButtonType} from '../../const';
+import {Offer} from '../../types/offer';
+import {CardType} from '../../types/card';
 
 type PlaceCardProps = {
   offer: Offer,
-  cardType: {
-    articleClassName: string;
-    imgWrapperClassName: string,
-    cardInfoClassName: string,
-    imgWidth: string,
-    imgHeight: string
-  },
+  cardType: CardType,
   onMouseEnter?: (offer: Offer) => void
   onMouseLeave?: () => void
 }
 
 function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps): JSX.Element {
-  const {isPremium, isFavorite, previewImage, price, rating, title, type, id} = offer;
+  const {isPremium, previewImage, price, rating, title, type, id} = offer;
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
-  const handleOnMouseEnter  = () => {
+  const handleOnMouseEnter = useCallback(() => {
     if (onMouseEnter) {
       onMouseEnter(offer);
     }
-  };
+  }, [offer, onMouseEnter]);
+  const handleOnMouseLeave = onMouseLeave;
 
   return (
     <article
       className={`${articleClassName} place-card`}
       onMouseEnter={handleOnMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseLeave={handleOnMouseLeave}
     >
-      {isPremium &&<div className="place-card__mark"><span>Premium</span></div>}
+      {isPremium &&
+        <div className="place-card__mark"><span>Premium</span>
+        </div>}
       <div className={`${imgWrapperClassName} place-card__image-wrapper`}>
         <Link to={`/offer/${id}`}>
           <img
@@ -40,6 +41,7 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
             width={imgWidth}
             height={imgHeight}
             alt={`Place ${id}`}
+            onClick={() => window.scrollTo(0, 0)}
           />
         </Link>
       </div>
@@ -49,19 +51,10 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={`place-card__bookmark-button ${isFavorite && 'place-card__bookmark-button--active'} button`}
-            type="button"
-          >
-            <svg
-              className="place-card__bookmark-icon"
-              width="18"
-              height="19"
-            >
-              <use xlinkHref="#icon-bookmark" />
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoritesButton
+            favoriteButtonType={FavoriteButtonType.CARD}
+            offer={offer}
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -70,11 +63,11 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{title}</Link>
+          <Link to={`/offer/${id}`} onClick={() => window.scrollTo(0, 0)}>{title}</Link>
         </h2>
         <p className="place-card__type">{makeFirstLetterUppercase(type)}</p>
       </div>
     </article>
   );
 }
-export default PlaceCard;
+export default memo(PlaceCard);

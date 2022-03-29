@@ -1,33 +1,35 @@
 import {useRef, useEffect} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {City, Offer} from '../../types/offer';
 import useMap from '../../hooks/use-map';
+import {City, Offer} from '../../types/offer';
 
-const URL_MARKER_DEFAULT = 'img/pin.svg';
-const URL_MARKER_ACTIVE = 'img/pin-active.svg';
+export enum MarkerUrl {
+  Default = 'img/pin.svg',
+  Active = 'img/pin-active.svg'
+}
 
 type MapProps = {
-  city: City,
+  activeCity: City,
   offersByCity: Offer[],
-  hoveredOffer?: Offer | null,
+  hoveredOffer: Offer | null,
 };
 
 const defaultIcon = leaflet.icon({
-  iconUrl: URL_MARKER_DEFAULT,
+  iconUrl: MarkerUrl.Default,
   iconSize: [30, 40],
   iconAnchor: [15, 30],
 });
 
 const activeIcon = leaflet.icon({
-  iconUrl: URL_MARKER_ACTIVE,
+  iconUrl: MarkerUrl.Active,
   iconSize: [30, 40],
   iconAnchor: [15, 30],
 });
 
-function Map({city, offersByCity, hoveredOffer}: MapProps): JSX.Element {
+function Map({activeCity, offersByCity, hoveredOffer}: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, activeCity);
 
   useEffect(() => {
     const layerGroup = leaflet.layerGroup();
@@ -40,13 +42,24 @@ function Map({city, offersByCity, hoveredOffer}: MapProps): JSX.Element {
             lng: offer.location.longitude,
           },
           {
-            icon: (offer === hoveredOffer) ? activeIcon : defaultIcon,
+            icon: (offer === hoveredOffer && offer !== null) ? activeIcon : defaultIcon,
           },
         );
         layerGroup.addLayer(marker);
       });
 
       layerGroup.addTo(map);
+
+      map.flyTo(
+        [offersByCity[0].city.location.latitude, offersByCity[0].city.location.longitude],
+        offersByCity[0].city.location.zoom,
+        {
+          animate: false,
+          duration: 1.5,
+        },
+      );
+
+      map.scrollWheelZoom.disable();
     }
 
     return () => {
@@ -54,7 +67,7 @@ function Map({city, offersByCity, hoveredOffer}: MapProps): JSX.Element {
         layerGroup.remove();
       }
     };
-  }, [map, offersByCity, hoveredOffer]);
+  }, [map, activeCity, offersByCity, hoveredOffer]);
 
   return (
     <div id="map" style={{height: '100%'}} ref={mapRef}></div>

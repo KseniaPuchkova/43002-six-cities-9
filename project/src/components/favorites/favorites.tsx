@@ -1,15 +1,13 @@
-import {Offer} from '../../types/offer';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import EmptyFavorites from './empty-favorites';
 import FavoritesList from '../favorites-list/favorites-list';
+import {useAppSelector} from '../../hooks/hooks';
+import {sortCities} from '../../utils';
 
-type FavoritesProps = {
-  offers: Offer[],
-};
-
-function Favorites({offers}: FavoritesProps): JSX.Element {
-  const favorites = offers.filter(({isFavorite}) => isFavorite);
+function Favorites(): JSX.Element {
+  const {offers} = useAppSelector(({DATA}) => DATA);
+  const favorites = offers.filter(({isFavorite}) => isFavorite).slice().sort(sortCities);
 
   if (favorites.length) {
     return (

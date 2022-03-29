@@ -1,15 +1,23 @@
-import {MouseEvent} from 'react';
+import {MouseEvent, memo} from 'react';
 import {useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import SortItem from '../sort-item/sort-item';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {changeSortType} from '../../store/app-process/app-process';
 import {SortType} from '../../const';
-import {changeSortType} from '../../store/action';
 
 function SortList(): JSX.Element {
-  const activeSortType = useAppSelector((state) => state.sortType);
   const dispatch = useAppDispatch();
+
+  const {sortType: activeSortType} = useAppSelector(({APP}) => APP);
 
   const [isSortListOpen, setIsSortListOpen] = useState(false);
   const handleSortOnClick = () => setIsSortListOpen(!isSortListOpen);
+
+  const onSortTypeChange = (evt: MouseEvent, sortType: string) => {
+    evt.preventDefault();
+    setIsSortListOpen(!isSortListOpen);
+    dispatch(changeSortType(sortType));
+  };
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -23,24 +31,18 @@ function SortList(): JSX.Element {
           <use xlinkHref="#icon-arrow-select" />
         </svg>
       </span>
-      <ul className={`places__options places__options--custom${isSortListOpen ? ' places__options--opened':''}`}>
+      <ul className={`places__options places__options--custom ${isSortListOpen && 'places__options--opened'}`}>
         {Object.values(SortType).map((sortType) => (
-          <li
-            className={`places__option${activeSortType === sortType ? ' places__option--active':''}`}
-            tabIndex={0}
+          <SortItem
             key={sortType}
-            onClick={(evt: MouseEvent) => {
-              evt.preventDefault();
-              setIsSortListOpen(!isSortListOpen);
-              dispatch(changeSortType(sortType));
-            }}
-          >
-            {sortType}
-          </li>
+            isActive={activeSortType === sortType}
+            sortType={sortType}
+            onSortTypeChange={(evt) => onSortTypeChange(evt, sortType)}
+          />
         ))}
       </ul>
     </form>
   );
 }
 
-export default SortList;
+export default memo(SortList);

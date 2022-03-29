@@ -1,24 +1,62 @@
-import React, {useState,  FormEvent, ChangeEvent} from 'react';
+import React, {useState, useEffect, FormEvent, ChangeEvent} from 'react';
+import {toast} from 'react-toastify';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {postReviewAction} from '../../store/api-actions';
+import {SubmitStatus} from '../../const';
 
-const MIN_CHARS_COUNT = 50;
-const MAX_CHARS_COUNT = 300;
+enum ToastText {
+  Success = 'Your review has been sent successfully. Thanks!',
+  Error = 'Your review has not been sent. Please try again',
+}
 
-const ratings = ['terribly', 'badly', 'not bad', 'good', 'perfect'].map((rating, index) => ({
+enum ReviewLength {
+  Min = 50,
+  Max = 300,
+}
+
+const RATINGS = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
+
+const ratings = RATINGS.map((rating, index) => ({
   rating: rating,
-  index: index + 1,
+  index: RATINGS.length - index,
 }));
 
 function ReviewForm(): JSX.Element {
-  const [comment, setComment] = useState({ratingStars: 0, review: ''});
-  const {ratingStars, review} = comment;
+  const dispatch = useAppDispatch();
 
-  const isDisabled = ratingStars === null || review.length < MIN_CHARS_COUNT || review.length > MAX_CHARS_COUNT;
+  const {currentOffer, submitStatus} = useAppSelector(({DATA}) => DATA);
+
+  const [review, setReview] = useState({count: 0, comment: ''});
+  const {count, comment} = review;
+
+
+  const handleReviewSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (!currentOffer) {
+      return;
+    }
+
+    dispatch(postReviewAction({id: currentOffer.id, rating: count, comment}));
+  };
+
+  useEffect(() => {
+    if (submitStatus === SubmitStatus.Success) {
+      setReview({count: 0, comment: ''});
+      toast.success(ToastText.Success);
+    }
+    if (submitStatus === SubmitStatus.Error) {
+      toast.error(ToastText.Error);
+    }}, [submitStatus]);
+
+  const isDisabled = count === 0 || comment.length < ReviewLength.Min || comment.length > ReviewLength.Max;
+  const isSending = submitStatus === SubmitStatus.Sending;
 
   return (
     <form className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={(evt: FormEvent<HTMLFormElement>) => evt.preventDefault()}
+      onSubmit={handleReviewSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
@@ -30,8 +68,9 @@ function ReviewForm(): JSX.Element {
               value={index}
               id={`${index}-stars`}
               type="radio"
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => setComment({...comment, ratingStars: parseInt(evt.target.value, 10)})}
-              checked={ratingStars === index}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => setReview({...review, count: Number(evt.target.value)})}
+              checked={count === index}
+              disabled={isSending}
             />
             <label
               htmlFor={`${index}-stars`}
@@ -50,18 +89,19 @@ function ReviewForm(): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={review}
-        onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => setComment({...comment, review: evt.target.value})}
+        value={comment}
+        onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => setReview({...review, comment: evt.target.value})}
+        disabled={isSending}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_CHARS_COUNT} characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{ReviewLength.Min} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isDisabled}
+          disabled={isDisabled || isSending}
         >Submit
         </button>
       </div>

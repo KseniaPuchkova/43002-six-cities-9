@@ -1,22 +1,31 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
-import {Offer} from '../../types/offer';
-import {Review }from '../../types/review';
+import {Route, Routes} from 'react-router-dom';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 import Main from '../main/main';
 import Favorites from '../favorites/favorites';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
 import SignIn from '../login/login';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {useAppSelector} from '../../hooks/hooks';
+import {AppRoute, AuthorizationStatus} from '../../const';
 
-type AppProps = {
-  offers: Offer[],
-  reviews: Review[]
-};
+const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
 
-function App({offers, reviews}: AppProps): JSX.Element {
+function App(): JSX.Element {
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {isDataLoaded} = useAppSelector(({DATA})=> DATA);
+
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -28,22 +37,18 @@ function App({offers, reviews}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <Favorites offers={offers} />
-            </PrivateRoute>
-          }
+          element={<PrivateRoute><Favorites /></PrivateRoute>}
         />
         <Route
           path={AppRoute.Room}
-          element={<Room offers={offers} reviews={reviews} />}
+          element={<Room />}
         />
         <Route
           path={AppRoute.NotFound}
           element={<NotFound />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
