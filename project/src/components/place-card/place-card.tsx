@@ -1,8 +1,9 @@
-import {memo, useCallback} from 'react';
+import {memo} from 'react';
 import {Link} from 'react-router-dom';
+import classNames from 'classnames';
 import FavoritesButton from '../favorites-button/favorites-button';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
-import {FavoriteButtonType} from '../../const';
+import {AppRoute, FavoriteButtonType} from '../../const';
 import {Offer} from '../../types/offer';
 import {CardType} from '../../types/card';
 
@@ -17,35 +18,35 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
   const {isPremium, previewImage, price, rating, title, type, id} = offer;
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
-  const handleOnMouseEnter = useCallback(() => {
+  const handleOnMouseEnter = () => {
     if (onMouseEnter) {
       onMouseEnter(offer);
     }
-  }, [offer, onMouseEnter]);
+  };
   const handleOnMouseLeave = onMouseLeave;
 
   return (
     <article
-      className={`${articleClassName} place-card`}
+      className={classNames(articleClassName, 'place-card')}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}
     >
       {isPremium &&
         <div className="place-card__mark"><span>Premium</span>
         </div>}
-      <div className={`${imgWrapperClassName} place-card__image-wrapper`}>
-        <Link to={`/offer/${id}`}>
+      <div className={classNames(imgWrapperClassName, 'place-card__image-wrapper')}>
+        <Link to={`${AppRoute.Offer}${id}`}>
           <img
             className="place-card__image"
-            src={previewImage}
-            width={imgWidth}
-            height={imgHeight}
+            src={classNames(previewImage)}
+            width={classNames(imgWidth)}
+            height={classNames(imgHeight)}
             alt={`Place ${id}`}
             onClick={() => window.scrollTo(0, 0)}
           />
         </Link>
       </div>
-      <div className={`${cardInfoClassName} place-card__info`}>
+      <div className={classNames(cardInfoClassName, 'place-card__info')}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -63,7 +64,7 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`} onClick={() => window.scrollTo(0, 0)}>{title}</Link>
+          <Link to={`${AppRoute.Offer}${id}`} onClick={() => window.scrollTo(0, 0)}>{title}</Link>
         </h2>
         <p className="place-card__type">{makeFirstLetterUppercase(type)}</p>
       </div>

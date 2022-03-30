@@ -31,7 +31,7 @@ function SortList(): JSX.Element {
           <use xlinkHref="#icon-arrow-select" />
         </svg>
       </span>
-      <ul className={`places__options places__options--custom ${isSortListOpen && 'places__options--opened'}`}>
+      <ul className={`places__options places__options--custom ${isSortListOpen ? 'places__options--opened' : ''}`}>
         {Object.values(SortType).map((sortType) => (
           <SortItem
             key={sortType}

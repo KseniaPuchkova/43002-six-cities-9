@@ -7,23 +7,9 @@ import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
 import SignIn from '../login/login';
-import LoadingScreen from '../loading-screen/loading-screen';
-import {useAppSelector} from '../../hooks/hooks';
-import {AppRoute, AuthorizationStatus} from '../../const';
-
-const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
-  authorizationStatus === AuthorizationStatus.Unknown;
+import {AppRoute} from '../../const';
 
 function App(): JSX.Element {
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
-  const {isDataLoaded} = useAppSelector(({DATA})=> DATA);
-
-  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
-  }
-
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>

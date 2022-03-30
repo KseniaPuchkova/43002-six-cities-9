@@ -1,4 +1,4 @@
-import {MouseEvent, memo} from 'react';
+import {MouseEvent} from 'react';
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {changeCity} from '../../store/app-process/app-process';
@@ -27,7 +27,7 @@ function CitiesList(): JSX.Element {
               <Link
                 to={city}
                 className={`locations__item-link tabs__item${activeCity === city ? ' tabs__item--active':''}`}
-                onClick={(evt) => handleChangeCityClick (evt, city)}
+                onClick={(evt) => handleChangeCityClick(evt, city)}
               >
                 <span>{city}</span>
               </Link>
@@ -39,4 +39,4 @@ function CitiesList(): JSX.Element {
   );
 }
 
-export default memo(CitiesList);
+export default CitiesList;

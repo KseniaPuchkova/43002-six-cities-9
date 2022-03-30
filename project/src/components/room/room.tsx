@@ -100,7 +100,7 @@ function Room(): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((good: string) => (
+                  {goods.map((good) => (
                     <li
                       key={good}
                       className="property__inside-item"
@@ -130,7 +130,7 @@ function Room(): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsByOffer.length}</span></h2>
                 <ReviewsList reviews={reviewsByOffer} />
-                {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm /> : ''}
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
               </section>
             </div>
           </div>
