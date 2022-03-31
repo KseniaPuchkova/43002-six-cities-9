@@ -8,7 +8,8 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 function Header(): JSX.Element {
   const dispatch = useDispatch();
 
-  const {authorizationStatus, userData} = useAppSelector(({USER}) => USER);
+  const authorizationStatus = useAppSelector(({USER}) => USER.authorizationStatus);
+  const userData = useAppSelector(({USER}) => USER.userData);
 
   const handleLogoutClick= (evt: MouseEvent) => {
     evt.preventDefault();

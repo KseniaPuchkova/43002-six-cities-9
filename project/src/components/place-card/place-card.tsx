@@ -1,6 +1,6 @@
 import {memo} from 'react';
 import {Link} from 'react-router-dom';
-import classNames from 'classnames';
+import className from 'classnames';
 import FavoritesButton from '../favorites-button/favorites-button';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
 import {AppRoute, FavoriteButtonType} from '../../const';
@@ -23,30 +23,29 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
       onMouseEnter(offer);
     }
   };
-  const handleOnMouseLeave = onMouseLeave;
 
   return (
     <article
-      className={classNames(articleClassName, 'place-card')}
+      className={className(articleClassName, 'place-card')}
       onMouseEnter={handleOnMouseEnter}
-      onMouseLeave={handleOnMouseLeave}
+      onMouseLeave={onMouseLeave}
     >
       {isPremium &&
         <div className="place-card__mark"><span>Premium</span>
         </div>}
-      <div className={classNames(imgWrapperClassName, 'place-card__image-wrapper')}>
+      <div className={className(imgWrapperClassName, 'place-card__image-wrapper')}>
         <Link to={`${AppRoute.Offer}${id}`}>
           <img
             className="place-card__image"
-            src={classNames(previewImage)}
-            width={classNames(imgWidth)}
-            height={classNames(imgHeight)}
+            src={className(previewImage)}
+            width={className(imgWidth)}
+            height={className(imgHeight)}
             alt={`Place ${id}`}
             onClick={() => window.scrollTo(0, 0)}
           />
         </Link>
       </div>
-      <div className={classNames(cardInfoClassName, 'place-card__info')}>
+      <div className={className(cardInfoClassName, 'place-card__info')}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -71,4 +70,4 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
     </article>
   );
 }
-export default memo(PlaceCard);
+export default memo(PlaceCard, (prevProps, nextProps) => prevProps.offer === nextProps.offer);

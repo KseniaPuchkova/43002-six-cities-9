@@ -1,6 +1,6 @@
 import {MouseEvent, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import classNames from 'classnames';
+import className from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {setFavoriteAction} from '../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../const';
@@ -39,14 +39,14 @@ function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JS
   };
 
   return (
-    <button className={classNames(`${buttonClassName}__bookmark-button`,
+    <button className={className(`${buttonClassName}__bookmark-button`,
       {[`${buttonClassName}__bookmark-button--active`] : (offer.isFavorite || isFavorite) && (authorizationStatus === AuthorizationStatus.Auth)},
       'button')}
     type="button"
     onClick={handleFavoriteClick}
     >
       <svg
-        className={classNames(`${buttonClassName}__bookmark-icon`)}
+        className={className(`${buttonClassName}__bookmark-icon`)}
         width={imgWidth}
         height={imgHeight}
       >

@@ -10,9 +10,10 @@ const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
 function Main(): JSX.Element {
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
-  const {isDataLoaded, offers} = useAppSelector(({DATA})=> DATA);
-  const {activeCity} = useAppSelector(({APP}) => APP);
+  const authorizationStatus = useAppSelector(({USER}) => USER.authorizationStatus);
+  const isDataLoaded = useAppSelector(({DATA})=> DATA.isDataLoaded);
+  const offers = useAppSelector(({DATA})=> DATA.offers);
+  const activeCity = useAppSelector(({APP}) => APP.activeCity);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (

@@ -8,7 +8,7 @@ export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', '
 function CitiesList(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const {activeCity} = useAppSelector(({APP}) => APP);
+  const activeCity = useAppSelector(({APP}) => APP.activeCity);
 
   const handleChangeCityClick = (evt: MouseEvent, city: string) => {
     evt.preventDefault();

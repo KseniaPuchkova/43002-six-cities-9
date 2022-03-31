@@ -1,5 +1,5 @@
 import {MouseEvent} from 'react';
-import classNames from 'classnames';
+import className from 'classnames';
 
 type SortItems = {
   sortType: string,
@@ -11,7 +11,7 @@ function SortItem({sortType, isActive, onSortTypeChange}: SortItems): JSX.Elemen
 
   return (
     <li
-      className={classNames('places__option', {'places__option--active' : isActive})}
+      className={className('places__option', {'places__option--active' : isActive})}
       tabIndex={0}
       onClick={onSortTypeChange}
     >

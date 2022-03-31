@@ -1,5 +1,6 @@
 import {MouseEvent, memo} from 'react';
 import {useState} from 'react';
+import className from 'classnames';
 import SortItem from '../sort-item/sort-item';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {changeSortType} from '../../store/app-process/app-process';
@@ -31,6 +32,7 @@ function SortList(): JSX.Element {
           <use xlinkHref="#icon-arrow-select" />
         </svg>
       </span>
+      <ul className={className('places__options places__options--custom', {'places__options--opened' : isSortListOpen})}></ul>
       <ul className={`places__options places__options--custom ${isSortListOpen ? 'places__options--opened' : ''}`}>
         {Object.values(SortType).map((sortType) => (
           <SortItem
