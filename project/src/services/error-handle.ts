@@ -19,7 +19,7 @@ export const errorHandle = (error: ErrorType): void => {
         toast.info(response.data.error);
         break;
       case HttpCode.NotFound:
-        toast.info(response.data.error);
+        toast.error(response.data.error);
         break;
     }
   }

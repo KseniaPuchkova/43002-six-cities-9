@@ -1,9 +1,8 @@
 import {MouseEvent, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
 import className from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {setFavoriteAction} from '../../store/api-actions';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AuthorizationStatus} from '../../const';
 import {FavoriteButtonType} from '../../types/favorite-button';
 import {Offer} from '../../types/offer';
 
@@ -14,7 +13,6 @@ type FavoritesButtonProps = {
 
 function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const {buttonClassName, imgWidth, imgHeight} = favoriteButtonType;
 
@@ -22,20 +20,15 @@ function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JS
 
   const [isFavorite, setFavorite] = useState(offer.isFavorite);
 
-
   const handleFavoriteClick = (evt: MouseEvent) => {
     evt.preventDefault();
 
-    if (authorizationStatus === AuthorizationStatus.NoAuth) {
-      return navigate(AppRoute.SignIn);
-    } else {
-      dispatch(setFavoriteAction({
-        id: offer.id,
-        flag: Number(!offer.isFavorite),
-      }));
+    dispatch(setFavoriteAction({
+      id: offer.id,
+      flag: Number(!offer.isFavorite),
+    }));
 
-      setFavorite(!isFavorite);
-    }
+    setFavorite(!isFavorite);
   };
 
   return (

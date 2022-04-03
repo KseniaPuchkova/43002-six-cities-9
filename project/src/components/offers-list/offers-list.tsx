@@ -4,7 +4,7 @@ import EmptyOffersList from './empty-offers-list';
 import SortList from '../sort-list/sort-list';
 import PlacesList from '../places-list/places-list';
 import {useAppSelector} from '../../hooks/hooks';
-import {getOffersByCity, getSortedOffers} from '../../utils';
+import {getOffersByCity, getSortedOffers} from '../../utils/utils';
 import {Offer} from '../../types/offer';
 
 function OffersList(): JSX.Element {

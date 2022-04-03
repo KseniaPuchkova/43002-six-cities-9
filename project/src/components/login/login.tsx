@@ -1,10 +1,10 @@
 import {useState, ChangeEvent, FormEvent, memo} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import Header from '../header/header';
 import {useAppSelector} from '../../hooks/hooks';
 import {useAppDispatch} from '../../hooks/hooks';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 
 const Reg = {
   EMAIL: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
@@ -19,17 +19,11 @@ enum ValidityText {
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [authData, setAuthData] = useState({email: '', password: ''});
   const {email, password} = authData;
 
   const activeCity = useAppSelector(({APP}) => APP.activeCity);
-  const authorizationStatus = useAppSelector(({USER}) => USER.authorizationStatus);
-
-  if (authorizationStatus === AuthorizationStatus.Auth) {
-    navigate(AppRoute.Main);
-  }
 
   const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = evt.target;

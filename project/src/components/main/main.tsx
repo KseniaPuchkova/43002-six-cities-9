@@ -3,7 +3,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import OffersList from '../offers-list/offers-list';
 import CitiesList from '../cities-list/cities-list';
 import {useAppSelector} from '../../hooks/hooks';
-import {getOffersByCity} from '../../utils';
+import {getOffersByCity} from '../../utils/utils';
 import {AuthorizationStatus} from '../../const';
 
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>

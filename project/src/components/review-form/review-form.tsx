@@ -1,13 +1,7 @@
 import React, {useState, useEffect, FormEvent, ChangeEvent} from 'react';
-import {toast} from 'react-toastify';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {postReviewAction} from '../../store/api-actions';
 import {SubmitStatus} from '../../const';
-
-enum ToastText {
-  Success = 'Your review has been sent successfully. Thanks!',
-  Error = 'Your review has not been sent. Please try again',
-}
 
 enum ReviewLength {
   Min = 50,
@@ -29,7 +23,6 @@ function ReviewForm(): JSX.Element {
   const [review, setReview] = useState({count: 0, comment: ''});
   const {count, comment} = review;
 
-
   const handleReviewSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -43,10 +36,6 @@ function ReviewForm(): JSX.Element {
   useEffect(() => {
     if (submitStatus === SubmitStatus.Success) {
       setReview({count: 0, comment: ''});
-      toast.success(ToastText.Success);
-    }
-    if (submitStatus === SubmitStatus.Error) {
-      toast.error(ToastText.Error);
     }}, [submitStatus]);
 
   const isDisabled = count === 0 || comment.length < ReviewLength.Min || comment.length > ReviewLength.Max;

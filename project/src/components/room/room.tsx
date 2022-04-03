@@ -10,7 +10,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import FavoritesButton from '../favorites-button/favorites-button';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {loadReviewsByOfferAction, loadOfferAction, loadOffersNearbyAction} from '../../store/api-actions';
-import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
+import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils/utils';
 import {AuthorizationStatus, FavoriteButtonType} from '../../const';
 
 const MAX_IMAGES_COUNT = 6;
@@ -77,7 +77,7 @@ function Room(): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: getRatingInPercent(rating)}}></span>
+                  <span style={{width: `${getRatingInPercent(rating)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>

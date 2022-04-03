@@ -3,7 +3,7 @@ import Footer from '../footer/footer';
 import EmptyFavorites from './empty-favorites';
 import FavoritesList from '../favorites-list/favorites-list';
 import {useAppSelector} from '../../hooks/hooks';
-import {sortCities} from '../../utils';
+import {sortCities} from '../../utils/utils';
 
 function Favorites(): JSX.Element {
   const offers = useAppSelector(({DATA}) => DATA.offers);

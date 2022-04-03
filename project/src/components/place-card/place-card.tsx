@@ -2,7 +2,7 @@ import {memo} from 'react';
 import {Link} from 'react-router-dom';
 import className from 'classnames';
 import FavoritesButton from '../favorites-button/favorites-button';
-import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
+import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils/utils';
 import {AppRoute, FavoriteButtonType} from '../../const';
 import {Offer} from '../../types/offer';
 import {CardType} from '../../types/card';
@@ -58,7 +58,7 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: getRatingInPercent(rating)}}></span>
+            <span style={{width: `${getRatingInPercent(rating)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

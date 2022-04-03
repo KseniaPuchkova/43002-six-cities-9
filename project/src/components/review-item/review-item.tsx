@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import {Review} from '../../types/review';
-import {getRatingInPercent} from '../../utils';
+import {getRatingInPercent} from '../../utils/utils';
 
 export const MAX_RATING = 5;
 
