@@ -9,6 +9,8 @@ import ReviewForm from '../review-form/review-form';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FavoritesButton from '../favorites-button/favorites-button';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getOffers, getCurrentOffer, getOffersNearby, getReviewsByOffer} from '../../store/data-process/selectors';
 import {loadReviewsByOfferAction, loadOfferAction, loadOffersNearbyAction} from '../../store/api-actions';
 import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils/utils';
 import {AuthorizationStatus, FavoriteButtonType} from '../../const';
@@ -21,10 +23,13 @@ function Room(): JSX.Element {
   const params = useParams();
   const id = Number(params.id);
 
-  const {offers, currentOffer, offersNearby, reviewsByOffer} = useAppSelector(({DATA}) => DATA);
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
-  const offer = offers.find((item) => item.id === id);
+  const offers = useAppSelector(getOffers);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const offersNearby = useAppSelector(getOffersNearby);
+  const reviewsByOffer = useAppSelector(getReviewsByOffer);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
+  const offer = offers.find((item) => item.id === id);
 
   useEffect(() => {
     dispatch(loadOfferAction(id));

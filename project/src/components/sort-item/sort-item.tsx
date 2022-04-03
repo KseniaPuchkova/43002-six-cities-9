@@ -8,7 +8,6 @@ type SortItems = {
 }
 
 function SortItem({sortType, isActive, onSortTypeChange}: SortItems): JSX.Element{
-
   return (
     <li
       className={className('places__option', {'places__option--active' : isActive})}

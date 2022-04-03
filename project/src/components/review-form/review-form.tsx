@@ -1,5 +1,6 @@
 import React, {useState, useEffect, FormEvent, ChangeEvent} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {getCurrentOffer, getSubmitStatus} from '../../store/data-process/selectors';
 import {postReviewAction} from '../../store/api-actions';
 import {SubmitStatus} from '../../const';
 
@@ -18,7 +19,8 @@ const ratings = RATINGS.map((rating, index) => ({
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const {currentOffer, submitStatus} = useAppSelector(({DATA}) => DATA);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const submitStatus = useAppSelector(getSubmitStatus);
 
   const [review, setReview] = useState({count: 0, comment: ''});
   const {count, comment} = review;

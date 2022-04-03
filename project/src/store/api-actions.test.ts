@@ -158,46 +158,19 @@ describe('Async actions', () => {
 
   it('should make a correct API call to POST /favorites/:id/ and add to favorites', async () => {
     const store = mockStore();
-    const fakeFavoriteOffer = {
-      ...fakeOffer,
-      id: 1,
-      isFavorite: true,
-    };
-    const id = fakeFavoriteOffer.id;
-    const flag = Number(fakeFavoriteOffer.isFavorite);
+    const id = fakeOffer.id;
+    const flag = Number(fakeOffer.isFavorite);
 
     mockAPI
       .onPost(`${APIRoute.Favorite}/${id}/${flag}`)
-      .reply(HttpCode.Success, fakeFavoriteOffer);
+      .reply(HttpCode.Success, fakeOffer);
 
     expect(store.getActions()).toEqual([]);
 
     await store.dispatch(setFavoriteAction({id, flag}));
 
     const actions = store.getActions().map(({type}) => type);
-    expect(actions).toContain(loadOffersAction.toString());
-  });
-
-  it('should redirect to login (server returns 401)', async () => {
-    const store = mockStore();
-    const fakeFavoriteOffer = {
-      ...fakeOffer,
-      id: 1,
-      isFavorite: true,
-    };
-    const id = fakeFavoriteOffer.id;
-    const flag = Number(fakeFavoriteOffer.isFavorite);
-
-    mockAPI
-      .onPost(`${APIRoute.Favorite}/${id}/${flag}`)
-      .reply(HttpCode.Unauthorized);
-
-    expect(store.getActions()).toEqual([]);
-
-    await store.dispatch(setFavoriteAction({id, flag}));
-
-    const actions = store.getActions().map(({type}) => type);
-    expect(actions).toContain(redirectToRoute.toString());
+    expect(actions).toContain(loadOffers.toString());
   });
 
   it('should make a correct API call to GET /login and get user data', async () => {

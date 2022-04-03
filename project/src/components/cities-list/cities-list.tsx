@@ -1,6 +1,7 @@
 import {MouseEvent} from 'react';
 import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {getActiveCity} from '../../store/app-process/selectors';
 import {changeCity} from '../../store/app-process/app-process';
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
@@ -8,7 +9,7 @@ export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', '
 function CitiesList(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const activeCity = useAppSelector(({APP}) => APP.activeCity);
+  const activeCity = useAppSelector(getActiveCity);
 
   const handleChangeCityClick = (evt: MouseEvent, city: string) => {
     evt.preventDefault();

@@ -1,8 +1,10 @@
 import {MouseEvent, useState} from 'react';
 import className from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import {setFavoriteAction} from '../../store/api-actions';
-import {AuthorizationStatus} from '../../const';
+import {redirectToRoute} from '../../store/action';
+import {AuthorizationStatus, AppRoute} from '../../const';
 import {FavoriteButtonType} from '../../types/favorite-button';
 import {Offer} from '../../types/offer';
 
@@ -16,12 +18,17 @@ function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JS
 
   const {buttonClassName, imgWidth, imgHeight} = favoriteButtonType;
 
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const [isFavorite, setFavorite] = useState(offer.isFavorite);
 
   const handleFavoriteClick = (evt: MouseEvent) => {
     evt.preventDefault();
+
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      dispatch(redirectToRoute(AppRoute.SignIn));
+      return;
+    }
 
     dispatch(setFavoriteAction({
       id: offer.id,

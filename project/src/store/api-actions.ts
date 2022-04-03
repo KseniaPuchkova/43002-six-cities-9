@@ -3,12 +3,12 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {toast} from 'react-toastify';
 import {saveToken, dropToken} from '../services/token';
 import {AppDispatch, State} from '../types/state.js';
-import {errorHandle, getStatusCode} from '../services/error-handle';
+import {errorHandle} from '../services/error-handle';
 import {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites} from './data-process/data-process';
 import {requireAuthorization, getUserData} from './user-process/user-process';
 import {changeSubmitStatus} from './data-process/data-process';
 import {redirectToRoute} from './action';
-import {AppRoute, APIRoute, AuthorizationStatus, HttpCode, SubmitStatus} from '../const';
+import {AppRoute, APIRoute, AuthorizationStatus, SubmitStatus} from '../const';
 import {Offer, FavoriteFlag} from '../types/offer';
 import {Review, ReviewForForm} from '../types/review';
 import {UserData} from '../types/user-data';
@@ -132,13 +132,8 @@ export const setFavoriteAction = createAsyncThunk<void, FavoriteFlag, {
       api.post<Offer>(`${APIRoute.Favorite}/${id}/${flag}`);
       const {data} = await api.get<Offer[]>(APIRoute.Offers);
       dispatch(loadOffers(data));
-      dispatch(loadFavorites(data));
+      dispatch(loadFavoritesAction());
     } catch (error) {
-      const status = getStatusCode(error);
-      if (status === HttpCode.Unauthorized) {
-        dispatch(redirectToRoute(AppRoute.SignIn));
-        return;
-      }
       errorHandle(error);
     }
   },

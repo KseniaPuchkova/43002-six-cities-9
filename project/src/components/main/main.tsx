@@ -1,27 +1,15 @@
 import Header from '../header/header';
-import LoadingScreen from '../loading-screen/loading-screen';
 import OffersList from '../offers-list/offers-list';
 import CitiesList from '../cities-list/cities-list';
 import {useAppSelector} from '../../hooks/hooks';
-import {getOffersByCity} from '../../utils/utils';
+import {getOffersByActiveCity} from '../../store/app-process/selectors';
 import {AuthorizationStatus} from '../../const';
 
-const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
 function Main(): JSX.Element {
-  const authorizationStatus = useAppSelector(({USER}) => USER.authorizationStatus);
-  const isDataLoaded = useAppSelector(({DATA})=> DATA.isDataLoaded);
-  const offers = useAppSelector(({DATA})=> DATA.offers);
-  const activeCity = useAppSelector(({APP}) => APP.activeCity);
-
-  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
-  }
-
-  const offersByCity = getOffersByCity(activeCity, offers);
+  const offersByCity = useAppSelector(getOffersByActiveCity);
 
   return (
     <div className="page page--gray page--main">

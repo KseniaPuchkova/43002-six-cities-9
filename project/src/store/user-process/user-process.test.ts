@@ -1,4 +1,3 @@
-
 import {userProcess, requireAuthorization, getUserData} from './user-process';
 import {fakeUserData} from '../../utils/mocks';
 import {AuthorizationStatus} from '../../const';

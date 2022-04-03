@@ -4,6 +4,7 @@ import {loginAction} from '../../store/api-actions';
 import Header from '../header/header';
 import {useAppSelector} from '../../hooks/hooks';
 import {useAppDispatch} from '../../hooks/hooks';
+import {getActiveCity} from '../../store/app-process/selectors';
 import {AppRoute} from '../../const';
 
 const Reg = {
@@ -23,7 +24,7 @@ function Login(): JSX.Element {
   const [authData, setAuthData] = useState({email: '', password: ''});
   const {email, password} = authData;
 
-  const activeCity = useAppSelector(({APP}) => APP.activeCity);
+  const activeCity = useAppSelector(getActiveCity);
 
   const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = evt.target;

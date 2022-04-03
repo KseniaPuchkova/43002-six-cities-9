@@ -4,16 +4,13 @@ import EmptyOffersList from './empty-offers-list';
 import SortList from '../sort-list/sort-list';
 import PlacesList from '../places-list/places-list';
 import {useAppSelector} from '../../hooks/hooks';
-import {getOffersByCity, getSortedOffers} from '../../utils/utils';
+import {getActiveCity, getOffersByActiveCity, getSortedOffersByActiveCity} from '../../store/app-process/selectors';
 import {Offer} from '../../types/offer';
 
 function OffersList(): JSX.Element {
-  const activeCity = useAppSelector(({APP}) => APP.activeCity);
-  const sortType = useAppSelector(({APP}) => APP.sortType);
-  const offers = useAppSelector(({DATA}) => DATA.offers);
-
-  const offersByCity = getOffersByCity(activeCity, offers);
-  const sortedOffers = getSortedOffers(sortType, offersByCity);
+  const activeCity = useAppSelector(getActiveCity);
+  const offersByCity = useAppSelector(getOffersByActiveCity);
+  const sortedOffers = useAppSelector(getSortedOffersByActiveCity);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | null>(null);
   const onMouseEnter = setHoveredOffer;

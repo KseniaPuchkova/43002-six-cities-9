@@ -13,27 +13,14 @@ export const errorHandle = (error: ErrorType): void => {
   if (response) {
     switch (response.status) {
       case HttpCode.BadRequest:
-        toast.error(response.data.error);
+        toast.info(response.data.error);
         break;
       case HttpCode.Unauthorized:
         toast.info(response.data.error);
         break;
       case HttpCode.NotFound:
-        toast.error(response.data.error);
+        toast.info(response.data.error);
         break;
     }
   }
-};
-
-export const getStatusCode = (error: ErrorType): number => {
-  if (!request.isAxiosError(error)) {
-    throw error;
-  }
-
-  const {response} = error;
-  if (response) {
-    return response.status;
-  }
-
-  return -1;
 };

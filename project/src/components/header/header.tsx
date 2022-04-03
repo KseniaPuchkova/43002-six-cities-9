@@ -2,14 +2,15 @@ import {MouseEvent, memo} from 'react';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/hooks';
+import {getAuthorizationStatus, getUserData} from '../../store/user-process/selectors';
 import {logoutAction} from '../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 function Header(): JSX.Element {
   const dispatch = useDispatch();
 
-  const authorizationStatus = useAppSelector(({USER}) => USER.authorizationStatus);
-  const userData = useAppSelector(({USER}) => USER.userData);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userData = useAppSelector(getUserData);
 
   const handleLogoutClick= (evt: MouseEvent) => {
     evt.preventDefault();
