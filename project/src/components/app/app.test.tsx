@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import HistoryRouter from '../history-route/history-route';
 import App from './app';
 import {fakeCity, makeFakeOffer, makeFakeOffers, fakeUserData} from '../../utils/mocks';
-import {AppRoute, AuthorizationStatus, SubmitStatus, SortType} from '../../const';
+import {AppRoute, AuthorizationStatus, SubmitStatus, SortType, NameSpace} from '../../const';
 
 const FAKE_OFFER_ID = 1;
 const fakeOffer = makeFakeOffer(FAKE_OFFER_ID);
@@ -15,11 +15,11 @@ const fakeOffers = makeFakeOffers();
 
 const createMockStore = configureMockStore();
 let store = createMockStore({
-  APP: {
+  [NameSpace.App]: {
     activeCity: fakeCity,
     sortType: SortType.POPULAR,
   },
-  DATA: {
+  [NameSpace.Data]: {
     offers: fakeOffers,
     isDataLoaded: true,
     currentOffer: fakeOffer,
@@ -28,7 +28,7 @@ let store = createMockStore({
     favorites: [],
     submitStatus: SubmitStatus.Unknown,
   },
-  USER: {
+  [NameSpace.User]: {
     authorizationStatus: AuthorizationStatus.NoAuth,
     userData: {},
   },
@@ -60,16 +60,16 @@ describe('App routing', () => {
     expect(screen.getByText(/Password/i)).toBeInTheDocument();
   });
 
-  it('should render "Favorites" when route to user authorized navigate to "/favorites"', () => {
+  it('should render "Favorites" when user authorized navigate to "/favorites"', () => {
     history = createMemoryHistory();
 
     const createMockStore = configureMockStore([thunk.withExtraArgument(api)]);
     store = createMockStore({
-      APP: {
+      [NameSpace.App]: {
         activeCity: fakeCity,
         sortType: SortType.POPULAR,
       },
-      DATA: {
+      [NameSpace.Data]: {
         offers: fakeOffers,
         isDataLoaded: true,
         currentOffer: fakeOffer,
@@ -78,7 +78,7 @@ describe('App routing', () => {
         favorites: fakeOffers,
         submitStatus: SubmitStatus.Unknown,
       },
-      USER: {
+      [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.Auth,
         userData: fakeUserData,
       },
@@ -95,7 +95,45 @@ describe('App routing', () => {
     history.push(AppRoute.Favorites);
     render(fakeApp);
 
-    expect(screen.getByText(/Nothing yet saved./i)).toBeInTheDocument();
+    expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
+  });
+
+  it('should not render "Favorites" when user unauthorized navigate to "/favorites"', () => {
+    history = createMemoryHistory();
+
+    const createMockStore = configureMockStore([thunk.withExtraArgument(api)]);
+    store = createMockStore({
+      [NameSpace.App]: {
+        activeCity: fakeCity,
+        sortType: SortType.POPULAR,
+      },
+      [NameSpace.Data]: {
+        offers: fakeOffers,
+        isDataLoaded: true,
+        currentOffer: fakeOffer,
+        offersNearby: fakeOffers,
+        reviewsByOffer: [],
+        favorites: [],
+        submitStatus: SubmitStatus.Unknown,
+      },
+      [NameSpace.User]: {
+        authorizationStatus: AuthorizationStatus.NoAuth,
+        userData: fakeUserData,
+      },
+    });
+
+    fakeApp = (
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <App />
+        </HistoryRouter>
+      </Provider>
+    );
+
+    history.push(AppRoute.Favorites);
+    render(fakeApp);
+
+    expect(screen.queryByText(/Saved listing/i)).not.toBeInTheDocument();
   });
 
   it('should render "Room" when user navigate to "/offer/:id"', () => {

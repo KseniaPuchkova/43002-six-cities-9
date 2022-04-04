@@ -13,6 +13,7 @@ function CitiesList(): JSX.Element {
 
   const handleChangeCityClick = (evt: MouseEvent, city: string) => {
     evt.preventDefault();
+
     dispatch(changeCity(city));
   };
 

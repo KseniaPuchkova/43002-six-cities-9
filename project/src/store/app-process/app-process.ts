@@ -1,16 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {CITIES} from '../../components/cities-list/cities-list';
 import {NameSpace, SortType} from '../../const';
 
-const DEFAULT_CITY_INDEX = 0;
+const DEFAULT_CITY = 'Paris';
 
 type InitalState = {
   activeCity: string,
   sortType: string,
-}
+};
 
 const initialState: InitalState = {
-  activeCity: CITIES[DEFAULT_CITY_INDEX],
+  activeCity: DEFAULT_CITY,
   sortType: SortType.POPULAR,
 };
 

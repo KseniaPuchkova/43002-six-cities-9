@@ -7,9 +7,12 @@ import {Review} from '../types/review';
 
 export const ONE_ACTION = 'UNKNOWN_ACTION';
 export const OFFERS_COUNT = 100;
+export const FAVORITES_COUNT = 10;
 export const REVIEWS_COUNT = 5;
 export const OFFERS_TYPES = ['Apartment', 'Hotel', 'House', 'PrivateRoom'];
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export const fakeCity = getRandomArrayItem(CITIES);
 
 export const makeFakeOffer = (id: number) => {
   const offer: Offer = {
@@ -32,7 +35,7 @@ export const makeFakeOffer = (id: number) => {
     },
     id,
     images: [],
-    isFavorite: false,
+    isFavorite: datatype.boolean(),
     isPremium: datatype.boolean(),
     location: {
       latitude: parseFloat(address.latitude()),
@@ -89,7 +92,11 @@ export const fakeCardType = {
   imgHeight: '200',
 }
 
-export const fakeCity = getRandomArrayItem(CITIES);
+export const fakeFavoriteButtonType = {
+  buttonClassName: 'place-card',
+  imgWidth: '18',
+  imgHeight: '19',
+}
 
 export const makeFakeOffers = (): Offer[] =>
   new Array(OFFERS_COUNT).fill(null).map((_offer, index) => makeFakeOffer(index));
