@@ -1,4 +1,4 @@
-import {MouseEvent, useState} from 'react';
+import {MouseEvent} from 'react';
 import className from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
@@ -20,8 +20,6 @@ function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JS
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const [isFavorite, setFavorite] = useState(offer.isFavorite);
-
   const handleFavoriteClick = (evt: MouseEvent) => {
     evt.preventDefault();
 
@@ -34,13 +32,11 @@ function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JS
       id: offer.id,
       flag: Number(!offer.isFavorite),
     }));
-
-    setFavorite(!isFavorite);
   };
 
   return (
     <button className={className(`${buttonClassName}__bookmark-button`,
-      {[`${buttonClassName}__bookmark-button--active`] : (offer.isFavorite || isFavorite) && (authorizationStatus === AuthorizationStatus.Auth)},
+      {[`${buttonClassName}__bookmark-button--active`] : offer.isFavorite && authorizationStatus === AuthorizationStatus.Auth},
       'button')}
     type="button"
     onClick={handleFavoriteClick}
@@ -52,7 +48,7 @@ function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JS
       >
         <use xlinkHref="#icon-bookmark" />
       </svg>
-      <span className="visually-hidden">{(offer.isFavorite || isFavorite) ? 'In bookmarks' : 'To bookmarks'}</span>
+      <span className="visually-hidden">{offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
     </button>
   );
 }

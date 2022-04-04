@@ -5,7 +5,7 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createAPI} from '../services/api';
 import {loadOffersAction, loadOfferAction, loadOffersNearbyAction, loadReviewsByOfferAction, postReviewAction, checkAuthAction, loadFavoritesAction, setFavoriteAction, loginAction, logoutAction} from './api-actions';
 import {requireAuthorization, getUserData} from './user-process/user-process';
-import {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites, changeSubmitStatus} from './data-process/data-process';
+import {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites, changeFavoriteFlag, changeSubmitStatus} from './data-process/data-process';
 import {redirectToRoute} from './action';
 import {makeFakeOffer, makeFakeOffers, makeFakeReviewByOffer, makeFakeReviewsByOffer, fakeUserData, fakeAuthData} from '../utils/mocks';
 import {APIRoute, HttpCode} from '../const';
@@ -170,7 +170,7 @@ describe('Async actions', () => {
     await store.dispatch(setFavoriteAction({id, flag}));
 
     const actions = store.getActions().map(({type}) => type);
-    expect(actions).toContain(loadOffers.toString());
+    expect(actions).toContain(changeFavoriteFlag.toString());
   });
 
   it('should make a correct API call to GET /login and get user data', async () => {

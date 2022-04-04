@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {CITIES} from '../../components/cities-list/cities-list';
-import {Process, SortType} from '../../const';
+import {NameSpace, SortType} from '../../const';
 
 const DEFAULT_CITY_INDEX = 0;
 
@@ -15,7 +15,7 @@ const initialState: InitalState = {
 };
 
 export const appProcess = createSlice({
-  name: Process.App,
+  name: NameSpace.App,
   initialState,
   reducers: {
     changeCity: (state, action) => {

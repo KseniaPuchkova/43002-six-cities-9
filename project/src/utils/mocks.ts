@@ -81,6 +81,14 @@ export const fakeUserData: UserData = {
   token: datatype.string(5),
 };
 
+export const fakeCardType = {
+  articleClassName: 'near-places__card',
+  imgWrapperClassName: 'near-places__image-wrapper',
+  cardInfoClassName: '',
+  imgWidth: '260',
+  imgHeight: '200',
+}
+
 export const fakeCity = getRandomArrayItem(CITIES);
 
 export const makeFakeOffers = (): Offer[] =>

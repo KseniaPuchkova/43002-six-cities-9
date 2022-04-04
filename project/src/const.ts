@@ -1,4 +1,4 @@
-export enum Process {
+export enum NameSpace {
   User = 'USER',
   Data = 'DATA',
   App = 'APP',

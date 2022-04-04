@@ -4,9 +4,8 @@ import {toast} from 'react-toastify';
 import {saveToken, dropToken} from '../services/token';
 import {AppDispatch, State} from '../types/state.js';
 import {errorHandle} from '../services/error-handle';
-import {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites} from './data-process/data-process';
+import {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites, changeSubmitStatus, changeFavoriteFlag} from './data-process/data-process';
 import {requireAuthorization, getUserData} from './user-process/user-process';
-import {changeSubmitStatus} from './data-process/data-process';
 import {redirectToRoute} from './action';
 import {AppRoute, APIRoute, AuthorizationStatus, SubmitStatus} from '../const';
 import {Offer, FavoriteFlag} from '../types/offer';
@@ -129,10 +128,8 @@ export const setFavoriteAction = createAsyncThunk<void, FavoriteFlag, {
   'data/setFavorite',
   async ({id, flag}, {dispatch, extra: api}) => {
     try {
-      api.post<Offer>(`${APIRoute.Favorite}/${id}/${flag}`);
-      const {data} = await api.get<Offer[]>(APIRoute.Offers);
-      dispatch(loadOffers(data));
-      dispatch(loadFavoritesAction());
+      const {data} = await api.post<Offer>(`${APIRoute.Favorite}/${id}/${flag}`);
+      dispatch(changeFavoriteFlag(data));
     } catch (error) {
       errorHandle(error);
     }

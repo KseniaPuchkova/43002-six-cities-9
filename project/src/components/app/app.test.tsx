@@ -95,7 +95,7 @@ describe('App routing', () => {
     history.push(AppRoute.Favorites);
     render(fakeApp);
 
-    expect(screen.getByText(/Nothing yet saved/i)).toBeInTheDocument();
+    expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
   });
 
   it('should render "Room" when user navigate to "/offer/:id"', () => {
