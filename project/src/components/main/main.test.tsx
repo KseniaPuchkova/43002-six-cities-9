@@ -24,7 +24,6 @@ const store = createMockStore({
     userData: {},
   },
 });
-
 const history = createMemoryHistory();
 
 describe('Component: Main', () => {
@@ -36,6 +35,7 @@ describe('Component: Main', () => {
         </HistoryRouter>
       </Provider>,
     );
+
     expect(screen.getByAltText(/6 cities logo/i)).toBeInTheDocument();
   });
 });

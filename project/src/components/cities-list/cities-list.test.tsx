@@ -4,19 +4,17 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
 import CitiesList from './cities-list';
-import {AppRoute, NameSpace} from '../../const';
+import {NameSpace} from '../../const';
 
 const default_city = "Paris";
 
-const mockStore = configureMockStore();
-const store = mockStore({
+const createMockStore = configureMockStore();
+const store = createMockStore({
   [NameSpace.App]: {
     activeCity: default_city,
   },
 });
-
 const history = createMemoryHistory();
-history.push(AppRoute.Main);
 
 describe('Component: CitiesList', () => {
   it('should render correctly', () => {

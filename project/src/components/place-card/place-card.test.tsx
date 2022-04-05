@@ -31,7 +31,6 @@ let store = createMockStore({
     userData: {},
   },
 });
-
 const history = createMemoryHistory();
 
 describe('Component: PlaceCard', () => {
