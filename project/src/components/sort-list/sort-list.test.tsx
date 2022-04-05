@@ -6,6 +6,7 @@ import HistoryRouter from '../history-route/history-route';
 import SortList from './sort-list';
 import {SortType, NameSpace} from '../../const';
 
+const history = createMemoryHistory();
 const createMockStore = configureMockStore();
 const store = createMockStore({
   [NameSpace.App]: {
@@ -15,8 +16,6 @@ const store = createMockStore({
 
 describe('Component: SortList', () => {
   it('should render correctly', () => {
-    const history = createMemoryHistory();
-
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>

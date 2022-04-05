@@ -1,10 +1,10 @@
-import {configureMockStore} from '@jedmao/redux-mock-store';
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
+import HistoryRouter from '../history-route/history-route';
+import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
 import {createAPI} from '../../services/api';
 import thunk from 'redux-thunk';
-import HistoryRouter from '../history-route/history-route';
 import App from './app';
 import {fakeCity, makeFakeOffer, makeFakeOffers, fakeUserData} from '../../utils/mocks';
 import {AppRoute, AuthorizationStatus, SubmitStatus, SortType, NameSpace} from '../../const';
@@ -13,6 +13,8 @@ const FAKE_OFFER_ID = 1;
 const fakeOffer = makeFakeOffer(FAKE_OFFER_ID);
 const fakeOffers = makeFakeOffers();
 
+let api = createAPI();
+let history = createMemoryHistory();
 const createMockStore = configureMockStore();
 let store = createMockStore({
   [NameSpace.App]: {
@@ -33,8 +35,7 @@ let store = createMockStore({
     userData: {},
   },
 });
-let history = createMemoryHistory();
-let api = createAPI();
+
 let fakeApp = (
   <Provider store={store}>
     <HistoryRouter history={history}>
@@ -43,7 +44,7 @@ let fakeApp = (
   </Provider>
 );
 
-describe('App routing', () => {
+describe('Component: App', () => {
   it('should render "Main" when user navigate to "/"', () => {
     history.push(AppRoute.Main);
     render(fakeApp);
@@ -118,7 +119,7 @@ describe('App routing', () => {
       },
       [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.NoAuth,
-        userData: fakeUserData,
+        userData: {},
       },
     });
 

@@ -5,10 +5,12 @@ import {createMemoryHistory} from 'history';
 import HistoryRouter from '../history-route/history-route';
 import Main from './main';
 import {fakeCity, makeFakeOffers} from '../../utils/mocks';
-import {AuthorizationStatus, SortType, NameSpace} from '../../const';
+import {AppRoute, AuthorizationStatus, SortType, NameSpace} from '../../const';
 
 const fakeOffers = makeFakeOffers();
 
+const history = createMemoryHistory();
+history.push(AppRoute.Main);
 const createMockStore = configureMockStore();
 const store = createMockStore({
   [NameSpace.App]: {
@@ -24,7 +26,6 @@ const store = createMockStore({
     userData: {},
   },
 });
-const history = createMemoryHistory();
 
 describe('Component: Main', () => {
   it('should render correctly', () => {
@@ -33,7 +34,7 @@ describe('Component: Main', () => {
         <HistoryRouter history={history}>
           <Main />
         </HistoryRouter>
-      </Provider>,
+      </Provider>
     );
 
     expect(screen.getByAltText(/6 cities logo/i)).toBeInTheDocument();

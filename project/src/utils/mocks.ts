@@ -4,6 +4,8 @@ import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {Offer} from '../types/offer';
 import {Review} from '../types/review';
+import {CardType} from '../types/card';
+import {FavoriteButtonType} from '../types/favorite-button';
 
 export const ONE_ACTION = 'UNKNOWN_ACTION';
 export const OFFERS_COUNT = 100;
@@ -84,7 +86,7 @@ export const fakeUserData: UserData = {
   token: datatype.string(5),
 };
 
-export const fakeCardType = {
+export const fakeCardType: CardType = {
   articleClassName: 'near-places__card',
   imgWrapperClassName: 'near-places__image-wrapper',
   cardInfoClassName: '',
@@ -92,7 +94,7 @@ export const fakeCardType = {
   imgHeight: '200',
 }
 
-export const fakeFavoriteButtonType = {
+export const fakeFavoriteButtonType: FavoriteButtonType = {
   buttonClassName: 'place-card',
   imgWidth: '18',
   imgHeight: '19',

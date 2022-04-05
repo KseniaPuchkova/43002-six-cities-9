@@ -4,11 +4,12 @@ import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
 import HistoryRouter from '../history-route/history-route';
 import FavoritesList from './favorites-list';
-import {AuthorizationStatus, NameSpace} from '../../const';
 import {makeFakeOffers, fakeUserData} from '../../utils/mocks';
+import {AuthorizationStatus, NameSpace} from '../../const';
 
 const fakeOffers = makeFakeOffers();
 
+const history = createMemoryHistory();
 const createMockStore = configureMockStore();
 const store = createMockStore({
   [NameSpace.Data]: {
@@ -19,7 +20,6 @@ const store = createMockStore({
     userData: fakeUserData,
   },
 });
-const history = createMemoryHistory();
 
 describe('Component: FavoritesList', () => {
   it('should render correctly', () => {

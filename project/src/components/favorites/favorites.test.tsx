@@ -9,9 +9,9 @@ import {makeFakeOffers, fakeUserData} from '../../utils/mocks';
 
 const fakeOffers = makeFakeOffers();
 
-const createMockStore = configureMockStore();
 const history = createMemoryHistory();
 history.push(AppRoute.Favorites);
+const createMockStore = configureMockStore();
 
 describe('Component: Favorites', () => {
   it('should render correctly with favotires', () => {
@@ -36,7 +36,7 @@ describe('Component: Favorites', () => {
     expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
   });
 
-  it('should render correctly  without favorites', () => {
+  it('should render correctly without favorites', () => {
     const store = createMockStore({
       [NameSpace.Data]: {
         offers: fakeOffers.filter(({isFavorite}) => !isFavorite),

@@ -70,7 +70,7 @@ function Map({activeCity, offersByCity, hoveredOffer}: MapProps): JSX.Element {
   }, [map, activeCity, offersByCity, hoveredOffer]);
 
   return (
-    <div id="map" style={{height: '100%'}} ref={mapRef}></div>
+    <div id="map" style={{height: '100%'}} ref={mapRef} data-testid="Map"></div>
   );
 }
 

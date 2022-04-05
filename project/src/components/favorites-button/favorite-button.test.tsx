@@ -11,6 +11,7 @@ const FAKE_OFFER_ID = 1;
 const fakeOffer = makeFakeOffer(FAKE_OFFER_ID);
 const fakeOffers = makeFakeOffers();
 
+const history = createMemoryHistory();
 const createMockStore = configureMockStore();
 const store = createMockStore({
   [NameSpace.Data]: {
@@ -21,7 +22,6 @@ const store = createMockStore({
     userData: fakeUserData,
   },
 });
-const history = createMemoryHistory();
 
 describe('Component: Favorites', () => {
   it('should render correctly', () => {

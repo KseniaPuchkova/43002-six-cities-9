@@ -4,13 +4,16 @@ import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import HistoryRouter from '../history-route/history-route';
 import NotFound from './not-found';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, NameSpace} from '../../const';
 
+const history = createMemoryHistory();
 const createMockStore = configureMockStore();
 const store = createMockStore({
-  USER: {authorizationStatus: AuthorizationStatus.Auth},
+  [NameSpace.User]: {
+    authorizationStatus: AuthorizationStatus.NoAuth,
+    userData: {},
+  },
 });
-const history = createMemoryHistory();
 
 describe('Component: NotFound', () => {
   it('should render correctly', () => {
@@ -19,7 +22,7 @@ describe('Component: NotFound', () => {
         <HistoryRouter history={history}>
           <NotFound />
         </HistoryRouter>
-      </Provider>,
+      </Provider>
     );
 
     expect(screen.getByText('404. Page not found')).toBeInTheDocument();

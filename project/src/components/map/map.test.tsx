@@ -3,8 +3,8 @@ import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import HistoryRouter from '../history-route/history-route';
-import PlaceCard from './place-card';
-import {fakeCity, makeFakeOffer, makeFakeOffers, fakeCardType} from '../../utils/mocks';
+import Map from './map';
+import {makeFakeOffer, makeFakeOffers} from '../../utils/mocks';
 import {AuthorizationStatus, SubmitStatus, SortType, NameSpace} from '../../const';
 
 const FAKE_OFFER_ID = 1;
@@ -33,16 +33,16 @@ const store = createMockStore({
   },
 });
 
-describe('Component: PlaceCard', () => {
-  it('should render "PlaceCard" correctly', () => {
+describe('Component: Map', () => {
+  it('should render "Map" correctly', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <PlaceCard offer={fakeOffer} cardType={fakeCardType}/>
+          <Map activeCity={fakeOffer.city} offersByCity={fakeOffers} hoveredOffer={fakeOffer}/>
         </HistoryRouter>
       </Provider>,
     );
 
-    expect(screen.getByText(/night/i)).toBeInTheDocument();
+    expect(screen.getByTestId('Map')).toBeInTheDocument();
   });
 });

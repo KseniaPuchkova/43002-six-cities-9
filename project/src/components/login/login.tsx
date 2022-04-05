@@ -82,6 +82,7 @@ function Login(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   onChange={handleEmailChange}
+                  data-testid="email"
                   required
                 />
               </div>
@@ -93,6 +94,7 @@ function Login(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   onChange={handlePasswordChange}
+                  data-testid="password"
                   required
                 />
               </div>
