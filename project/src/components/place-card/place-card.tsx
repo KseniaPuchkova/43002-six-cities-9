@@ -24,6 +24,8 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
     }
   };
 
+  const RouteToOffer = `${AppRoute.Offer}${id}`;
+
   return (
     <article
       className={className(articleClassName, 'place-card')}
@@ -34,12 +36,12 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
         <div className="place-card__mark"><span>Premium</span>
         </div>}
       <div className={className(imgWrapperClassName, 'place-card__image-wrapper')}>
-        <Link to={`${AppRoute.Offer}${id}`}>
+        <Link to={RouteToOffer}>
           <img
             className="place-card__image"
-            src={className(previewImage)}
-            width={className(imgWidth)}
-            height={className(imgHeight)}
+            src={previewImage}
+            width={imgWidth}
+            height={imgHeight}
             alt={`Place ${id}`}
             onClick={() => window.scrollTo(0, 0)}
           />
@@ -63,7 +65,7 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}${id}`} onClick={() => window.scrollTo(0, 0)}>{title}</Link>
+          <Link to={RouteToOffer} onClick={() => window.scrollTo(0, 0)}>{title}</Link>
         </h2>
         <p className="place-card__type">{makeFirstLetterUppercase(type)}</p>
       </div>

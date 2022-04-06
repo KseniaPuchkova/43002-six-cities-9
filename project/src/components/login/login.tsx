@@ -1,4 +1,4 @@
-import {useState, ChangeEvent, FormEvent, memo} from 'react';
+import {useState, ChangeEvent, FormEvent} from 'react';
 import {Link} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import Header from '../header/header';
@@ -119,4 +119,4 @@ function Login(): JSX.Element {
   );
 }
 
-export default memo(Login);
+export default Login;

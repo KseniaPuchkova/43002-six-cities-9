@@ -1,4 +1,4 @@
-import {MouseEvent, memo} from 'react';
+import {MouseEvent} from 'react';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/hooks';
@@ -78,4 +78,4 @@ function Header(): JSX.Element {
   );
 }
 
-export default memo(Header);
+export default Header;

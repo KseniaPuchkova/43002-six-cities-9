@@ -13,7 +13,6 @@ function OffersList(): JSX.Element {
   const sortedOffers = useAppSelector(getSortedOffersByActiveCity);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | null>(null);
-  const onMouseEnter = setHoveredOffer;
   const onMouseLeave = useCallback(() => setHoveredOffer(null), []);
 
   return (
@@ -26,7 +25,7 @@ function OffersList(): JSX.Element {
             <SortList />
             <PlacesList
               offers={sortedOffers}
-              onMouseEnter={onMouseEnter}
+              onMouseEnter={setHoveredOffer}
               onMouseLeave={onMouseLeave}
             />
           </section>

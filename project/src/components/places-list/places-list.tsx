@@ -1,4 +1,5 @@
 import {memo} from 'react';
+import className from 'classnames';
 import PlaceCard from '../place-card/place-card';
 import {CardType} from '../../const';
 import {Offer} from '../../types/offer';
@@ -13,8 +14,12 @@ type PlacesListProps = {
 function PlacesList({offers, isNearPlacesList, onMouseEnter, onMouseLeave}: PlacesListProps) {
 
   return (
-    <div className={isNearPlacesList ? 'near-places__list places__list' : 'cities__places-list places__list tabs__content'} data-testid="PlacesList">
-      {offers.slice().map((offer) => (
+    <div className={className(
+      {'cities__places-list places__list tabs__content' : !isNearPlacesList},
+      {'near-places__list places__list' : isNearPlacesList})}
+    data-testid="PlacesList"
+    >
+      {offers.map((offer) => (
         <PlaceCard
           key={offer.id}
           offer={offer}

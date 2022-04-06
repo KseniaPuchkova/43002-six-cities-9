@@ -1,5 +1,6 @@
 import {MouseEvent} from 'react';
 import {Link} from 'react-router-dom';
+import className from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {getActiveCity} from '../../store/app-process/selectors';
 import {changeCity} from '../../store/app-process/app-process';
@@ -28,7 +29,7 @@ function CitiesList(): JSX.Element {
             >
               <Link
                 to={city}
-                className={`locations__item-link tabs__item${activeCity === city ? ' tabs__item--active':''}`}
+                className={className('locations__item-link tabs__item', {'tabs__item--active' : activeCity === city})}
                 onClick={(evt) => handleChangeCityClick(evt, city)}
               >
                 <span>{city}</span>

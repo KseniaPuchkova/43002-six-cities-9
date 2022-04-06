@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
-//import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import HistoryRouter from '../history-route/history-route';
 import Login from './login';
 import {fakeCity} from '../../utils/mocks';
@@ -34,11 +34,11 @@ describe('Component: Login', () => {
     expect(screen.getByPlaceholderText(/Email/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Password/i)).toBeInTheDocument();
 
-    //userEvent.type(screen.getByTestId('email'), 'test@test.ru');
-    //userEvent.type(screen.getByTestId('password'), '123456');
+    userEvent.type(screen.getByTestId('email'), 'test@test.ru');
+    userEvent.type(screen.getByTestId('password'), '123456');
 
-    //expect(screen.getByDisplayValue(/test@test.ru/i)).toBeInTheDocument();
-    // expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(/test@test.ru/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
     expect(screen.getByText(fakeCity)).toBeInTheDocument();
   });
 });

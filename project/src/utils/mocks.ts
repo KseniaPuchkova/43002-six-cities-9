@@ -1,5 +1,5 @@
 import {address, datatype, image, internet, lorem, name} from 'faker';
-import {getRandomArrayItem} from '../utils/utils';
+import {getRandomArrayItem} from './utils';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {Offer} from '../types/offer';
@@ -7,12 +7,11 @@ import {Review} from '../types/review';
 import {CardType} from '../types/card';
 import {FavoriteButtonType} from '../types/favorite-button';
 
-export const ONE_ACTION = 'UNKNOWN_ACTION';
-export const OFFERS_COUNT = 100;
-export const FAVORITES_COUNT = 10;
-export const REVIEWS_COUNT = 5;
-export const OFFERS_TYPES = ['Apartment', 'Hotel', 'House', 'PrivateRoom'];
+const OFFERS_COUNT = 100;
+const REVIEWS_COUNT = 5;
+const OFFERS_TYPES = ['Apartment', 'Hotel', 'House', 'PrivateRoom'];
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const ONE_ACTION = 'UNKNOWN_ACTION';
 
 export const fakeCity: string = getRandomArrayItem(CITIES);
 

@@ -1,6 +1,6 @@
 import './loading-screen.css';
 
-function LoadingScreen(): JSX.Element | null {
+function LoadingScreen(): JSX.Element {
   return (
     <div className="loader__wrapper" data-testid="LoadingScreen">
       <div className="loader-pin__wrapper">
