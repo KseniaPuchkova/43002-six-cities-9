@@ -92,13 +92,13 @@ export const fakeCardType: CardType = {
   cardInfoClassName: '',
   imgWidth: '260',
   imgHeight: '200',
-}
+};
 
 export const fakeFavoriteButtonType: FavoriteButtonType = {
   buttonClassName: 'place-card',
   imgWidth: '18',
   imgHeight: '19',
-}
+};
 
 export const makeFakeOffers = (): Offer[] =>
   new Array(OFFERS_COUNT).fill(null).map((_offer, index) => makeFakeOffer(index));
