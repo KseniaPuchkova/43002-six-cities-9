@@ -14,7 +14,7 @@ export const REVIEWS_COUNT = 5;
 export const OFFERS_TYPES = ['Apartment', 'Hotel', 'House', 'PrivateRoom'];
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-export const fakeCity = getRandomArrayItem(CITIES);
+export const fakeCity: string = getRandomArrayItem(CITIES);
 
 export const makeFakeOffer = (id: number) => {
   const offer: Offer = {

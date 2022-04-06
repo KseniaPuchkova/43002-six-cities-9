@@ -4,13 +4,12 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
 import Favorites from './favorites';
-import {AppRoute, AuthorizationStatus, NameSpace} from '../../const';
+import {AuthorizationStatus, NameSpace} from '../../const';
 import {makeFakeOffers, fakeUserData} from '../../utils/mocks';
 
 const fakeOffers = makeFakeOffers();
 
 const history = createMemoryHistory();
-history.push(AppRoute.Favorites);
 const createMockStore = configureMockStore();
 
 describe('Component: Favorites', () => {
@@ -30,7 +29,7 @@ describe('Component: Favorites', () => {
         <HistoryRouter history={history}>
           <Favorites />
         </HistoryRouter>;
-      </Provider>,
+      </Provider>
     );
 
     expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
@@ -52,7 +51,7 @@ describe('Component: Favorites', () => {
         <HistoryRouter history={history}>
           <Favorites />
         </HistoryRouter>;
-      </Provider>,
+      </Provider>
     );
 
     expect(screen.getByText(/Nothing yet saved./i)).toBeInTheDocument();

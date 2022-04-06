@@ -13,7 +13,7 @@ type PlacesListProps = {
 function PlacesList({offers, isNearPlacesList, onMouseEnter, onMouseLeave}: PlacesListProps) {
 
   return (
-    <div className={isNearPlacesList ? 'near-places__list places__list' : 'cities__places-list places__list tabs__content'}>
+    <div className={isNearPlacesList ? 'near-places__list places__list' : 'cities__places-list places__list tabs__content'} data-testid="PlacesList">
       {offers.slice().map((offer) => (
         <PlaceCard
           key={offer.id}

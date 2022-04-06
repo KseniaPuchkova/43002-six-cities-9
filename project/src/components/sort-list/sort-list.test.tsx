@@ -21,7 +21,7 @@ describe('Component: SortList', () => {
         <HistoryRouter history={history}>
           <SortList />
         </HistoryRouter>
-      </Provider>,
+      </Provider>
     );
 
     expect(screen.getByText(/Sort by/i)).toBeInTheDocument();
