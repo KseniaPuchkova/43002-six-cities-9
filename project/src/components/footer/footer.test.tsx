@@ -36,7 +36,6 @@ describe('Component: Footer', () => {
         </Routes>
       </HistoryRouter>);
 
-
     userEvent.click(screen.getByRole('link'));
     expect(screen.getByText(/Main page/i)).toBeInTheDocument();
   });
