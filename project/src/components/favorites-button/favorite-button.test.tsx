@@ -1,8 +1,8 @@
 import {render, screen} from '@testing-library/react';
 import {configureMockStore} from '@jedmao/redux-mock-store';
+import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
-import {createMemoryHistory} from 'history';
 import FavoritesButton from './favorites-button';
 import {AuthorizationStatus, NameSpace} from '../../const';
 import {makeFakeOffers, makeFakeOffer, fakeUserData, fakeFavoriteButtonType} from '../../utils/mocks';

@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
+import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
 import HistoryRouter from '../history-route/history-route';
-import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
 import {createAPI} from '../../services/api';
 import thunk from 'redux-thunk';

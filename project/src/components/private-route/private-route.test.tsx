@@ -1,8 +1,8 @@
-import {Provider} from 'react-redux';
-import {Route, Routes} from 'react-router-dom';
-import {configureMockStore} from '@jedmao/redux-mock-store';
 import {render, screen} from '@testing-library/react';
+import {configureMockStore} from '@jedmao/redux-mock-store';
+import {Route, Routes} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
 import PrivateRoute from './private-route';
 import {AppRoute, AuthorizationStatus} from '../../const';

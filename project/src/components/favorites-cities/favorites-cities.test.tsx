@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
+import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
 import FavoritesCities from './favorites-cities';
 import {AuthorizationStatus, NameSpace} from '../../const';
