@@ -13,9 +13,9 @@ const FAKE_OFFER_ID = 1;
 const fakeOffer = makeFakeOffer(FAKE_OFFER_ID);
 const fakeOffers = makeFakeOffers();
 
-let api = createAPI();
+const api = createAPI();
 let history = createMemoryHistory();
-const createMockStore = configureMockStore();
+let createMockStore = configureMockStore();
 let store = createMockStore({
   [NameSpace.App]: {
     activeCity: fakeCity,
@@ -64,7 +64,7 @@ describe('Component: App', () => {
   it('should render "Favorites" when user authorized navigate to "/favorites"', () => {
     history = createMemoryHistory();
 
-    const createMockStore = configureMockStore([thunk.withExtraArgument(api)]);
+    createMockStore = configureMockStore([thunk.withExtraArgument(api)]);
     store = createMockStore({
       [NameSpace.App]: {
         activeCity: fakeCity,
@@ -102,7 +102,7 @@ describe('Component: App', () => {
   it('should not render "Favorites" when user unauthorized navigate to "/favorites"', () => {
     history = createMemoryHistory();
 
-    const createMockStore = configureMockStore([thunk.withExtraArgument(api)]);
+    createMockStore = configureMockStore([thunk.withExtraArgument(api)]);
     store = createMockStore({
       [NameSpace.App]: {
         activeCity: fakeCity,
