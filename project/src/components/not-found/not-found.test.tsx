@@ -22,7 +22,7 @@ describe('Component: NotFound', () => {
         <HistoryRouter history={history}>
           <NotFound />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText('404. Page not found')).toBeInTheDocument();

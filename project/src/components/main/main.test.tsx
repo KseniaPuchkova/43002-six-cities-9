@@ -34,7 +34,7 @@ describe('Component: Main', () => {
         <HistoryRouter history={history}>
           <Main />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByAltText(/6 cities logo/i)).toBeInTheDocument();

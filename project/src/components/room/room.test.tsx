@@ -41,16 +41,16 @@ describe('Component: Room', () => {
 
     render(
       <Provider store={store}>
-      <HistoryRouter history={history}>
-        <Routes>
-          <Route
-            path={AppRoute.Room}
-            element={<Room />}
-          />
-        </Routes>
-      </HistoryRouter>
-    </Provider>
-  );
+        <HistoryRouter history={history}>
+          <Routes>
+            <Route
+              path={AppRoute.Room}
+              element={<Room />}
+            />
+          </Routes>
+        </HistoryRouter>
+      </Provider>,
+    );
 
     expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
     expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();

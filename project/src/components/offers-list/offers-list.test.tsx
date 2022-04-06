@@ -38,7 +38,7 @@ describe('Component: OffersList', () => {
         <HistoryRouter history={history}>
           <OffersList />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/places to stay in/i)).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('Component: OffersList', () => {
         <HistoryRouter history={history}>
           <OffersList />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/No places to stay available/i)).toBeInTheDocument();

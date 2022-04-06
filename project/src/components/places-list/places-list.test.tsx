@@ -36,7 +36,7 @@ describe('Component: PlacesList', () => {
         <HistoryRouter history={history}>
           <PlacesList offers={fakeOffers} isNearPlacesList={false} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}/>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByTestId('PlacesList')).toBeInTheDocument();

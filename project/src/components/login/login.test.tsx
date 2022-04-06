@@ -28,11 +28,11 @@ describe('Component: Login', () => {
         <HistoryRouter history={history}>
           <Login />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
-    expect(screen.queryByPlaceholderText(/Email/i)).toBeInTheDocument();
-    expect(screen.queryByPlaceholderText(/Password/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Email/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Password/i)).toBeInTheDocument();
 
     //userEvent.type(screen.getByTestId('email'), 'test@test.ru');
     //userEvent.type(screen.getByTestId('password'), '123456');

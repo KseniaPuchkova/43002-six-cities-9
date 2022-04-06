@@ -10,7 +10,7 @@ import {fakeUserData} from '../../utils/mocks';
 import {AppRoute, AuthorizationStatus, NameSpace} from '../../const';
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore();
+let createMockStore = configureMockStore();
 let store = createMockStore();
 
 describe('Component: Header', () => {
@@ -32,7 +32,7 @@ describe('Component: Header', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/Sign out/i)).not.toBeInTheDocument();
@@ -40,7 +40,7 @@ describe('Component: Header', () => {
   });
 
   it('should render correctly when user authorized', () => {
-    const createMockStore = configureMockStore();
+    createMockStore = configureMockStore();
     store = createMockStore({
       [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.Auth,
@@ -58,7 +58,7 @@ describe('Component: Header', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/Sign out/i)).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe('Component: Header', () => {
   });
 
   it('should should render correctly when user unauthorized clicked to "/login"', () => {
-    const createMockStore = configureMockStore();
+    createMockStore = configureMockStore();
     store = createMockStore({
       [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.NoAuth,
@@ -88,19 +88,19 @@ describe('Component: Header', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/This is login page/i)).not.toBeInTheDocument();
 
     //userEvent.click(screen.getByText(/Sign in/i));
-   // expect(screen.getByText(/This is login page/i)).toBeInTheDocument();
+    // expect(screen.getByText(/This is login page/i)).toBeInTheDocument();
   });
 
   it('should redirect to "/favorites" url when user authorized clicked to email"', () => {
     history.push(AppRoute.Main);
 
-    const createMockStore = configureMockStore();
+    createMockStore = configureMockStore();
     store = createMockStore({
       [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.Auth,
@@ -122,7 +122,7 @@ describe('Component: Header', () => {
             />
           </Routes>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.queryByText(/This is favorites page/i)).not.toBeInTheDocument();

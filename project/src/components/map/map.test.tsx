@@ -40,7 +40,7 @@ describe('Component: Map', () => {
         <HistoryRouter history={history}>
           <Map activeCity={fakeOffer.city} offersByCity={fakeOffers} hoveredOffer={fakeOffer}/>
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByTestId('Map')).toBeInTheDocument();

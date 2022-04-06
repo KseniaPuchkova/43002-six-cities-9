@@ -28,10 +28,10 @@ describe('Component: ReviewsItem', () => {
         <HistoryRouter history={history}>
           <ReviewForm />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
-    expect(screen.queryByPlaceholderText(/Tell how was your stay, what you like and what can be improved/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Tell how was your stay, what you like and what can be improved/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Your review/i)).toBeInTheDocument();
     expect(screen.getByText(/To submit review please make sure to set/i)).toBeInTheDocument();
   });

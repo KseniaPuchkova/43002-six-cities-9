@@ -21,9 +21,9 @@ describe('Component: SortList', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <SortItem key={SortType.POPULAR} sortType={SortType.POPULAR} isActive={true} onSortTypeChange={onSortTypeChange} />
+          <SortItem key={SortType.POPULAR} sortType={SortType.POPULAR} isActive onSortTypeChange={onSortTypeChange} />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/Popular/i)).toBeInTheDocument();
@@ -34,9 +34,9 @@ describe('Component: SortList', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <SortItem key={SortType.TOP_RATED_FIRST} sortType={SortType.TOP_RATED_FIRST} isActive={true} onSortTypeChange={onSortTypeChange} />
+          <SortItem key={SortType.TOP_RATED_FIRST} sortType={SortType.TOP_RATED_FIRST} isActive onSortTypeChange={onSortTypeChange} />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/Top Rated First/i)).toBeInTheDocument();

@@ -1,5 +1,5 @@
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
@@ -24,10 +24,9 @@ describe('Component: ReviewsList', () => {
         <HistoryRouter history={history}>
           <ReviewsList reviews={fakeReviews} />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
-    const {container} = render(<ReviewsList reviews={fakeReviews}/>)
-    expect(container.firstChild).toHaveClass('reviews__list')
+    expect(screen.getByTestId('ReviewsList')).toBeInTheDocument();
   });
 });

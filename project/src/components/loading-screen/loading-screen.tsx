@@ -2,7 +2,7 @@ import './loading-screen.css';
 
 function LoadingScreen(): JSX.Element | null {
   return (
-    <div className="loader__wrapper">
+    <div className="loader__wrapper" data-testid="LoadingScreen">
       <div className="loader-pin__wrapper">
         <svg
           className="loader-pin"

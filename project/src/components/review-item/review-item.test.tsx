@@ -26,7 +26,7 @@ describe('Component: ReviewsItem', () => {
         <HistoryRouter history={history}>
           <ReviewItem review={fakeReview} />
         </HistoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(fakeReview.user.name)).toBeInTheDocument();

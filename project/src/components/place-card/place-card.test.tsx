@@ -4,7 +4,7 @@ import {createMemoryHistory} from 'history';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import HistoryRouter from '../history-route/history-route';
 import PlaceCard from './place-card';
-import {fakeCity, makeFakeOffer, makeFakeOffers, fakeCardType} from '../../utils/mocks';
+import {makeFakeOffer, makeFakeOffers, fakeCardType} from '../../utils/mocks';
 import {AuthorizationStatus, SubmitStatus, SortType, NameSpace} from '../../const';
 
 const FAKE_OFFER_ID = 1;

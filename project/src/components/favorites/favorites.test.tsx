@@ -29,7 +29,7 @@ describe('Component: Favorites', () => {
         <HistoryRouter history={history}>
           <Favorites />
         </HistoryRouter>;
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe('Component: Favorites', () => {
         <HistoryRouter history={history}>
           <Favorites />
         </HistoryRouter>;
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(/Nothing yet saved./i)).toBeInTheDocument();
