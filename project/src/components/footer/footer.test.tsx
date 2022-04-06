@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {Routes, Route} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import userEvent from '@testing-library/user-event';
+//import userEvent from '@testing-library/user-event';
 import HistoryRouter from '../history-route/history-route';
 import Footer from './footer';
 import {AppRoute} from '../../const';
@@ -36,7 +36,7 @@ describe('Component: Footer', () => {
         </Routes>
       </HistoryRouter>);
 
-    userEvent.click(screen.getByRole('link'));
+    //userEvent.click(screen.getByRole('link'));
     expect(screen.getByText(/Main page/i)).toBeInTheDocument();
   });
 });
