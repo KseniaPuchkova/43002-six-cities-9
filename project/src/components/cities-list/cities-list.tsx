@@ -4,8 +4,7 @@ import className from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {getActiveCity} from '../../store/app-process/selectors';
 import {changeCity} from '../../store/app-process/app-process';
-
-export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+import {CITIES} from '../../const';
 
 function CitiesList(): JSX.Element {
   const dispatch = useAppDispatch();

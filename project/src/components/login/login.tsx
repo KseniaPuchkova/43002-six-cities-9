@@ -1,11 +1,11 @@
-import {useState, ChangeEvent, FormEvent} from 'react';
+import {useState, useEffect, ChangeEvent, FormEvent} from 'react';
 import {Link} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import Header from '../header/header';
-import {useAppSelector} from '../../hooks/hooks';
 import {useAppDispatch} from '../../hooks/hooks';
-import {getActiveCity} from '../../store/app-process/selectors';
-import {AppRoute} from '../../const';
+import {changeCity} from '../../store/app-process/app-process';
+import {getRandomArrayItem} from '../../utils/utils';
+import {AppRoute, CITIES} from '../../const';
 
 const Reg = {
   EMAIL: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
@@ -21,10 +21,15 @@ enum ValidityText {
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
 
+  const [activeCity, setActiveCity] = useState('');
+
+  useEffect(() => {
+    const randomCity = getRandomArrayItem(CITIES);
+    setActiveCity(randomCity);
+  }, []);
+
   const [authData, setAuthData] = useState({email: '', password: ''});
   const {email, password} = authData;
-
-  const activeCity = useAppSelector(getActiveCity);
 
   const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = evt.target;
@@ -108,7 +113,11 @@ function Login(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main}>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Main}
+                onClick={() => dispatch(changeCity(activeCity))}
+              >
                 <span>{activeCity}</span>
               </Link>
             </div>

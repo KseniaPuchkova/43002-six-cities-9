@@ -85,3 +85,5 @@ export const FavoriteButtonType = {
     imgHeight: '33',
   },
 } as const;
+
+export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
