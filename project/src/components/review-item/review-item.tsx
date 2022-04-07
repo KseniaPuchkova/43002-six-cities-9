@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import {Review} from '../../types/review';
-import {getRatingInPercent} from '../../utils';
+import {getRatingInPercent} from '../../utils/utils';
 
 export const MAX_RATING = 5;
 
@@ -28,7 +28,7 @@ function ReviewItem({review}: ReviewsProps) {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: getRatingInPercent(rating)}}></span>
+            <span style={{width: `${getRatingInPercent(rating)}%`}}></span>
             <span className="visually-hidden">{rating}</span>
           </div>
         </div>

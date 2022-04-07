@@ -9,8 +9,10 @@ import ReviewForm from '../review-form/review-form';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FavoritesButton from '../favorites-button/favorites-button';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getOffers, getCurrentOffer, getOffersNearby, getReviewsByOffer} from '../../store/data-process/selectors';
 import {loadReviewsByOfferAction, loadOfferAction, loadOffersNearbyAction} from '../../store/api-actions';
-import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
+import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils/utils';
 import {AuthorizationStatus, FavoriteButtonType} from '../../const';
 
 const MAX_IMAGES_COUNT = 6;
@@ -21,10 +23,13 @@ function Room(): JSX.Element {
   const params = useParams();
   const id = Number(params.id);
 
-  const {offers, currentOffer, offersNearby, reviewsByOffer} = useAppSelector(({DATA}) => DATA);
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
-  const offer = offers.find((item) => item.id === id);
+  const offers = useAppSelector(getOffers);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const offersNearby = useAppSelector(getOffersNearby);
+  const reviewsByOffer = useAppSelector(getReviewsByOffer);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
+  const offer = offers.find((item) => item.id === id);
 
   useEffect(() => {
     dispatch(loadOfferAction(id));
@@ -77,7 +82,7 @@ function Room(): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: getRatingInPercent(rating)}}></span>
+                  <span style={{width: `${getRatingInPercent(rating)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
@@ -100,7 +105,7 @@ function Room(): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((good: string) => (
+                  {goods.map((good) => (
                     <li
                       key={good}
                       className="property__inside-item"
@@ -130,7 +135,7 @@ function Room(): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsByOffer.length}</span></h2>
                 <ReviewsList reviews={reviewsByOffer} />
-                {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm /> : ''}
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
               </section>
             </div>
           </div>

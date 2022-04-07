@@ -1,8 +1,9 @@
-import {memo, useCallback} from 'react';
+import {memo} from 'react';
 import {Link} from 'react-router-dom';
+import className from 'classnames';
 import FavoritesButton from '../favorites-button/favorites-button';
-import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils';
-import {FavoriteButtonType} from '../../const';
+import {getRatingInPercent, makeFirstLetterUppercase} from '../../utils/utils';
+import {AppRoute, FavoriteButtonType} from '../../const';
 import {Offer} from '../../types/offer';
 import {CardType} from '../../types/card';
 
@@ -17,24 +18,25 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
   const {isPremium, previewImage, price, rating, title, type, id} = offer;
   const {articleClassName, imgWrapperClassName, cardInfoClassName, imgWidth, imgHeight} = cardType;
 
-  const handleOnMouseEnter = useCallback(() => {
+  const handleOnMouseEnter = () => {
     if (onMouseEnter) {
       onMouseEnter(offer);
     }
-  }, [offer, onMouseEnter]);
-  const handleOnMouseLeave = onMouseLeave;
+  };
+
+  const RouteToOffer = `${AppRoute.Offer}${id}`;
 
   return (
     <article
-      className={`${articleClassName} place-card`}
+      className={className(articleClassName, 'place-card')}
       onMouseEnter={handleOnMouseEnter}
-      onMouseLeave={handleOnMouseLeave}
+      onMouseLeave={onMouseLeave}
     >
       {isPremium &&
         <div className="place-card__mark"><span>Premium</span>
         </div>}
-      <div className={`${imgWrapperClassName} place-card__image-wrapper`}>
-        <Link to={`/offer/${id}`}>
+      <div className={className(imgWrapperClassName, 'place-card__image-wrapper')}>
+        <Link to={RouteToOffer}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -45,7 +47,7 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
           />
         </Link>
       </div>
-      <div className={`${cardInfoClassName} place-card__info`}>
+      <div className={className(cardInfoClassName, 'place-card__info')}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -58,16 +60,16 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: getRatingInPercent(rating)}}></span>
+            <span style={{width: `${getRatingInPercent(rating)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`} onClick={() => window.scrollTo(0, 0)}>{title}</Link>
+          <Link to={RouteToOffer} onClick={() => window.scrollTo(0, 0)}>{title}</Link>
         </h2>
         <p className="place-card__type">{makeFirstLetterUppercase(type)}</p>
       </div>
     </article>
   );
 }
-export default memo(PlaceCard);
+export default memo(PlaceCard, (prevProps, nextProps) => prevProps.offer === nextProps.offer);

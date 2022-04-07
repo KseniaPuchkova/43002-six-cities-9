@@ -1,4 +1,4 @@
-export enum Process {
+export enum NameSpace {
   User = 'USER',
   Data = 'DATA',
   App = 'APP',
@@ -15,6 +15,7 @@ export enum AppRoute {
   SignIn = '/login',
   Favorites = '/favorites',
   Room = '/offer/:id',
+  Offer = '/offer/',
   NotFound = '*',
 }
 
@@ -27,6 +28,8 @@ export enum APIRoute {
 }
 
 export enum HttpCode {
+  Success = 200,
+  NoContent = 204,
   BadRequest = 400,
   Unauthorized = 401,
   NotFound = 404,

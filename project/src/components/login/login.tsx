@@ -1,14 +1,15 @@
-import {useState, ChangeEvent, FormEvent, memo} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {useState, ChangeEvent, FormEvent} from 'react';
+import {Link} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import Header from '../header/header';
 import {useAppSelector} from '../../hooks/hooks';
 import {useAppDispatch} from '../../hooks/hooks';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {getActiveCity} from '../../store/app-process/selectors';
+import {AppRoute} from '../../const';
 
 const Reg = {
-  Email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-  Password: /^(?=.*[a-z])(?=.*[0-9]).+$/,
+  EMAIL: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+  PASSWORD: /^(?=.*[a-z])(?=.*[0-9]).+$/,
 };
 
 enum ValidityText {
@@ -19,23 +20,17 @@ enum ValidityText {
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [authData, setAuthData] = useState({email: '', password: ''});
   const {email, password} = authData;
 
-  const {activeCity} = useAppSelector(({APP}) => APP);
-  const {authorizationStatus} = useAppSelector(({USER}) => USER);
-
-  if (authorizationStatus === AuthorizationStatus.Auth) {
-    navigate(AppRoute.Main);
-  }
+  const activeCity = useAppSelector(getActiveCity);
 
   const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = evt.target;
     setAuthData({...authData, [name]:value});
 
-    if (!Reg.Email.test(evt.target.value)) {
+    if (!Reg.EMAIL.test(evt.target.value)) {
       evt.target.setCustomValidity(ValidityText.Email);
     }
     else {
@@ -50,7 +45,7 @@ function Login(): JSX.Element {
     if ((evt.target.value).trim().length === 0) {
       evt.target.setCustomValidity(ValidityText.PasswordOnlySpaces);
     }
-    else if (!Reg.Password.test(evt.target.value))  {
+    else if (!Reg.PASSWORD.test(evt.target.value))  {
       evt.target.setCustomValidity(ValidityText.PasswordDigitAndLetter);
     }
     else {
@@ -87,6 +82,7 @@ function Login(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   onChange={handleEmailChange}
+                  data-testid="email"
                   required
                 />
               </div>
@@ -98,6 +94,7 @@ function Login(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   onChange={handlePasswordChange}
+                  data-testid="password"
                   required
                 />
               </div>
@@ -122,4 +119,4 @@ function Login(): JSX.Element {
   );
 }
 
-export default memo(Login);
+export default Login;

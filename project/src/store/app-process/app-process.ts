@@ -1,21 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {CITIES} from '../../components/cities-list/cities-list';
-import {Process, SortType} from '../../const';
+import {NameSpace, SortType} from '../../const';
 
-const DEFAULT_CITY_INDEX = 0;
+const DEFAULT_CITY = 'Paris';
 
 type InitalState = {
   activeCity: string,
   sortType: string,
-}
+};
 
 const initialState: InitalState = {
-  activeCity: CITIES[DEFAULT_CITY_INDEX],
+  activeCity: DEFAULT_CITY,
   sortType: SortType.POPULAR,
 };
 
 export const appProcess = createSlice({
-  name: Process.App,
+  name: NameSpace.App,
   initialState,
   reducers: {
     changeCity: (state, action) => {

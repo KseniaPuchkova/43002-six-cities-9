@@ -1,18 +1,14 @@
 import React, {useState, useEffect, FormEvent, ChangeEvent} from 'react';
-import {toast} from 'react-toastify';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {getCurrentOffer, getSubmitStatus} from '../../store/data-process/selectors';
 import {postReviewAction} from '../../store/api-actions';
 import {SubmitStatus} from '../../const';
-
-enum ToastText {
-  Success = 'Your review has been sent successfully. Thanks!',
-  Error = 'Your review has not been sent. Please try again',
-}
 
 enum ReviewLength {
   Min = 50,
   Max = 300,
 }
+const defaultREview = {count: 0, comment: ''};
 
 const RATINGS = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
 
@@ -24,11 +20,11 @@ const ratings = RATINGS.map((rating, index) => ({
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const {currentOffer, submitStatus} = useAppSelector(({DATA}) => DATA);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const submitStatus = useAppSelector(getSubmitStatus);
 
-  const [review, setReview] = useState({count: 0, comment: ''});
+  const [review, setReview] = useState(defaultREview );
   const {count, comment} = review;
-
 
   const handleReviewSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -42,11 +38,7 @@ function ReviewForm(): JSX.Element {
 
   useEffect(() => {
     if (submitStatus === SubmitStatus.Success) {
-      setReview({count: 0, comment: ''});
-      toast.success(ToastText.Success);
-    }
-    if (submitStatus === SubmitStatus.Error) {
-      toast.error(ToastText.Error);
+      setReview(defaultREview );
     }}, [submitStatus]);
 
   const isDisabled = count === 0 || comment.length < ReviewLength.Min || comment.length > ReviewLength.Max;
@@ -54,8 +46,6 @@ function ReviewForm(): JSX.Element {
 
   return (
     <form className="reviews__form form"
-      action="#"
-      method="post"
       onSubmit={handleReviewSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>

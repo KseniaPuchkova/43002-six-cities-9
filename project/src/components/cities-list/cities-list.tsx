@@ -1,6 +1,8 @@
-import {MouseEvent, memo} from 'react';
+import {MouseEvent} from 'react';
 import {Link} from 'react-router-dom';
+import className from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
+import {getActiveCity} from '../../store/app-process/selectors';
 import {changeCity} from '../../store/app-process/app-process';
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
@@ -8,10 +10,11 @@ export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', '
 function CitiesList(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const {activeCity} = useAppSelector(({APP}) => APP);
+  const activeCity = useAppSelector(getActiveCity);
 
   const handleChangeCityClick = (evt: MouseEvent, city: string) => {
     evt.preventDefault();
+
     dispatch(changeCity(city));
   };
 
@@ -26,8 +29,8 @@ function CitiesList(): JSX.Element {
             >
               <Link
                 to={city}
-                className={`locations__item-link tabs__item${activeCity === city ? ' tabs__item--active':''}`}
-                onClick={(evt) => handleChangeCityClick (evt, city)}
+                className={className('locations__item-link tabs__item', {'tabs__item--active' : activeCity === city})}
+                onClick={(evt) => handleChangeCityClick(evt, city)}
               >
                 <span>{city}</span>
               </Link>
@@ -39,4 +42,4 @@ function CitiesList(): JSX.Element {
   );
 }
 
-export default memo(CitiesList);
+export default CitiesList;

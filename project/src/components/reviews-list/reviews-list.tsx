@@ -15,7 +15,7 @@ function ReviewsList({reviews}: ReviewsListProps): JSX.Element {
     .slice(0, MAX_REVIEWS_COUNT);
 
   return (
-    <ul className="reviews__list">
+    <ul className="reviews__list" data-testid="ReviewsList">
       {reviewsByDateAndCount.map((review) => (
         <ReviewItem
           key={review.id}

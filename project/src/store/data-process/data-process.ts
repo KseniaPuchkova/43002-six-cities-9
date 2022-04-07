@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {Process, SubmitStatus} from '../../const';
+import {NameSpace, SubmitStatus} from '../../const';
 import {Offer} from '../../types/offer';
 import {Review} from '../../types/review';
 
@@ -24,7 +24,7 @@ const initialState: InitalState = {
 };
 
 export const dataProcess = createSlice({
-  name: Process.Data,
+  name: NameSpace.Data,
   initialState,
   reducers: {
     loadOffers: (state, action) => {
@@ -43,10 +43,22 @@ export const dataProcess = createSlice({
     loadFavorites: (state, action) => {
       state.favorites = action.payload;
     },
+    changeFavoriteFlag: (state, action) => {
+      const {id} = action.payload;
+      state.currentOffer = action.payload;
+
+      const indexOffer = state.offers.findIndex((offer) => offer.id === id);
+      state.offers[indexOffer] = action.payload;
+
+      const indexOfferNearby = state.offersNearby.findIndex((offer) => offer.id === id);
+      state.offersNearby[indexOfferNearby] = action.payload;
+
+      state.favorites = state.favorites.filter((offer) => offer.id !== id);
+    },
     changeSubmitStatus: (state, action) => {
       state.submitStatus = action.payload;
     },
   },
 });
 
-export const {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites, changeSubmitStatus} = dataProcess.actions;
+export const {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites,  changeFavoriteFlag, changeSubmitStatus} = dataProcess.actions;

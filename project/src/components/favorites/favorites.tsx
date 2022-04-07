@@ -2,11 +2,18 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import EmptyFavorites from './empty-favorites';
 import FavoritesList from '../favorites-list/favorites-list';
+import NotFound from '../not-found/not-found';
 import {useAppSelector} from '../../hooks/hooks';
-import {sortCities} from '../../utils';
+import {getOffers} from '../../store/data-process/selectors';
+import {sortCities} from '../../utils/utils';
 
 function Favorites(): JSX.Element {
-  const {offers} = useAppSelector(({DATA}) => DATA);
+  const offers = useAppSelector(getOffers);
+
+  if (!offers ) {
+    return <NotFound />;
+  }
+
   const favorites = offers.filter(({isFavorite}) => isFavorite).slice().sort(sortCities);
 
   if (favorites.length) {
