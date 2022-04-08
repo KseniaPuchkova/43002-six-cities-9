@@ -21,11 +21,11 @@ enum ValidityText {
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const [activeCity, setActiveCity] = useState('');
+  const [city, setCity] = useState('');
 
   useEffect(() => {
     const randomCity = getRandomArrayItem(CITIES);
-    setActiveCity(randomCity);
+    setCity(randomCity);
   }, []);
 
   const [authData, setAuthData] = useState({email: '', password: ''});
@@ -116,9 +116,9 @@ function Login(): JSX.Element {
               <Link
                 className="locations__item-link"
                 to={AppRoute.Main}
-                onClick={() => dispatch(changeCity(activeCity))}
+                onClick={() => dispatch(changeCity(city))}
               >
-                <span>{activeCity}</span>
+                <span>{city}</span>
               </Link>
             </div>
           </section>

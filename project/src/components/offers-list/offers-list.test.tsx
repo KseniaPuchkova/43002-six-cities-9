@@ -41,7 +41,7 @@ describe('Component: OffersList', () => {
       </Provider>,
     );
 
-    expect(screen.getByText(/places to stay in/i)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`places to stay in ${fakeCity}`, 'i'))).toBeInTheDocument();
   });
 
   it('should render correctly without offers', () => {
@@ -71,7 +71,7 @@ describe('Component: OffersList', () => {
     );
 
     expect(screen.getByText(/No places to stay available/i)).toBeInTheDocument();
-    expect(screen.getByText(/We could not find any property available at the moment in/i)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`We could not find any property available at the moment in ${fakeCity}`, 'i'))).toBeInTheDocument();
   });
 });
 
