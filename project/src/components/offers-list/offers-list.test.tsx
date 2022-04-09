@@ -40,7 +40,7 @@ describe('Component: OffersList', () => {
         </HistoryRouter>
       </Provider>,
     );
-
+    expect(screen.getByText(/Places/)).toBeInTheDocument();
     expect(screen.getByText(new RegExp(`places to stay in ${fakeCity}`, 'i'))).toBeInTheDocument();
   });
 

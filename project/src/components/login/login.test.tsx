@@ -5,19 +5,12 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
 import Login from './login';
-import {getRandomArrayItem} from '../../utils/utils';
-//import {fakeCity} from '../../utils/mocks';
-import {AppRoute, AuthorizationStatus, NameSpace, CITIES} from '../../const';
-
-const randomCity = getRandomArrayItem(CITIES);
+import {AppRoute, AuthorizationStatus, NameSpace} from '../../const';
 
 const history = createMemoryHistory();
 history.push(AppRoute.SignIn);
 const createMockStore = configureMockStore();
 const store = createMockStore({
-  [NameSpace.App]: {
-    activeCity: randomCity,
-  },
   [NameSpace.User]: {
     authorizationStatus: AuthorizationStatus.NoAuth,
     userData: {},
@@ -42,7 +35,5 @@ describe('Component: Login', () => {
 
     expect(screen.getByDisplayValue(/test@test.ru/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue(/123abc/i)).toBeInTheDocument();
-
-    expect(screen.getByText(new RegExp(`${randomCity}`, 'i'))).toBeInTheDocument();
   });
 });
