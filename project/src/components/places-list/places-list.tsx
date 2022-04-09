@@ -12,7 +12,6 @@ type PlacesListProps = {
 };
 
 function PlacesList({offers, isNearPlacesList, onMouseEnter, onMouseLeave}: PlacesListProps) {
-
   return (
     <div className={className(
       {'cities__places-list places__list tabs__content' : !isNearPlacesList},
