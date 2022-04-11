@@ -44,5 +44,6 @@ describe('Component: Map', () => {
     );
 
     expect(screen.getByTestId('Map')).toBeInTheDocument();
+    expect(screen.getAllByRole('img')).toHaveLength(fakeOffers.length);
   });
 });
