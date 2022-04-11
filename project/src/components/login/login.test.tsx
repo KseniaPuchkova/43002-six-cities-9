@@ -5,12 +5,15 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
 import Login from './login';
-import {AppRoute, AuthorizationStatus, NameSpace} from '../../const';
+import {fakeCity} from '../../utils/mocks';
+import {AuthorizationStatus, NameSpace} from '../../const';
 
 const history = createMemoryHistory();
-history.push(AppRoute.SignIn);
 const createMockStore = configureMockStore();
 const store = createMockStore({
+  [NameSpace.App]: {
+    activeCity: fakeCity,
+  },
   [NameSpace.User]: {
     authorizationStatus: AuthorizationStatus.NoAuth,
     userData: {},
@@ -35,5 +38,7 @@ describe('Component: Login', () => {
 
     expect(screen.getByDisplayValue(/test@test.ru/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue(/123abc/i)).toBeInTheDocument();
+
+    expect(screen.getByTestId('City')).toBeInTheDocument();
   });
 });

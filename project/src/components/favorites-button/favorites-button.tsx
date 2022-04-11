@@ -40,6 +40,7 @@ function FavoritesButton ({favoriteButtonType, offer}: FavoritesButtonProps): JS
       'button')}
     type="button"
     onClick={handleFavoriteClick}
+    data-testid="button"
     >
       <svg
         className={className(`${buttonClassName}__bookmark-icon`)}

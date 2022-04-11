@@ -5,12 +5,11 @@ import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
 import Main from './main';
 import {fakeCity, makeFakeOffers} from '../../utils/mocks';
-import {AppRoute, AuthorizationStatus, SortType, NameSpace} from '../../const';
+import {AuthorizationStatus, SortType, NameSpace} from '../../const';
 
 const fakeOffers = makeFakeOffers();
 
 const history = createMemoryHistory();
-history.push(AppRoute.Main);
 const createMockStore = configureMockStore();
 const store = createMockStore({
   [NameSpace.App]: {

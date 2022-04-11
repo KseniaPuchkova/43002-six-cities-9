@@ -41,7 +41,7 @@ describe('Component: OffersList', () => {
       </Provider>,
     );
     expect(screen.getByText(/Places/)).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(`places to stay in ${fakeCity}`, 'i'))).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`${fakeOffers.length} places to stay in ${fakeCity}`, 'i'))).toBeInTheDocument();
   });
 
   it('should render correctly without offers', () => {

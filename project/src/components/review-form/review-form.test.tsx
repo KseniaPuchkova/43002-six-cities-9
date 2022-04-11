@@ -1,4 +1,5 @@
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
@@ -34,5 +35,26 @@ describe('Component: ReviewsItem', () => {
     expect(screen.getByPlaceholderText(/Tell how was your stay, what you like and what can be improved/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Your review/i)).toBeInTheDocument();
     expect(screen.getByText(/To submit review please make sure to set/i)).toBeInTheDocument();
+
+    const [fiveStars, fourStars, threeStars, twoStars, oneStar] = screen.getAllByRole('radio');
+
+    expect(oneStar).not.toBeChecked();
+    expect(twoStars).not.toBeChecked();
+    expect(threeStars).not.toBeChecked();
+    expect(fourStars).not.toBeChecked();
+    expect(fiveStars).not.toBeChecked();
+
+    userEvent.click(fiveStars);
+    expect(fiveStars).toBeChecked();
+    expect(oneStar).not.toBeChecked();
+    expect(twoStars).not.toBeChecked();
+    expect(threeStars).not.toBeChecked();
+    expect(fourStars).not.toBeChecked();
+
+    userEvent.type(screen.getByTestId('comment'), 'Comment');
+    expect(screen.getByDisplayValue('Comment')).toBeInTheDocument();
+
+    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toHaveAttribute('disabled');
   });
 });

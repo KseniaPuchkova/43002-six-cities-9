@@ -56,5 +56,7 @@ describe('Component: Room', () => {
     expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
     expect(screen.getByText(/Reviews/i)).toBeInTheDocument();
     expect(screen.getByText(/Other places in the neighbourhood/i)).toBeInTheDocument();
+
+    expect(useDispatch).toBeCalledTimes(103);
   });
 });

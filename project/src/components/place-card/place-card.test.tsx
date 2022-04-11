@@ -1,11 +1,13 @@
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {Routes, Route} from 'react-router-dom';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
 import PlaceCard from './place-card';
 import {makeFakeOffer, makeFakeOffers, fakeCardType} from '../../utils/mocks';
-import {AuthorizationStatus, SubmitStatus, SortType, NameSpace} from '../../const';
+import {AppRoute, AuthorizationStatus, SubmitStatus, SortType, NameSpace} from '../../const';
 
 const FAKE_OFFER_ID = 1;
 const fakeOffer = makeFakeOffer(FAKE_OFFER_ID);
@@ -44,5 +46,32 @@ describe('Component: PlaceCard', () => {
     );
 
     expect(screen.getByText(/night/i)).toBeInTheDocument();
+  });
+
+  it('should navigate to "/room" when user click on image or title', () => {
+    global.scrollTo = jest.fn();
+
+    render(
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <Routes>
+            <Route
+              path={AppRoute.Main}
+              element={<PlaceCard offer={fakeOffer} cardType={fakeCardType}/>}
+            />
+            <Route
+              path={AppRoute.Room}
+              element={<h1>This is room page</h1>}
+            />
+          </Routes>
+        </HistoryRouter>
+      </Provider>,
+    );
+
+    const [imageLink, titleLink] = screen.getAllByRole('link');
+    userEvent.click(imageLink);
+    userEvent.click(titleLink);
+
+    expect(screen.getByText(/This is room page/i)).toBeInTheDocument();
   });
 });

@@ -4,8 +4,8 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
 import Favorites from './favorites';
-import {AuthorizationStatus, NameSpace} from '../../const';
 import {makeFakeOffers, fakeUserData} from '../../utils/mocks';
+import {AuthorizationStatus, NameSpace} from '../../const';
 
 const fakeOffers = makeFakeOffers();
 
@@ -28,7 +28,7 @@ describe('Component: Favorites', () => {
       <Provider store={store}>
         <HistoryRouter history={history}>
           <Favorites />
-        </HistoryRouter>;
+        </HistoryRouter>
       </Provider>,
     );
 
@@ -50,10 +50,11 @@ describe('Component: Favorites', () => {
       <Provider store={store}>
         <HistoryRouter history={history}>
           <Favorites />
-        </HistoryRouter>;
+        </HistoryRouter>
       </Provider>,
     );
 
     expect(screen.getByText(/Nothing yet saved./i)).toBeInTheDocument();
+    expect(screen.getByText(/Save properties to narrow down search or plan your future trips./i)).toBeInTheDocument();
   });
 });

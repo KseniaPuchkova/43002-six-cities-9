@@ -44,7 +44,7 @@ function Header(): JSX.Element {
                           style={{borderRadius: '100%'}}
                         />
                       </div>
-                      <span className="header__user-name user__name">{userData?.email}</span>
+                      <span className="header__user-name user__name" data-testid="Email">{userData?.email}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">

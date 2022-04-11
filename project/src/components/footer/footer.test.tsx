@@ -27,7 +27,7 @@ describe('Component: Footer', () => {
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<h1>Main page</h1>}
+            element={<h1>This is main page</h1>}
           />
           <Route
             path={AppRoute.NotFound}
@@ -37,6 +37,6 @@ describe('Component: Footer', () => {
       </HistoryRouter>);
 
     userEvent.click(screen.getByRole('link'));
-    expect(screen.getByText(/Main page/i)).toBeInTheDocument();
+    expect(screen.getByText(/This is main page/i)).toBeInTheDocument();
   });
 });

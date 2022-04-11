@@ -118,7 +118,7 @@ function Login(): JSX.Element {
                 to={AppRoute.Main}
                 onClick={() => dispatch(changeCity(city))}
               >
-                <span>{city}</span>
+                <span data-testid="City">{city}</span>
               </Link>
             </div>
           </section>

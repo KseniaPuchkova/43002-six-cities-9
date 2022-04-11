@@ -61,4 +61,4 @@ export const dataProcess = createSlice({
   },
 });
 
-export const {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites,  changeFavoriteFlag, changeSubmitStatus} = dataProcess.actions;
+export const {loadOffers, loadOffer, loadOffersNearby, loadReviewsByOffer, loadFavorites, changeFavoriteFlag, changeSubmitStatus} = dataProcess.actions;

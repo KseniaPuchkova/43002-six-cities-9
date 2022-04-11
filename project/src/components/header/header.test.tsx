@@ -5,7 +5,6 @@ import {Routes, Route} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
-
 import Header from './header';
 import {fakeUserData} from '../../utils/mocks';
 import {AppRoute, AuthorizationStatus, NameSpace} from '../../const';
@@ -64,6 +63,7 @@ describe('Component: Header', () => {
 
     expect(screen.getByText(/Sign out/i)).toBeInTheDocument();
     expect(screen.queryByText(/Sign in/i)).not.toBeInTheDocument();
+    expect(screen.getByTestId('Email')).toHaveTextContent(fakeUserData.email);
   });
 
   it('should should render correctly when user unauthorized clicked to "/login"', () => {
