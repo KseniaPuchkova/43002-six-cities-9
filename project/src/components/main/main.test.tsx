@@ -25,6 +25,7 @@ const store = createMockStore({
     userData: {},
   },
 });
+window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 describe('Component: Main', () => {
   it('should render correctly', () => {

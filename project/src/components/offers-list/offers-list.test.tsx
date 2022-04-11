@@ -13,6 +13,7 @@ const fakeOffers = makeFakeOffers();
 
 const history = createMemoryHistory();
 const createMockStore = configureMockStore();
+window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 describe('Component: OffersList', () => {
   it('should render correctly with offers', () => {

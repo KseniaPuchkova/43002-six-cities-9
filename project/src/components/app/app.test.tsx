@@ -43,6 +43,7 @@ let fakeApp = (
     </HistoryRouter>
   </Provider>
 );
+window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 describe('Component: App', () => {
   it('should render "Main" when user navigate to "/"', () => {
