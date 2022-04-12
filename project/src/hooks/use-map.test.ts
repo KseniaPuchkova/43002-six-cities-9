@@ -1,3 +1,4 @@
+import {Map} from 'leaflet';
 import {renderHook} from '@testing-library/react-hooks';
 import {screen} from '@testing-library/react';
 import useMap from './use-map';
@@ -17,5 +18,10 @@ describe('Hook, useMap', () => {
 
     expect(screen.getByText('CARTO')).toBeInTheDocument();
     expect(screen.getByText('Leaflet')).toBeInTheDocument();
+  });
+
+  it('should return instanceof Map', () => {
+    const {result} = renderHook(() => useMap({current: document.createElement('div')}, fakeCity));
+    expect(result.current).toBeInstanceOf(Map);
   });
 });

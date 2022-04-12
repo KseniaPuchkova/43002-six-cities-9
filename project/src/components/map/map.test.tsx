@@ -46,4 +46,16 @@ describe('Component: Map', () => {
     expect(screen.getByTestId('Map')).toBeInTheDocument();
     expect(screen.getAllByRole('img')).toHaveLength(fakeOffers.length);
   });
+
+  it('should render correctly when user hovered offer', () => {
+    render(
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <Map activeCity={fakeOffer.city} offersByCity={fakeOffers} hoveredOffer={fakeOffers[0]}/>
+        </HistoryRouter>
+      </Provider>,
+    );
+
+    expect(screen.getByAltText('hovered')).toBeInTheDocument();
+  });
 });

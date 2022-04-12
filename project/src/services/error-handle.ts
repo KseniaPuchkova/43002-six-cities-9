@@ -13,13 +13,13 @@ export const errorHandle = (error: ErrorType): void => {
   if (response) {
     switch (response.status) {
       case HttpCode.BadRequest:
-        toast.info(response.data.error);
+        toast.info(response.data.error, {position: 'bottom-left'});
         break;
       case HttpCode.Unauthorized:
-        toast.info(response.data.error);
+        toast.info(response.data.error, {position: 'bottom-left'});
         break;
       case HttpCode.NotFound:
-        toast.info(response.data.error);
+        toast.info(response.data.error, {position: 'bottom-left'});
         break;
     }
   }

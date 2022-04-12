@@ -43,6 +43,7 @@ function Map({activeCity, offersByCity, hoveredOffer}: MapProps): JSX.Element {
           },
           {
             icon: (offer === hoveredOffer && offer !== null) ? activeIcon : defaultIcon,
+            alt: (offer === hoveredOffer && offer !== null) ? 'hovered' : '',
           },
         );
         layerGroup.addLayer(marker);

@@ -95,9 +95,9 @@ export const postReviewAction = createAsyncThunk<void, ReviewForForm, {
       const {data} = await api.post<Review[]>(`${APIRoute.Comments}/${id}`, {comment, rating});
       dispatch(changeSubmitStatus(SubmitStatus.Success));
       dispatch(loadReviewsByOffer(data));
-      toast.success(ToastText.Success);
+      toast.success(ToastText.Success, {position: 'bottom-left'});
     } catch (error) {
-      toast.error(ToastText.Error);
+      toast.error(ToastText.Error, {position: 'bottom-left'});
       dispatch(changeSubmitStatus(SubmitStatus.Error));
     }
   },

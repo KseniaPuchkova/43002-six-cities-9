@@ -30,7 +30,7 @@ const store = createMockStore({
     submitStatus: SubmitStatus.Unknown,
   },
   [NameSpace.User]: {
-    authorizationStatus: AuthorizationStatus.Auth,
+    authorizationStatus: AuthorizationStatus.NoAuth,
     userData: {},
   },
 });
@@ -46,6 +46,9 @@ describe('Component: PlaceCard', () => {
     );
 
     expect(screen.getByText(/night/i)).toBeInTheDocument();
+    expect(screen.getAllByRole('link')).toHaveLength(2);
+    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByAltText(`Place ${fakeOffer.id}`)).toBeInTheDocument();
   });
 
   it('should navigate to "/room" when user click on image or title', () => {
