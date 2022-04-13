@@ -12,18 +12,19 @@ const fakeReviews = makeFakeReviewsByOffer();
 
 const history = createMemoryHistory();
 const createMockStore = configureMockStore();
-const store = createMockStore({
-  [NameSpace.Data]: {
-    reviewsByOffer: fakeReviews,
-  },
-  [NameSpace.User]: {
-    authorizationStatus: AuthorizationStatus.Auth,
-    userData: fakeUserData,
-  },
-});
 
 describe('Component: ReviewsItem', () => {
   it('should render correctly', () => {
+    const store = createMockStore({
+      [NameSpace.Data]: {
+        reviewsByOffer: fakeReviews,
+      },
+      [NameSpace.User]: {
+        authorizationStatus: AuthorizationStatus.Auth,
+        userData: fakeUserData,
+      },
+    });
+
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>

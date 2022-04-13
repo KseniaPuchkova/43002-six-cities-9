@@ -31,7 +31,7 @@ describe('Component: NotFound', () => {
     expect(screen.getByText('Return to main page')).toBeInTheDocument();
   });
 
-  it('should navigate to mane page when user click', () => {
+  it('should navigate to main page when user click', () => {
     history.push('/non-existent-route');
 
     render(

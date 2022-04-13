@@ -33,6 +33,7 @@ describe('Component: Favorites', () => {
     );
 
     expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Nothing yet saved./i)).not.toBeInTheDocument();
   });
 
   it('should render correctly without favorites', () => {
@@ -54,6 +55,7 @@ describe('Component: Favorites', () => {
       </Provider>,
     );
 
+    expect(screen.queryByText(/Saved listing/i)).not.toBeInTheDocument();
     expect(screen.getByText(/Nothing yet saved./i)).toBeInTheDocument();
     expect(screen.getByText(/Save properties to narrow down search or plan your future trips./i)).toBeInTheDocument();
   });
