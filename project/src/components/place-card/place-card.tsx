@@ -31,6 +31,7 @@ function PlaceCard({offer, cardType, onMouseEnter, onMouseLeave}: PlaceCardProps
       className={className(articleClassName, 'place-card')}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={onMouseLeave}
+      data-testid="place-card"
     >
       {isPremium &&
         <div className="place-card__mark"><span>Premium</span>

@@ -9,8 +9,8 @@ import NotFound from './not-found';
 import {AppRoute, AuthorizationStatus, NameSpace} from '../../const';
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore();
-const store = createMockStore({
+const mockStore = configureMockStore();
+const store = mockStore({
   [NameSpace.User]: {
     authorizationStatus: AuthorizationStatus.NoAuth,
     userData: {},

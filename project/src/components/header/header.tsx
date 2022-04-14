@@ -14,6 +14,7 @@ function Header(): JSX.Element {
 
   const handleLogoutClick= (evt: MouseEvent) => {
     evt.preventDefault();
+
     dispatch(logoutAction());
   };
 

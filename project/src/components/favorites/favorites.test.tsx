@@ -10,11 +10,11 @@ import {AuthorizationStatus, NameSpace} from '../../const';
 const fakeOffers = makeFakeOffers();
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore();
+const mockStore = configureMockStore();
 
 describe('Component: Favorites', () => {
   it('should render correctly with favotires', () => {
-    const store = createMockStore({
+    const store = mockStore({
       [NameSpace.Data]: {
         offers: fakeOffers.filter(({isFavorite}) => isFavorite),
       },
@@ -37,7 +37,7 @@ describe('Component: Favorites', () => {
   });
 
   it('should render correctly without favorites', () => {
-    const store = createMockStore({
+    const store = mockStore({
       [NameSpace.Data]: {
         offers: fakeOffers.filter(({isFavorite}) => !isFavorite),
       },

@@ -12,9 +12,10 @@ import {AppRoute, AuthorizationStatus, NameSpace} from '../../const';
 import {fakeCity} from '../../utils/mocks';
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore([thunk]);
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
-const store = createMockStore({
+const store = mockStore({
   [NameSpace.App]: {
     activeCity: fakeCity,
   },

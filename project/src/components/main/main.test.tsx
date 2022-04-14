@@ -10,8 +10,8 @@ import {AuthorizationStatus, SortType, NameSpace} from '../../const';
 const fakeOffers = makeFakeOffers();
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore();
-const store = createMockStore({
+const mockStore = configureMockStore();
+const store = mockStore({
   [NameSpace.App]: {
     activeCity: fakeCity,
     sortType: SortType.POPULAR,
@@ -25,6 +25,7 @@ const store = createMockStore({
     userData: {},
   },
 });
+
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 describe('Component: Main', () => {

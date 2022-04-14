@@ -7,8 +7,8 @@ import SortItem from './sort-item';
 import {SortType, NameSpace} from '../../const';
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore();
-const store = createMockStore({
+const mockStore = configureMockStore();
+const store = mockStore({
   [NameSpace.App]: {
     sortType: SortType.POPULAR,
   },

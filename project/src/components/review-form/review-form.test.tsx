@@ -11,11 +11,11 @@ import {AuthorizationStatus, NameSpace} from '../../const';
 const fakeReviews = makeFakeReviewsByOffer();
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore();
+const mockStore = configureMockStore();
 
 describe('Component: ReviewsItem', () => {
   it('should render correctly', () => {
-    const store = createMockStore({
+    const store = mockStore({
       [NameSpace.Data]: {
         reviewsByOffer: fakeReviews,
       },

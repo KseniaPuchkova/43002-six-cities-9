@@ -1,4 +1,6 @@
 import {Link} from 'react-router-dom';
+import {useAppDispatch} from '../../hooks/hooks';
+import {changeCity} from '../../store/app-process/app-process';
 import PlaceCard from '../place-card/place-card';
 import {AppRoute, CardType} from '../../const';
 import {Offer} from '../../types/offer';
@@ -10,12 +12,17 @@ type FavoritesCitiesProp = {
 
 function FavoritesCities({favorites, city}: FavoritesCitiesProp): JSX.Element {
   const favoritesByCity = favorites.filter((offer) => offer.city.name === city);
+  const dispatch = useAppDispatch();
 
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <Link className="locations__item-link" to={AppRoute.Main}>
+          <Link
+            className="locations__item-link"
+            to={AppRoute.Main}
+            onClick={() => dispatch(changeCity(city))}
+          >
             <span>{city}</span>
           </Link>
         </div>

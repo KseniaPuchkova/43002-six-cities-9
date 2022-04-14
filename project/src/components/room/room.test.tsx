@@ -16,8 +16,8 @@ const fakeReviews = makeFakeReviewsByOffer();
 
 const history = createMemoryHistory();
 history.push(`${AppRoute.Offer}${fakeOffers[FAKE_OFFER_ID].id}`);
-const createMockStore = configureMockStore();
-const store = createMockStore({
+const mockStore = configureMockStore();
+const store = mockStore({
   [NameSpace.Data]: {
     offers: fakeOffers,
     isDataLoaded: true,

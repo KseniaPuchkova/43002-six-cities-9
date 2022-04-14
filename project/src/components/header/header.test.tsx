@@ -10,12 +10,12 @@ import {fakeUserData} from '../../utils/mocks';
 import {AppRoute, AuthorizationStatus, NameSpace} from '../../const';
 
 const history = createMemoryHistory();
-let createMockStore = configureMockStore();
-let store = createMockStore();
+let mockStore = configureMockStore();
+let store = mockStore();
 
 describe('Component: Header', () => {
   it('should render correctly when user unauthorized', () => {
-    store = createMockStore({
+    store = mockStore({
       [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.NoAuth,
         userData: {},
@@ -40,8 +40,8 @@ describe('Component: Header', () => {
   });
 
   it('should render correctly when user authorized', () => {
-    createMockStore = configureMockStore();
-    store = createMockStore({
+    mockStore = configureMockStore();
+    store = mockStore({
       [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.Auth,
         userData: fakeUserData,
@@ -67,8 +67,8 @@ describe('Component: Header', () => {
   });
 
   it('should should render correctly when user unauthorized clicked to "/login"', () => {
-    createMockStore = configureMockStore();
-    store = createMockStore({
+    mockStore = configureMockStore();
+    store = mockStore({
       [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.NoAuth,
         userData: {},
@@ -101,8 +101,8 @@ describe('Component: Header', () => {
   it('should redirect to "/favorites" url when user authorized clicked to email"', () => {
     history.push(AppRoute.Main);
 
-    createMockStore = configureMockStore();
-    store = createMockStore({
+    mockStore = configureMockStore();
+    store = mockStore({
       [NameSpace.User]: {
         authorizationStatus: AuthorizationStatus.Auth,
         userData: test,

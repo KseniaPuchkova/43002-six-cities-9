@@ -1,3 +1,5 @@
+import {createSelector} from 'reselect';
+import {sortCities} from '../../utils/utils';
 import {NameSpace} from '../../const';
 import {State} from '../../types/state';
 import {Offer} from '../../types/offer';
@@ -16,3 +18,7 @@ export const getReviewsByOffer = (state: State): Review[] => state[NameSpace.Dat
 export const getFavorites = (state: State): Offer[] => state[NameSpace.Data].favorites;
 
 export const getSubmitStatus = (state: State): number => state[NameSpace.Data].submitStatus;
+
+export const getSortedFavorites = createSelector(
+  [getOffers], (offers) => offers.filter(({isFavorite}) => isFavorite).slice().sort(sortCities),
+);

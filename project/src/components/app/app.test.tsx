@@ -3,7 +3,6 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
 import HistoryRouter from '../history-route/history-route';
 import {Provider} from 'react-redux';
-import {createAPI} from '../../services/api';
 import thunk from 'redux-thunk';
 import App from './app';
 import {fakeCity, makeFakeOffer, makeFakeOffers, fakeUserData} from '../../utils/mocks';
@@ -13,10 +12,10 @@ const FAKE_OFFER_ID = 1;
 const fakeOffer = makeFakeOffer(FAKE_OFFER_ID);
 const fakeOffers = makeFakeOffers();
 
-const api = createAPI();
-let history = createMemoryHistory();
-let createMockStore = configureMockStore();
-let store = createMockStore({
+const history = createMemoryHistory();
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+let store = mockStore({
   [NameSpace.App]: {
     activeCity: fakeCity,
     sortType: SortType.POPULAR,
@@ -43,6 +42,7 @@ let fakeApp = (
     </HistoryRouter>
   </Provider>
 );
+
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 describe('Component: App', () => {
@@ -63,10 +63,7 @@ describe('Component: App', () => {
   });
 
   it('should render "Favorites" when user authorized navigate to "/favorites"', () => {
-    history = createMemoryHistory();
-
-    createMockStore = configureMockStore([thunk.withExtraArgument(api)]);
-    store = createMockStore({
+    store = mockStore({
       [NameSpace.App]: {
         activeCity: fakeCity,
         sortType: SortType.POPULAR,
@@ -101,10 +98,7 @@ describe('Component: App', () => {
   });
 
   it('should not render "Favorites" when user unauthorized navigate to "/favorites"', () => {
-    history = createMemoryHistory();
-
-    createMockStore = configureMockStore([thunk.withExtraArgument(api)]);
-    store = createMockStore({
+    store = mockStore({
       [NameSpace.App]: {
         activeCity: fakeCity,
         sortType: SortType.POPULAR,

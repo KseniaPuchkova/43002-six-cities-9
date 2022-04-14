@@ -12,8 +12,8 @@ const fakeReview = makeFakeReviewByOffer(FAKE_REVIEW_ID);
 const fakeReviews = makeFakeReviewsByOffer();
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore();
-const store = createMockStore({
+const mockStore = configureMockStore();
+const store = mockStore({
   [NameSpace.Data]: {
     reviewsByOffer: fakeReviews,
   },
@@ -31,5 +31,7 @@ describe('Component: ReviewsItem', () => {
 
     expect(screen.getByText(fakeReview.user.name)).toBeInTheDocument();
     expect(screen.getByText(fakeReview.comment)).toBeInTheDocument();
+    expect(screen.getByAltText(new RegExp(`Reviews ${fakeReview.user.name}`, 'i'))
+      .getAttribute('src')).toBe(fakeReview.user.avatarUrl);
   });
 });

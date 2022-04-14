@@ -12,12 +12,12 @@ const fakeOffer = makeFakeOffer(FAKE_OFFER_ID);
 const fakeOffers = makeFakeOffers();
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore();
+const mockStore = configureMockStore();
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 describe('Component: OffersList', () => {
   it('should render correctly with offers', () => {
-    const store = createMockStore({
+    const store = mockStore({
       [NameSpace.App]: {
         activeCity: fakeCity,
         sortType: SortType.POPULAR,
@@ -46,7 +46,7 @@ describe('Component: OffersList', () => {
   });
 
   it('should render correctly without offers', () => {
-    const store = createMockStore({
+    const store = mockStore({
       [NameSpace.App]: {
         activeCity: fakeCity,
         sortType: SortType.POPULAR,

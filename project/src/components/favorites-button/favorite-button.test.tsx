@@ -16,11 +16,12 @@ const fakeOffer = makeFakeOffer(FAKE_OFFER_ID);
 const fakeOffers = makeFakeOffers();
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore([thunk]);
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
 describe('Component: FavoritesButton', () => {
   it('should render correctly', () => {
-    const store = createMockStore({
+    const store = mockStore({
       [NameSpace.Data]: {
         offers: fakeOffers,
       },
@@ -47,8 +48,8 @@ describe('Component: FavoritesButton', () => {
     expect(screen.getByRole('button').getAttribute('type')).toBe('button');
   });
 
-  it('should dispatch data when user autorized clicked to button', () => {
-    const store = createMockStore({
+  it('should dispatch data when user authorized clicked to button', () => {
+    const store = mockStore({
       [NameSpace.Data]: {
         offers: fakeOffers,
       },
@@ -79,8 +80,8 @@ describe('Component: FavoritesButton', () => {
     expect(useDispatch).toBeCalledTimes(1);
   });
 
-  it('should dispatch with payload "redirect to route" when user unautorized clicked to button', () => {
-    const store = createMockStore({
+  it('should dispatch with payload "redirect to route" when user unauthorized clicked to button', () => {
+    const store = mockStore({
       [NameSpace.Data]: {
         offers: fakeOffers,
       },

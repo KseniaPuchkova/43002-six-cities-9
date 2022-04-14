@@ -14,8 +14,8 @@ const fakeOffer = makeFakeOffer(FAKE_OFFER_ID);
 const fakeOffers = makeFakeOffers();
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore();
-const store = createMockStore({
+const mockStore = configureMockStore();
+const store = mockStore({
   [NameSpace.App]: {
     activeCity: fakeOffer.city,
     sortType: SortType.POPULAR,
@@ -36,11 +36,15 @@ const store = createMockStore({
 });
 
 describe('Component: PlaceCard', () => {
-  it('should render "PlaceCard" correctly', () => {
+  global.scrollTo = jest.fn();
+  const onMouseEnter = jest.fn();
+  const onMouseLeave = jest.fn();
+
+  it('should render correctly', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <PlaceCard offer={fakeOffer} cardType={fakeCardType}/>
+          <PlaceCard offer={fakeOffer} cardType={fakeCardType} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}/>
         </HistoryRouter>
       </Provider>,
     );
@@ -52,15 +56,13 @@ describe('Component: PlaceCard', () => {
   });
 
   it('should navigate to "/room" when user click on image or title', () => {
-    global.scrollTo = jest.fn();
-
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
           <Routes>
             <Route
               path={AppRoute.Main}
-              element={<PlaceCard offer={fakeOffer} cardType={fakeCardType}/>}
+              element={<PlaceCard offer={fakeOffer} cardType={fakeCardType} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}/>}
             />
             <Route
               path={AppRoute.Room}

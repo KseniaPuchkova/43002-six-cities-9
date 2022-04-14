@@ -12,8 +12,8 @@ const fakeOffer = makeFakeOffer(FAKE_OFFER_ID);
 const fakeOffers = makeFakeOffers();
 
 const history = createMemoryHistory();
-const createMockStore = configureMockStore();
-const store = createMockStore({
+const mockStore = configureMockStore();
+const store = mockStore({
   [NameSpace.Data]: {
     offers: fakeOffers,
     isDataLoaded: true,

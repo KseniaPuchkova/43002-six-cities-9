@@ -7,8 +7,8 @@ import HistoryRouter from '../history-route/history-route';
 import PrivateRoute from './private-route';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
-const createMockStore = configureMockStore();
 const history = createMemoryHistory();
+const mockStore = configureMockStore();
 
 describe('Component: PrivateRouter', () => {
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('Component: PrivateRouter', () => {
   });
 
   it('should render component for public route when user not authorized', () => {
-    const store = createMockStore({
+    const store = mockStore({
       USER: {authorizationStatus: AuthorizationStatus.NoAuth},
     });
 
@@ -30,11 +30,7 @@ describe('Component: PrivateRouter', () => {
             />
             <Route
               path='/private'
-              element={
-                <PrivateRoute>
-                  <h1>Private Route</h1>
-                </PrivateRoute>
-              }
+              element={<PrivateRoute><h1>Private Route</h1></PrivateRoute>}
             />
           </Routes>
         </HistoryRouter>
@@ -46,7 +42,7 @@ describe('Component: PrivateRouter', () => {
   });
 
   it('should render component for private route when user authorized', () => {
-    const store = createMockStore({
+    const store = mockStore({
       USER: {authorizationStatus: AuthorizationStatus.Auth},
     });
 
@@ -60,11 +56,7 @@ describe('Component: PrivateRouter', () => {
             />
             <Route
               path='/private'
-              element={
-                <PrivateRoute>
-                  <h1>Private Route</h1>
-                </PrivateRoute>
-              }
+              element={<PrivateRoute><h1>Private Route</h1></PrivateRoute>}
             />
           </Routes>
         </HistoryRouter>
