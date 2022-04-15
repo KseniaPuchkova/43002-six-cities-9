@@ -8,7 +8,7 @@ enum ReviewLength {
   Min = 50,
   Max = 300,
 }
-const defaultREview = {count: 0, comment: ''};
+const defaultReview = {count: 0, comment: ''};
 
 const RATINGS = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
 
@@ -23,7 +23,7 @@ function ReviewForm(): JSX.Element {
   const currentOffer = useAppSelector(getCurrentOffer);
   const submitStatus = useAppSelector(getSubmitStatus);
 
-  const [review, setReview] = useState(defaultREview );
+  const [review, setReview] = useState(defaultReview );
   const {count, comment} = review;
 
   const handleReviewSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -38,7 +38,7 @@ function ReviewForm(): JSX.Element {
 
   useEffect(() => {
     if (submitStatus === SubmitStatus.Success) {
-      setReview(defaultREview );
+      setReview(defaultReview );
     }}, [submitStatus]);
 
   const isDisabled = count === 0 || comment.length < ReviewLength.Min || comment.length > ReviewLength.Max;

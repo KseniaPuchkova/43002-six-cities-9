@@ -1,4 +1,5 @@
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
@@ -30,7 +31,7 @@ describe('Component: SortList', () => {
     expect(screen.getByText(/Sort by/i)).toBeInTheDocument();
   });
 
-  it('should dispatch when user unauthorized clicked to sort type', () => {
+  it('should dispatch when user clicked to sort type', () => {
     const dispatch = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
     useDispatch.mockReturnValue(dispatch);
@@ -43,6 +44,11 @@ describe('Component: SortList', () => {
       </Provider>,
     );
 
+    userEvent.click(screen.getByRole('list'));
+
     expect(useDispatch).toBeCalledTimes(1);
+    expect(dispatch).nthCalledWith(1, {
+      type: 'APP/changeSortType',
+    });
   });
 });

@@ -11,8 +11,9 @@ type FavoritesCitiesProp = {
 };
 
 function FavoritesCities({favorites, city}: FavoritesCitiesProp): JSX.Element {
-  const favoritesByCity = favorites.filter((offer) => offer.city.name === city);
   const dispatch = useAppDispatch();
+
+  const favoritesByCity = favorites.filter((offer) => offer.city.name === city);
 
   return (
     <li className="favorites__locations-items">
