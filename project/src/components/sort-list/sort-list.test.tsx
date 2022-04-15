@@ -47,8 +47,5 @@ describe('Component: SortList', () => {
     userEvent.click(screen.getByRole('list'));
 
     expect(useDispatch).toBeCalledTimes(1);
-    expect(dispatch).nthCalledWith(1, {
-      type: 'APP/changeSortType',
-    });
   });
 });
