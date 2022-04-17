@@ -1,5 +1,4 @@
-import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {render, screen, fireEvent} from '@testing-library/react';
 import {Routes, Route} from 'react-router-dom';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
@@ -76,7 +75,7 @@ describe('Component: FavoritesButton', () => {
       </Provider>,
     );
 
-    userEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button'));
     expect(useDispatch).toBeCalledTimes(1);
   });
 
@@ -108,7 +107,7 @@ describe('Component: FavoritesButton', () => {
       </Provider>,
     );
 
-    userEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button'));
     expect(useDispatch).toBeCalledTimes(1);
     expect(dispatch).nthCalledWith(1, {
       type: 'app/redirectToRoute', payload: AppRoute.SignIn,

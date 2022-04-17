@@ -1,5 +1,4 @@
-import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {render, screen, fireEvent} from '@testing-library/react';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
@@ -55,7 +54,7 @@ describe('Component: CitiesList', () => {
     );
 
     const [firstCity] = screen.getAllByRole('link');
-    userEvent.click(firstCity);
+    fireEvent.click(firstCity);
 
     expect(useDispatch).toBeCalledTimes(1);
     expect(dispatch).nthCalledWith(1, {
