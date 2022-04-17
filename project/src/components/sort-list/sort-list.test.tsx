@@ -51,7 +51,7 @@ describe('Component: SortList', () => {
     expect(screen.getByText('Top rated first')).toBeInTheDocument();
   });
 
-  it('should dispatch when user clicked to sort type', () => {
+  it('should dispatch with payload when user clicked to sort type', () => {
     const dispatch = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
     useDispatch.mockReturnValue(dispatch);

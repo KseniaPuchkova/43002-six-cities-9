@@ -1,25 +1,29 @@
-import {MouseEvent, memo} from 'react';
-import {useState} from 'react';
+import {useState, useEffect, MouseEvent, memo} from 'react';
 import className from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
-import {getSortType} from '../../store/app-process/selectors';
+import {getActiveCity, getSortType} from '../../store/app-process/selectors';
 import {changeSortType} from '../../store/app-process/app-process';
 import {SortType} from '../../const';
 
 function SortList(): JSX.Element {
   const dispatch = useAppDispatch();
 
+  const activeCity = useAppSelector(getActiveCity);
   const activeSortType = useAppSelector(getSortType);
 
   const [isSortListOpen, setIsSortListOpen] = useState(false);
-  const handleSortOnClick = () => setIsSortListOpen(!isSortListOpen);
+  const handleSortOnClick = () => setIsSortListOpen((state) => !state);
 
   const onSortTypeChange = (evt: MouseEvent, sortType: string) => {
     evt.preventDefault();
 
     dispatch(changeSortType(sortType));
-    setIsSortListOpen(!isSortListOpen);
+    setIsSortListOpen((state) => !state);
   };
+
+  useEffect(() => {
+    setIsSortListOpen(false);
+  }, [activeCity]);
 
   return (
     <form className="places__sorting" action="#" method="get">
